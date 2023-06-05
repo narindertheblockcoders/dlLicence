@@ -426,7 +426,7 @@ function NewBooking() {
               )}
             </div>
 
-            <div className="mb-3 booking-row">
+            {/* <div className="mb-3 booking-row">
               <label for="booking-input">Choose Name:</label>
               <input list="New-booking" id="booking-input" name="booking-input"></input>
               <datalist id="New-booking">
@@ -440,10 +440,10 @@ function NewBooking() {
                   );
                 })}
               </datalist>
-            </div>
-            <div className="mb-3 booking-row">
+            </div> */}
+            <div className="mb-3 booking-row" id="add-name-div">
               <select
-                className="form-select"
+                className="form-select select-clientname"
                 id="book-select"
                 name="clientId"
                 onChange={(e) => selectedClient(e.target.value)}
@@ -458,7 +458,11 @@ function NewBooking() {
                   );
                 })}
               </select>
-              <i class="bi bi-plus-square" onClick={addClientFn} />
+              <button type="button" className="add-name-btn" onClick={addClientFn}>
+                {" "}
+                +
+                {/* <i class="bi bi-plus-square" onClick={addClientFn} /> */}
+              </button>
               {clientNameErr && (
                 <span className="input-error">Client name is required</span>
               )}

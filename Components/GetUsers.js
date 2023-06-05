@@ -4,7 +4,8 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import Navbar from "./ui/Navbar";
 import DeleteUserModal from "./DeleteUserModal";
-
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
 
 function GetUsers() {
 
@@ -13,12 +14,15 @@ function GetUsers() {
   const [inputLength, setInputLength] = useState(0);
   const [show, setShow] = useState(false);
   const [userId, setUserId] = useState();
+  const [open, setOpen] = React.useState(false);
+
   const router = useRouter()
 
   const getAllUsers = async () => {
     try {
       const token = localStorage.getItem("token")
       const response = await axios.post("/api/getUsers", { token });
+      setOpen(false)
       setInputs(response.data.data.data)
       setInputLength(response.data.data.data.length)
     } catch (error) {
@@ -54,6 +58,7 @@ function GetUsers() {
   }
 
   useEffect(() => {
+    setOpen(true)
     setInputs(inputs)
     getAllUsers()
    
@@ -66,6 +71,12 @@ function GetUsers() {
 
   return (
     <>
+    <Backdrop
+  sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+  open={open}
+>
+  <CircularProgress color="inherit" />
+</Backdrop>
  <Navbar/>
       <section className="Clients">
         <div className="container-fluid">

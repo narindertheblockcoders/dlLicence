@@ -10,6 +10,8 @@ import Link from "next/link";
 import SwapTrainer from "./SwapTrainer";
 import { format } from "date-fns";
 import ClientInfoModal from "./ClientInfoModal";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
 
 let timee;
 function Schedule() {
@@ -42,9 +44,10 @@ function Schedule() {
   const [trainerId, setTrainerId] = useState();
   const [bookVehicle, setBookvehicle] = useState();
   const [timeSchedule1, setTimeSchedule1] = useState();
-  const [bookingShowModal, setBookingShowModal] = useState(false)
-  const [clientId, setClientId] = useState()
-  const [bookingId,setBookingId] =useState()
+  const [bookingShowModal, setBookingShowModal] = useState(false);
+  const [clientId, setClientId] = useState();
+  const [bookingId, setBookingId] = useState();
+  const [open, setOpen] = React.useState(false);
 
   async function getAllTrainer() {
     try {
@@ -57,6 +60,20 @@ function Schedule() {
       console.log(err);
     }
   }
+
+  async function todayDate() {
+    const currentDate = new Date();
+    const options = { day: "numeric" };
+    const formattedDate = currentDate.toLocaleDateString(undefined, options);
+
+    setSelectedId(formattedDate - 1);
+
+    console.log(formattedDate, "date share");
+  }
+
+  useEffect(() => {
+    todayDate();
+  }, []);
 
   const timeSchedule = [
     { time: "07:00 AM" },
@@ -91,6 +108,7 @@ function Schedule() {
       const token = localStorage.getItem("token");
       const res = await axios.post("/api/getSchedules", { token: token });
       const response = res.data.data.data;
+      setOpen(false);
       setAllScheduleData(response);
     } catch (err) {
       console.log(err, "all shedule error");
@@ -219,6 +237,7 @@ function Schedule() {
   }
 
   useEffect(() => {
+    setOpen(true);
     getAllSchedule();
     getAllTrainer();
     getAllLocation();
@@ -250,17 +269,16 @@ function Schedule() {
   }
 
   function handleModalShowFn(item2) {
-
     setId(item2?.id);
     setScheduleId(item2?.scheduleId);
-    setTrainerId(item2?.trainerId)
+    setTrainerId(item2?.trainerId);
     setShowModal(true);
   }
 
   async function bookingModalShowFn(item2) {
     // setClientId(item2.id)
-    setBookingId(item2?.id)
-    setBookingShowModal(true)
+    setBookingId(item2?.id);
+    setBookingShowModal(true);
   }
 
   const SearchFn = (e) => {
@@ -300,6 +318,12 @@ function Schedule() {
 
   return (
     <>
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={open}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <Head>
         <link
           href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
@@ -461,13 +485,16 @@ function Schedule() {
                                   (item2) =>
                                     item?.id == item2?.trainerId &&
                                     item1?.time?.split(" ")[0] ==
-                                    item2?.timeSlot?.slice(0, -3)
+                                      item2?.timeSlot?.slice(0, -3)
                                 );
                                 if (matchingData?.length == 0) {
                                   return (
                                     <div className="trainer-timings">
                                       <span>{item1?.time}</span>
-                                      <div className="trainer-opcity" id="trainer-opcity">
+                                      <div
+                                        className="trainer-opcity"
+                                        id="trainer-opcity"
+                                      >
                                         <Link
                                           href=""
                                           className="trainerhover-btns"
@@ -487,13 +514,12 @@ function Schedule() {
 
                                 return (
                                   <>
-                                    {
-                                      searchSchedualData == null ?
-                                        dataByScheduleDate?.map((item2, id) => {
+                                    {searchSchedualData == null
+                                      ? dataByScheduleDate?.map((item2, id) => {
                                           if (
                                             item?.id == item2?.trainerId &&
                                             item1?.time?.split(" ")[0] ==
-                                            item2?.timeSlot?.slice(0, -3)
+                                              item2?.timeSlot?.slice(0, -3)
                                           ) {
                                             return (
                                               <div
@@ -524,7 +550,7 @@ function Schedule() {
                                                 ) : null}
 
                                                 <div className="head-one-main">
-                                                  {item2.scheduleId != 3 ?
+                                                  {item2.scheduleId != 3 ? (
                                                     <div className="head-one-one">
                                                       <h5>
                                                         {new Date(
@@ -550,8 +576,7 @@ function Schedule() {
                                                         )}
                                                       </h5>
                                                     </div>
-                                                    :
-
+                                                  ) : (
                                                     <div className="head-one-one">
                                                       <h5>
                                                         {new Date(
@@ -566,8 +591,7 @@ function Schedule() {
                                                         )}
                                                       </h5>
                                                     </div>
-
-                                                  }
+                                                  )}
 
                                                   <div className="head-one-one">
                                                     <a
@@ -596,11 +620,11 @@ function Schedule() {
                                                       );
                                                   })}
 
-                                                  {item2.scheduleId != 1 ?
+                                                  {item2.scheduleId != 1 ? (
                                                     <small>
                                                       Test at {item2.testTime}
                                                     </small>
-                                                    : null}
+                                                  ) : null}
 
                                                   <small>Location</small>
                                                   {allLocation?.map((item3) => {
@@ -619,16 +643,26 @@ function Schedule() {
                                                     }
                                                   })}
 
-
                                                   <small>Client</small>
                                                   <div class="training-booking">
-                                                    <span>      {item2.clientName}    <strong>
-                                                      ({item2.clientMobileNo})
-                                                    </strong>  </span>
-                                                    <Link href="#" class="view-booking"
-                                                      onClick={(e) => bookingModalShowFn(item2)}
-
-                                                    >View Bookings</Link>
+                                                    <span>
+                                                      {" "}
+                                                      {item2.clientName}{" "}
+                                                      <strong>
+                                                        ({item2.clientMobileNo})
+                                                      </strong>{" "}
+                                                    </span>
+                                                    <Link
+                                                      href="#"
+                                                      class="view-booking"
+                                                      onClick={(e) =>
+                                                        bookingModalShowFn(
+                                                          item2
+                                                        )
+                                                      }
+                                                    >
+                                                      View Bookings
+                                                    </Link>
                                                   </div>
 
                                                   <div class="tt-payment">
@@ -659,12 +693,11 @@ function Schedule() {
                                             );
                                           }
                                         })
-
-                                        : searchSchedualData.map((item2) => {
+                                      : searchSchedualData.map((item2) => {
                                           if (
                                             item?.id == item2?.trainerId &&
                                             item1?.time?.split(" ")[0] ==
-                                            item2?.timeSlot?.slice(0, -3)
+                                              item2?.timeSlot?.slice(0, -3)
                                           ) {
                                             return (
                                               <div
@@ -694,7 +727,7 @@ function Schedule() {
                                                   </div>
                                                 ) : null}
                                                 <div className="head-one-main">
-                                                  {item2.scheduleId != 3 ?
+                                                  {item2.scheduleId != 3 ? (
                                                     <div className="head-one-one">
                                                       <h5>
                                                         {new Date(
@@ -720,8 +753,7 @@ function Schedule() {
                                                         )}
                                                       </h5>
                                                     </div>
-                                                    :
-
+                                                  ) : (
                                                     <div className="head-one-one">
                                                       <h5>
                                                         {new Date(
@@ -736,8 +768,7 @@ function Schedule() {
                                                         )}
                                                       </h5>
                                                     </div>
-
-                                                  }
+                                                  )}
                                                   <div className="head-one-one">
                                                     <a
                                                       href="#"
@@ -765,11 +796,11 @@ function Schedule() {
                                                       );
                                                   })}
 
-                                                  {item2.scheduleId != 1 ?
+                                                  {item2.scheduleId != 1 ? (
                                                     <small>
                                                       Test at {item2.testTime}
                                                     </small>
-                                                    : null}
+                                                  ) : null}
                                                   <small>Location</small>
                                                   {allLocation?.map((item3) => {
                                                     if (
@@ -823,8 +854,7 @@ function Schedule() {
                                               </div>
                                             );
                                           }
-                                        })
-                                    }
+                                        })}
                                   </>
                                 );
                               })}

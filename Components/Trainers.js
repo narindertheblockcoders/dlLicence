@@ -5,8 +5,13 @@ import axios from "axios";
 import { format } from 'date-fns';
 import Link from "next/link";
 import AddScheduleModal from "./AddScheduleModal";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
+
 
 function Trainers() {
+  const [open, setOpen] = React.useState(false);
+
 
   const timeSchedule = [
     { time: "07:00 AM" },
@@ -63,7 +68,7 @@ function Trainers() {
         const dateB = new Date(b.datesch);
         return dateA - dateB;
       });
-
+     setOpen(false)
       setTrainerData(sortedData)
     } catch (error) {
       console.log("Error---:", error)
@@ -71,11 +76,13 @@ function Trainers() {
   }
 
   useEffect(() => {
+    setOpen(true)
     AlltrainerClient()
   }, [])
 
   async function getAlltrainerClient(e) {
     try {
+      setOpen(true)
       const token = localStorage.getItem("token")
       const response = await axios.post("/api/getAllTrainerData", { token: token, trainerId: e })
       const resultData = response.data.data.data
@@ -86,7 +93,7 @@ function Trainers() {
         const dateB = new Date(b.datesch);
         return dateA - dateB;
       });
-
+       setOpen(false)
       setTrainerData(sortedData)
     } catch (error) {
       console.log("Error---:", error)
@@ -170,6 +177,12 @@ function Trainers() {
   
   return (
     <>
+      <Backdrop
+  sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+  open={open}
+>
+  <CircularProgress color="inherit" />
+</Backdrop>
       <Navbar />
       {/* section-traner-tab */}
       <section className="trainers">

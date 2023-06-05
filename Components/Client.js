@@ -6,6 +6,10 @@ import { ToastContainer, toast } from "react-toastify";
 import DeleteClientModal from "./DeleteClientModal";
 import FeedbackModal from "./FeedbackModal";
 import { format } from 'date-fns';
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
+
+
 function Client() {
 
   const [dataSearch, setDataSearch] = useState();
@@ -15,12 +19,15 @@ function Client() {
   const [id, setId] = useState();
   const [allClientData, setAllClientData] = useState();
   const [message, setMessage] = useState();
+  const [open, setOpen] = React.useState(false);
+
 
   async function getAllClients() {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.post("/api/allClients", { token: token });
       const response = res.data.data;
+      setOpen(false)
       setAllClientData(response.data);
       setInputLength(response.data.length);
     } catch (err) {
@@ -46,6 +53,7 @@ function Client() {
   };
 
   useEffect(() => {
+    setOpen(true)
     setAllClientData(allClientData);
 
     getAllClients();
@@ -72,6 +80,12 @@ function Client() {
   }
   return (
     <>
+         <Backdrop
+  sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+  open={open}
+>
+  <CircularProgress color="inherit" />
+</Backdrop>
       <ToastContainer />
       <meta charSet="UTF-8" />
       <meta httpEquiv="X-UA-Compatible" content="IE=edge" />

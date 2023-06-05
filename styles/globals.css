@@ -261,6 +261,14 @@ section#login .container {
     width: 23%;
     margin-right: 2%;
 }
+#add-name-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px   ;
+}
+
+.add-name-btn{float: left; padding: 13px 20px; background-color: #0C4B92; font-size: 18px; color: white;}
 
 .booking #book-input {
     border: 1px solid var(--unnamed-color-c4c4c4);
@@ -2245,6 +2253,10 @@ textarea::placeholder {
     width: 100%;
     float: left;
     margin-top: 1rem;
+}
+
+.Clients .client-table table th {
+    color: white;
 }
 
 

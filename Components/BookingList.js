@@ -10,11 +10,11 @@ import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import Link from "next/link";
 import Head from "next/head";
-import OwlCarousel from 'react-owl-carousel3';
+import OwlCarousel from "react-owl-carousel3";
 import dynamic from "next/dynamic";
 
-function BookingList() {
 
+function BookingList() {
   const [scheduleData, setScheduleData] = useState();
   const [booklocation, setBookLocation] = useState();
   const [searchFilter, setSearchFilter] = useState();
@@ -30,9 +30,17 @@ function BookingList() {
   const [date3, setDate3] = useState();
   const [loading, setLoading] = useState(false);
   const [itemId, setItemId] = useState();
+  const [halfHour, setHalfHour] = useState();
+  const [todayDates, setTodayDates] = useState()
+  const [selectedId, setSelectedId] = useState(0);
   const [open, setOpen] = React.useState(false);
-  const [selectedId, setSelectedId] = useState(0)
-  const [halfHour, setHalfHour] = useState()
+
+  
+  
+  
+  
+  
+  
   async function schedualDataFn() {
     try {
       const token = localStorage.getItem("token");
@@ -44,6 +52,7 @@ function BookingList() {
       const numAscending = result?.sort(
         (a, b) => a.dummyBooking - b.dummyBooking
       );
+      setOpen(false)
       setScheduleData(numAscending);
     } catch (error) {
       console.log("Error:", error);
@@ -87,8 +96,23 @@ function BookingList() {
       },
     });
   }
+  async function todayDate(){
+    const currentDate = new Date();
+    const options = { day: 'numeric' };
+    const formattedDate = currentDate.toLocaleDateString(undefined, options);
+  
+    setSelectedId(formattedDate - 1)
+   
+     console.log(formattedDate,"date share")
+  }
+
+  useEffect(()=>{
+    todayDate()
+  },[todayDates])
+
 
   useEffect(() => {
+    setOpen(true)
     schedualDataFn();
     vehicalBooking();
     bookingLocation();
@@ -110,7 +134,6 @@ function BookingList() {
   }
 
   const SearchFn = (e) => {
-
     const search = e.target.value;
     if (search == null || !search) {
       // schedualDataFn()
@@ -128,7 +151,6 @@ function BookingList() {
     if (dataByDate) {
     }
   }, []);
-
 
   const DatePicker = (e) => {
     setDate3(null);
@@ -199,14 +221,12 @@ function BookingList() {
         }
       }
     }
-
-
     setDatePicker(temp);
   };
 
   async function filterData(item, i) {
-
-    setSelectedId(i)
+    console.log(i, "click in here");
+    setSelectedId(i);
     const filterValue = scheduleData?.filter((item2) => {
       const dateValue = item2.dateOfBooking;
       const date = new Date(dateValue);
@@ -219,7 +239,7 @@ function BookingList() {
 
     setDataByDate(filterValue);
   }
-
+  console.log(selectedId, "click select ID");
 
   async function getDataByDate() {
     const date1 = new Date();
@@ -240,20 +260,37 @@ function BookingList() {
 
   return (
     <>
+<Backdrop
+  sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+  open={open}
+>
+  <CircularProgress color="inherit" />
+</Backdrop>
       <Navbar />
 
       <Head>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous" />
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+          crossorigin="anonymous"
+        />
         <link rel="stylesheet" href="css/style.css" />
         <link rel="stylesheet" href="css/responsive.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
           integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g=="
-          crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <link rel="stylesheet"
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer"
+        />
+        <link
+          rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
           integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw=="
-          crossorigin="anonymous" referrerpolicy="no-referrer" />
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer"
+        />
       </Head>
 
       <section className="booking-tabs" id="add-schedule">
@@ -321,17 +358,18 @@ function BookingList() {
                     aria-controls="pills-home"
                     aria-selected="true"
                     onClick={() => filterData(item)}
-                  >
-
-                  </button>
+                  ></button>
                 </li>
 
                 {datePicker?.map((item, i) => {
-
                   return (
                     <li className="nav-item" role="presentation">
                       <button
-                        className={selectedId == i ? "nav-link item active" : "nav-link item   "}
+                        className={
+                          selectedId == i
+                            ? "nav-link item active"
+                            : "nav-link item   "
+                        }
                         id="pills-profile-tab"
                         onClick={() => filterData(item, i)}
                       >
@@ -340,12 +378,10 @@ function BookingList() {
                     </li>
                   );
                 })}
-
               </OwlCarousel>
             </ul>
           </div>
           <div className="main-tabs">
-
             <div className="texts-tab">
               <div className="tab-content" id="pills-tabContent">
                 <div
@@ -371,7 +407,7 @@ function BookingList() {
                                     <>
                                       <div key={idx2} className="head-one-main">
                                         {item2?.locationId === item?.id &&
-                                          item2.isDummyBooking == 1 ? (
+                                        item2.isDummyBooking == 1 ? (
                                           <div className="head-one-one">
                                             <a
                                               href="#"
@@ -442,7 +478,7 @@ function BookingList() {
                                         <span>{item2.trainerName}</span>
                                       </div>
                                       {item2?.paidAmount < item2?.totalAmount &&
-                                        item2.paidAmount > 0 ? (
+                                      item2.paidAmount > 0 ? (
                                         <div className="schedule_client1">
                                           <small>Client</small>
                                           <span>
@@ -492,7 +528,6 @@ function BookingList() {
           swapDataId={swapDataId}
         />
         <AddTrainerModal
-
           showModal={showModal}
           setShowModal={setShowModal}
           schedualDataFn={schedualDataFn}
