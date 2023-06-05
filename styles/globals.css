@@ -269,7 +269,9 @@ section#login .container {
 }
 
 .add-name-btn{float: left; padding: 13px 20px; background-color: #0C4B92; font-size: 18px; color: white;}
-
+#dropdownLogout .dropdown-toggle .dropdown-item {
+    cursor: pointer !important;
+}
 .booking #book-input {
     border: 1px solid var(--unnamed-color-c4c4c4);
     background: #FBFBFB 0% 0% no-repeat padding-box;
