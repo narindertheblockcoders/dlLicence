@@ -177,7 +177,7 @@ function NewBooking() {
     setPaidAmountErr(false);
     setDateofBookingErr(false);
     setDateofPaymentErr(false);
-    setPaymentBalErr(false);
+    // setPaymentBalErr(false);
 
     if (
       !bookingRefNo &&
@@ -202,7 +202,7 @@ function NewBooking() {
       setPaidAmountErr(true);
       setDateofBookingErr(true);
       setDateofPaymentErr(true);
-      setPaymentBalErr(true);
+      // setPaymentBalErr(false);
       return;
     } else {
       setBookingRefNoErr(false);
@@ -259,11 +259,11 @@ function NewBooking() {
         setDateofPaymentErr(true);
         return;
       }
-      setPaymentBalErr(false);
-      if (!paymentBalance) {
-        setPaymentBalErr(true);
-        return;
-      }
+      // setPaymentBalErr(false);
+      // if (!paymentBalance) {
+      //   setPaymentBalErr(false);
+      //   return;
+      // }
     }
 
     const data = {
@@ -292,8 +292,9 @@ function NewBooking() {
       !dateofBookingErr &&
       !dateofPaymentErr &&
       !totalAmountErr &&
-      !paidAmountErr &&
-      !paymentBalErr
+      !paidAmountErr
+      //  &&
+      // !paymentBalE rr
     ) {
       // setLoading(true)
       // setDisable(true)

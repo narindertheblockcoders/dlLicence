@@ -262,6 +262,7 @@ function Schedule() {
   };
 
   async function modalShowFn(item, item3) {
+    console.log(item, "fuddi error")
     setDate(item3);
     setTrainerName(item.trainerName);
     setTrainerId(item.id);
@@ -488,6 +489,7 @@ function Schedule() {
                                       item2?.timeSlot?.slice(0, -3)
                                 );
                                 if (matchingData?.length == 0) {
+                                  console.log(matchingData, "matching date")
                                   return (
                                     <div className="trainer-timings">
                                       <span>{item1?.time}</span>
