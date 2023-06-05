@@ -1,0 +1,3103 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import "rsuite/dist/rsuite.css";
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+    border-radius: 10px;
+
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #022853;
+    width: 2px;
+    height: 5px;
+    border-radius: 10px;
+
+}
+
+:root {
+    scroll-behavior: smooth;
+    padding: 10px;
+}
+
+/*--------------------------- navbar ------------------------------*/
+.navbar .navbar-brand {
+    background: #2F55A2;
+    padding: 15px 20px;
+    color: white;
+    font-size: 19px;
+    font-weight: 500;
+}
+
+.rs-picker-menu {
+    z-index: 1200 !important;
+}
+
+nav.navbar {
+    background: #F3F8FF !important;
+    padding: 0;
+}
+
+.modal {
+    transition: opacity .15s linear;
+    background: #2f55a28c;
+}
+
+.rs-picker-default .rs-picker-toggle.rs-btn {
+    padding-top: 15px !important;
+    padding-bottom: 15px !important;
+}
+
+.rs-picker-date .rs-picker-toggle.rs-btn .rs-picker-toggle-clean,
+.rs-picker-daterange .rs-picker-toggle.rs-btn .rs-picker-toggle-clean,
+.rs-picker-date .rs-picker-toggle.rs-btn .rs-picker-toggle-caret,
+.rs-picker-daterange .rs-picker-toggle.rs-btn .rs-picker-toggle-caret {
+    top: 16px !important;
+    right: 12px !important;
+}
+
+.rs-picker-toggle.rs-btn.rs-btn-default:hover {
+    border: 1px solid #c4c4c4;
+}
+
+.rs-picker-toggle-textbox {
+
+    border: 1px solid #c4c4c4;
+    background-color: #fbfbfb !important;
+    outline: none;
+}
+
+.rs-picker-toggle.rs-btn.rs-btn-default {
+    box-shadow: unset !important;
+    border: 1px solid #c4c4c4;
+    outline: unset !important;
+    background: #fbfbfb !important;
+}
+
+.rs-picker-toggle .rs-picker-toggle-placeholder {
+    color: #8e8e93;
+    /* color: #89797b; */
+    font-size: 16px;
+    font-weight: 500;
+    color: #74777B;
+}
+
+.rs-picker-toggle-clean:hover svg path {
+    stroke: #222222 !important;
+
+}
+
+.rs-picker-toggle-wrapper {
+    width: 100% !important;
+}
+
+
+.rs-picker-toggle-clean:hover {
+    color: #191919 !important;
+}
+
+.rs-picker-has-value .rs-btn .rs-picker-toggle-value,
+.rs-picker-has-value .rs-picker-toggle .rs-picker-toggle-value {
+    color: #74777B !important;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+nav.navbar .container-fluid {
+    padding: 0;
+}
+
+nav.navbar .dropdown-menu.show {
+    display: block;
+    right: 1%;
+}
+
+.navbar .nav-link {
+    font-size: 16px;
+    font-weight: 500;
+    padding: 1rem;
+    color: #000000;
+}
+
+.navbar-nav .nav-item {
+    margin-left: 20px;
+}
+
+/* .nav-link:focus{
+    border-bottom: 3px solid #2F55A2;
+    color: #2F55A2;} */
+form#nav-selects {
+    padding: 0px 34px;
+    justify-content: center;
+    align-items: center;
+}
+
+.navbar-nav .nav-link.active {
+    border-bottom: 3px solid #2F55A2;
+    color: #2F55A2;
+}
+
+#nav-selects span img {
+    margin-right: 10px;
+}
+
+#nav-selects .form-select:focus {
+    box-shadow: unset !important;
+}
+
+.owl-carousel {
+    display: block !important;
+}
+
+#login .client-content {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+#login #book-input {
+    width: 100%;
+}
+
+#login .client-row {
+    width: 100%;
+    margin-right: 0;
+}
+
+#login .login-remb {
+    float: left;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 10px;
+}
+
+#login .btn-book {
+    width: 100%;
+}
+
+section#login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 92vh;
+    padding: 0;
+}
+
+
+
+section#login .container {
+    display: flex;
+    justify-content: center;
+}
+
+#login .form-check {
+    margin: 0;
+    display: flex;
+}
+
+#login form {
+    width: 40%;
+    background: #f2f8ff;
+    border-radius: 11px;
+    padding: 50px 50px;
+}
+
+/*------------------------- end navbar -------------------------------*/
+
+/*-------------------- Booking section starts ------------------*/
+.booking {
+    width: 100%;
+    float: left;
+    padding: 100px 0;
+    height: 87vh;
+}
+
+.booking h2 {
+    text-align: center;
+    font-size: 28px;
+    color: #022853;
+    font-weight: bold;
+}
+
+.booking .form-check {
+    margin-bottom: 2rem;
+}
+
+.booking input#flexCheckDefault {
+    border: 1px solid var(--unnamed-color-c4c4c4);
+
+    border: 1px solid #C4C4C4;
+    border-radius: 3px;
+    box-shadow: unset !important;
+}
+
+.booking label.form-check-label {
+    color: #000000;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.booking .booking-content {
+    width: 100%;
+    float: left;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.booking .booking-content .booking-row {
+    width: 23%;
+    margin-right: 2%;
+}
+
+.booking #book-input {
+    border: 1px solid var(--unnamed-color-c4c4c4);
+    background: #FBFBFB 0% 0% no-repeat padding-box;
+    border: 1px solid #C4C4C4;
+    border-radius: 5px;
+    text-align: left;
+    font-size: 16px;
+    font-weight: 500;
+    color: #74777B;
+    box-shadow: unset !important;
+    padding: 15px 10px 15px 15px;
+}
+
+
+
+.booking #book-select {
+    border: 1px solid var(--unnamed-color-c4c4c4);
+
+    border: 1px solid #C4C4C4;
+    border-radius: 5px;
+    text-align: left;
+    font-size: 16px;
+    font-weight: 500;
+    color: #74777B;
+    box-shadow: unset !important;
+    padding: 15px 10px 15px 15px;
+}
+
+select#book-select {
+    color: var(--bs-body-color);
+    background-color: #fbfbfb;
+}
+
+.booking-button {
+    float: left;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
+}
+
+.booking-button .btn-book {
+    padding: 15px 95px;
+    border: unset;
+    font-size: 14px;
+    background: #2F55A2;
+    font-weight: 700;
+    color: white;
+    border-radius: 5px;
+}
+
+/*-------------------- Booking section ends --------------------*/
+
+
+/*--------------------------- footer -------------------------------------*/
+section.footer {
+    float: left;
+    width: 100%;
+    text-align: center;
+    padding: 20px 0px;
+    border-top: 1px solid #e1e1e1;
+    position: fixed;
+    bottom: 0;
+    z-index: 999;
+    background-color: white;
+}
+
+section.footer p {
+    font-size: 15px;
+    font-weight: 500;
+    color: #000000;
+    padding: 0;
+    margin: 0;
+}
+
+/*--------------------------- footer -------------------------------------*/
+
+/*-------------------------------- booking-tabs -------------------------------------------*/
+
+section.booking-tabs {
+    float: left;
+    width: 100%;
+    padding: 50px 0px;
+}
+
+.booking-tabs .container {
+    width: 100%;
+
+}
+
+section.booking-tabs .head-booking {
+    float: left;
+    width: 100%;
+}
+
+section.booking-tabs .head-booking h2 {
+    font-size: 28px;
+    font-weight: 600;
+    color: #022853;
+}
+
+section.booking-tabs .inner-tabs-head {
+    float: left;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+section.booking-tabs .inner-tabs-head .left-tabss {
+    width: 50%;
+    text-align: right;
+}
+
+section.booking-tabs .inner-tabs-head .right-tabss {
+    width: 50%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+
+section.booking-tabs .inner-tabs-head .right-tabss .input-group {
+    width: 35%;
+}
+
+section.booking-tabs .inner-tabs-head .right-tabss .input-group .form-control:focus {
+    box-shadow: unset !important;
+}
+
+section.booking-tabs .inner-tabs-head .right-tabss .input-group #basic-addon2 {
+    background: white;
+    border-left: unset !important;
+    border: var(--bs-border-width) solid #C4D7F4;
+
+}
+
+section.booking-tabs .inner-tabs-head .right-tabss .input-group .form-control {
+    border: unset !important;
+    border-left: 1px solid #C4D7F4 !important;
+    border-top: 1px solid #C4D7F4 !important;
+    border-bottom: 1px solid #C4D7F4 !important;
+}
+
+section.booking-tabs .inner-tabs-head .left-tabss h6 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #2F55A2;
+}
+
+
+section.booking-tabs .main-tabs {
+    float: left;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+section.booking-tabs .main-tabs h4 {
+    background: white;
+    padding: 10px;
+}
+
+section.booking-tabs .main-tabs .owl-theme .owl-nav {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    top: 0;
+    z-index: -1;
+}
+
+section.booking-tabs .main-tabs .owl-theme .owl-nav [class*=owl-] {
+    margin: unset !important;
+}
+
+/* section.booking-tabs .main-tabs .owl-prev {
+    margin-left: -1rem !important;
+    margin-top: 0px !important;
+}
+
+section.booking-tabs .main-tabs .owl-next {
+    margin-right: -2rem !important;
+    margin-top: 0px !important;
+} */
+
+section.booking-tabs .main-tabs .owl-item {
+    width: 1300px !important;
+}
+
+section.booking-tabs .main-tabs .owl-stage {
+    width: 50000px !important;
+}
+
+section.booking-tabs .main-tabs .nav-pills .nav-link.active,
+.nav-pills .show>.nav-link {
+    color: #2F55A2;
+    background-color: unset;
+    border-bottom: 3px solid #2F55A2;
+    border-radius: 0;
+    font-weight: 600;
+}
+
+section.booking-tabs .main-tabs .nav-pills .nav-link {
+    color: #A1A1A1;
+    font-size: 14px;
+}
+
+section.booking-tabs .main-tabs .nav-item {
+    margin-right: 22px;
+}
+
+section.booking-tabs .main-tabs #pills-tab {
+    border-bottom: 1px solid #A1A1A1;
+    white-space: nowrap;
+    flex-wrap: unset;
+    overflow: auto;
+}
+
+/* innerpart-tab */
+
+.innerpart-tabs {
+    float: left;
+    width: 100%;
+    margin-top: 1.5rem;
+}
+
+.innerpart-tabs .three-part {
+    float: left;
+    width: 100%;
+    display: flex;
+
+}
+
+section.booking-tabs .main-tabs .nav-item:first-child {
+    margin-left: 0px;
+}
+
+.innerpart-tabs .three-part .same-one-part {
+    width: 26%;
+    margin-right: 100px;
+}
+
+.innerpart-tabs .three-part .same-two-part {
+    width: 26%;
+    margin-right: 100px;
+}
+
+.innerpart-tabs .three-part .same-three-part {
+    width: 26%;
+}
+
+.innerpart-tabs .three-part .same-one-part h3 {
+    float: left;
+    color: #0C4B92;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 6px 10px;
+    background: #8ADBFF;
+    margin: 0px;
+    text-transform: capitalize;
+}
+
+.innerpart-tabs .three-part .same-one-part .head-one {
+    border-bottom: 3px solid #8ADBFF;
+    float: left;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.innerpart-tabs .three-part .same-one-part .head-one a {
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 600;
+    color: #28389E;
+}
+
+.innerpart-tabs .three-part .same-two-part h3 {
+    float: left;
+    color: #0C4B92;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 6px 10px;
+    background: #8ADBFF;
+    margin: 0px;
+}
+
+.innerpart-tabs .three-part .same-two-part .head-one {
+    border-bottom: 3px solid #8ADBFF;
+    float: left;
+    width: 100%;
+}
+
+.innerpart-tabs .three-part .same-three-part h3 {
+    float: left;
+    color: #0C4B92;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 6px 10px;
+    background: #8ADBFF;
+    margin: 0px;
+}
+
+.innerpart-tabs .three-part .same-three-part .head-one {
+    border-bottom: 3px solid #8ADBFF;
+    float: left;
+    width: 100%;
+}
+
+.head-one-main {
+    float: left;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 12px;
+}
+
+.head-one-main .head-one-one {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.head-one-main .head-one-one h5 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #022853;
+    margin: 0;
+    white-space: nowrap;
+}
+
+.tt-payment {
+    width: 100%;
+    float: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #FFCBCB;
+    border-radius: 3px;
+    margin-top: 10px;
+    padding: 10px;
+}
+
+.tt-payment ul {
+    padding: unset;
+    list-style: none;
+    margin-bottom: unset;
+}
+
+.tt-payment ul strong {
+    font-size: 11px;
+    font-weight: bold;
+    color: #022853;
+}
+
+.tt-payment ul li {
+    color: #022853;
+    font-size: 11px;
+}
+
+.tt-payment a {
+    text-decoration: none;
+    margin-bottom: 0;
+    background-color: #46BB34;
+    color: white;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.head-one-main .head-one-one img {
+    margin-right: 14px;
+}
+
+.t-test {
+    border: unset;
+    background: #C8E6C9;
+    color: #155817;
+    font-size: 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    padding: 5px 8px;
+}
+
+.swap-trainer {
+    text-decoration: unset;
+    color: #28389E;
+    border: 0.5px solid #28389ead;
+    border-radius: 3px;
+    font-size: 11px;
+    padding: 2px 6px;
+    font-weight: 700;
+    margin-left: 10px;
+}
+
+.head-one-main .head-one-one .head-one-two {
+    text-decoration: unset;
+    color: #28389E;
+    border: 0.5px solid #28389ead;
+    border-radius: 3px;
+    font-size: 11px;
+    padding: 2px 6px;
+    font-weight: 700;
+    margin-left: 10px;
+}
+
+.training-booking {
+    width: 100%;
+    float: left;
+    display: flex;
+    justify-content: space-between;
+}
+
+.training-booking .view-booking {
+    text-decoration: none;
+    font-size: 11px;
+    background-color: #114B8D;
+    font-weight: 500;
+    color: white;
+    border-radius: 4px;
+    padding: 0px 5px 0 5px;
+    display: flex;
+    align-items: center;
+}
+
+.innerpart-tabs .three-part .two-part-head {
+    float: left;
+    width: 100%;
+    border-bottom: 2px dotted #8ADBFF;
+    padding-bottom: 12px;
+    margin-bottom: 12px;
+}
+
+.innerpart-tabs .three-part .two-part-head small {
+    width: 100%;
+    float: left;
+    font-size: 12px;
+    font-weight: 700;
+    color: #022853;
+}
+
+.innerpart-tabs .three-part .two-part-head span {
+    font-size: 15px;
+    float: left;
+    color: #022853;
+}
+
+.innerpart-tabs .three-part .two-part-head p {
+    font-size: 15px;
+    float: left;
+    width: 100%;
+    /* margin-bottom: 6px; */
+    color: #022853;
+    margin: 0 !important;
+}
+
+.innerpart-tabs .three-part .two-part-head h6 {
+    margin: 0;
+    padding: 7px 0px;
+    font-size: 15px;
+    font-weight: normal;
+    color: #022853;
+}
+
+.innerpart-tabs .three-part .two-part-head span strong {
+    color: #022853;
+    font-size: 10px;
+}
+
+.timeset {
+    float: left;
+    width: 100%;
+}
+
+.timeset ul {
+    margin: 0;
+    padding: 0;
+}
+
+.timeset ul li {
+    list-style: none;
+    padding: 13px 0px;
+    border-bottom: 2px dotted #8ADBFF;
+    font-size: 16px;
+    font-weight: 600;
+    color: #000000;
+}
+
+section.booking-tabs .inner-tabs-head .left-tabss h6 span img {
+    width: 1%;
+    margin-bottom: 2px;
+    margin-right: 10px;
+}
+
+section.booking-tabs .inner-tabs-head .left-tabss h6 small img {
+    width: 1%;
+    margin-bottom: 2px;
+    margin-left: 10px;
+}
+
+section.booking-tabs .custom-modell {
+    transition: opacity .15s linear;
+    background: #2f55a28c;
+}
+
+.schedule_client1 {
+    width: 100%;
+    float: left;
+    background: #FFF1CB;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+}
+
+.schedule_client2 {
+    width: 100%;
+    float: left;
+    background: #FFB5B5;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.schedule_client1 .schedule_payment,
+.schedule_client2 .schedule_payment1 {
+    display: flex;
+    width: 100%;
+    float: left;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.schedule_client1 .schedule_payment a,
+.schedule_client2 .schedule_payment1 a {
+    background: #46BB34;
+    text-decoration: none;
+    font-size: 12px;
+    color: white;
+    border-radius: 4px;
+    padding: 2px 5px 2px 5px;
+}
+
+.dummy-btn-one {
+    text-decoration: unset;
+    color: #133775;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 3px 6px;
+    background: #FFF2BF;
+    margin-top: 15px !important;
+}
+
+/*----------------------------------- modal-resdule -----------------------------------*/
+.custom-modell .btn-close {
+    position: absolute;
+    right: 3%;
+    top: 3%;
+}
+
+.custom-modell .modal-header {
+    display: unset;
+    width: 100%;
+    text-align: center;
+    margin-top: 30px;
+    border: unset;
+}
+
+.custom-modell .modal-header .modal-title {
+    color: #022853 !important;
+    font-size: 24px !important;
+    font-weight: 700 !important;
+}
+
+.custom-modell .modal-body .dateText {
+    font-size: 15px;
+    float: left;
+    width: 100%;
+    margin-bottom: 19px;
+    color: #022853;
+    text-align: center;
+}
+
+.custom-modell .modal-body p {
+    text-align: center;
+    margin: 0;
+    font-size: 12px;
+    font-weight: 700;
+    color: #022853;
+}
+
+.custom-modell .rs-picker-toggle span {
+
+    font-size: 1rem !important;
+    font-weight: 400 !important;
+}
+
+.custom-modell .rs-picker-default .rs-picker-toggle.rs-btn {
+    padding-top: 10px !important;
+    width: 100% !important;
+    padding-bottom: 10px !important;
+    padding: 10px !important;
+}
+
+.custom-modell .rs-picker-date .rs-picker-toggle.rs-btn .rs-picker-toggle-clean,
+.rs-picker-daterange .rs-picker-toggle.rs-btn .rs-picker-toggle-clean,
+.rs-picker-date .rs-picker-toggle.rs-btn .rs-picker-toggle-caret,
+.rs-picker-daterange .rs-picker-toggle.rs-btn .rs-picker-toggle-caret {
+    top: 10px !important;
+    right: 7px !important;
+}
+
+
+.custom-modell .datePicker .rs-picker-default .rs-picker-toggle.rs-btn {
+    padding: 0px !important;
+}
+
+.custom-modell .modal-body h4 {
+    width: 100%;
+    float: left;
+    font-size: 12px;
+    font-weight: 700;
+    color: #022853;
+    text-align: center;
+}
+
+.custom-modell .modal-body {
+    padding: 0;
+}
+
+.custom-modell .input-main {
+    padding: 15px 50px 50px 50px;
+}
+
+.custom-modell .sclient-box {
+    display: flex;
+    width: 100%;
+    float: left;
+    gap: 15px;
+}
+
+.custom-modell .input-main .form-control {
+    padding: 10px;
+    background: #FBFBFB;
+    color: #7a7c7c;
+    /* width: 50% !important; */
+}
+
+.sclient-div {
+    float: left;
+    width: 100% !important;
+}
+
+.custom-modell .sclient-box .input-group {
+    /* width: 50%; */
+    margin-bottom: 1rem !important;
+}
+
+.custom-modell .modal-body .sclient-box p {
+    margin-bottom: 16px !important;
+    text-align: left;
+}
+
+
+.custom-modell .modal-body .form-control {
+    margin-bottom: 5px !important;
+}
+
+.custom-modell .modal-body .form-select {
+    padding: 10px;
+    margin-bottom: 5px;
+    color: #6c757d;
+}
+
+.custom-modell .input-main .form-control:focus {
+    box-shadow: unset !important;
+}
+
+.custom-modell .input-main .form-select {
+
+    background-color: #fff;
+}
+
+.custom-modell .modal-body .form-select:focus {
+    box-shadow: unset !important;
+}
+
+.custom-modell .modal-btn-custom {
+    float: left;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.custom-modell .modal-btn-custom .reschedule {
+    padding: 14px 50px;
+    background: #2F55A2;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: unset;
+    border-radius: 5px;
+    color: white;
+    margin: 40px 0px;
+}
+
+.custom-modell .btn-close:focus {
+    box-shadow: unset !important;
+}
+
+.custom-modell .modal-dialog.modal-dialog-centered {
+    width: 600px !important;
+}
+
+/* add-schedule */
+#add-new-sche .timeset ul li {
+    list-style: none;
+    border-bottom: unset !important;
+    font-size: 16px;
+    font-weight: 600;
+    color: #000000;
+}
+
+#add-new-sche .timeset ul {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px dotted;
+
+    border-bottom: 2px dotted #8ADBFF;
+}
+
+#add-new-sche .timeset ul li .hover-btns {
+    padding: 8px 20px;
+    background: #2F55A2;
+    font-size: 14px;
+    color: white;
+    text-decoration: unset;
+    border-radius: 3px;
+    z-index: 1;
+}
+
+.opicty {
+    opacity: 0;
+    transition: ease-in-out 0.3s;
+}
+
+#add-new-sche ul:hover :nth-child(1) {
+    opacity: 1;
+    cursor: pointer;
+}
+
+
+
+/* add-first-modal */
+
+.add-first-modal .btn-close {
+    position: absolute;
+    top: 3%;
+    right: 3%;
+}
+
+.add-first-modal .modal-header {
+    text-align: center;
+    width: 100%;
+    border-bottom: unset;
+}
+
+.add-first-modal {
+    box-shadow: 12px 17px 26px #00000029;
+}
+
+.add-first-modal #exampleModalToggleLabel3 {
+    width: 100%;
+    color: #2F55A2;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.add-first-modal #first-body span {
+    text-align: center;
+    width: 100%;
+    float: left;
+    font-size: 15px;
+    color: #022853;
+    font-weight: 700;
+}
+
+.add-first-modal .main-redio {
+    display: flex;
+    justify-content: center;
+    float: left;
+    width: 100%;
+    margin-top: 23px;
+}
+
+.add-first-modal .main-redio .form-check-label {
+    font-size: 15px;
+    font-weight: 500;
+    color: #022853;
+}
+
+.add-first-modal .main-redio .form-check-input:checked {
+    background-color: #022853 !important;
+    position: relative;
+}
+
+.add-first-modal .main-redio .form-check-input:checked:focus {
+    box-shadow: unset !important;
+}
+
+.form-check-input:checked[type=radio] {
+    background-color: #022853 !important;
+
+}
+
+.form-check-input:checked[type=radio] {
+    background-image: unset !important;
+}
+
+.add-first-modal .modal-footer {
+    justify-content: center !important;
+    display: flex !important;
+    border: unset;
+}
+
+.add-first-modal .main-redio .form-check-input:checked::after {
+    content: "";
+    position: absolute;
+    height: 24px;
+    width: 24px;
+    border: 1px solid blueviolet;
+    border-radius: 100px;
+    bottom: -34%;
+    left: -34%;
+}
+
+.add-first-modal .modal-footer .model-next {
+    padding: 10px 40px;
+    background: #2F55A2;
+    border-radius: 5px;
+    color: white;
+    font-weight: 500;
+    font-size: 14px;
+    text-decoration: unset;
+}
+
+.add-first-modal .modal-content {
+    padding: 20px 10px 40px 10px;
+}
+
+.add-first-modal .btn-close:focus {
+    box-shadow: unset !important;
+}
+
+
+/* snd modal */
+
+.snd-modal .btn-close {
+    position: absolute;
+    right: 3%;
+    top: 3%;
+}
+
+.snd-modal #exampleModalToggleLabel4 {
+    width: 100%;
+    text-align: center;
+    color: #2F55A2;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.snd-modal .modal-header {
+    border: unset;
+}
+
+.snd-modal #snd-body .mainsnd-body {
+    background: #D4D8EB;
+    display: flex;
+}
+
+.snd-modal #snd-body .mainsnd-body .flex-snd {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 17px 10px 30px;
+}
+
+.snd-modal #snd-body .mainsnd-body .flex-snd span {
+    font-size: 12px;
+    color: #022853;
+    font-weight: bold;
+}
+
+.snd-modal #snd-body .mainsnd-body .flex-snd small {
+    font-size: 15px;
+    color: #022853;
+    font-weight: 400;
+    margin: 0;
+}
+
+.snd-modal #snd-body {
+    padding: 0;
+}
+
+.snd-modal #snd-body .snd-input-top {
+    float: left;
+    width: 47%;
+    padding: 20px 0px;
+}
+
+.snd-modal #snd-body .snd-input-top .form-control {
+    width: 100% !important;
+    float: left;
+    border-radius: 5px !important;
+    background: #FBFBFB;
+    border: 1px solid #C4C4C4;
+    flex: unset !important;
+    font-size: 14px;
+}
+
+.snd-modal #snd-body .snd-input-top .form-control:focus {
+    box-shadow: unset !important;
+}
+
+.snd-modal #snd-body .snd-input-top .input-group-text {
+    background: unset;
+    border: unset;
+    color: #022853;
+    font-size: 12px;
+    font-weight: 500;
+    margin-top: 20px;
+}
+
+.snd-input-top .autoflexx {
+    display: flex;
+    width: 20%;
+    float: left;
+    flex-direction: column;
+}
+
+
+/*  */
+.snd-modal #snd-body .snd-input-bottom {
+    float: left;
+    width: 100%;
+    padding: 0px 30px;
+}
+
+#snd-body small {
+    font-size: 12px;
+    color: #022853;
+    margin-bottom: 4px;
+}
+
+
+.snd-modal #snd-body .snd-input-bottom .react-time-picker__wrapper{
+    border: none !important;
+}
+.snd-modal #snd-body .snd-input-bottom .react-time-picker__inputGroup {
+    width: 100% !important;
+    float: left;
+    border-radius: 5px !important;
+    background: #FBFBFB;
+    border: 1px solid #C4C4C4;
+    flex: unset !important;
+    font-size: 14px;
+}
+.react-time-picker__inputGroup__amPm {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.snd-modal #snd-body .snd-input-bottom .form-control:focus {
+    box-shadow: unset !important;
+}
+
+.snd-modal #snd-body .snd-input-bottom .input-group-text {
+    background: unset;
+    border: unset;
+    color: #022853;
+    font-size: 12px;
+    font-weight: 500;
+
+}
+
+.snd-input-end .autoflexx #floatingTextarea2 {
+    background: #fbfbfb;
+    border: 1px solid #C4C4C4;
+}
+
+.snd-input-end .autoflexx #floatingTextarea2 {
+    box-shadow: unset !important;
+}
+
+.snd-input-end .autoflexx label {
+    color: #6f7880;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.snd-input-bottom .autoflexx {
+    display: flex;
+    width: 47%;
+    float: left;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+#autoflexx {
+    padding-top: 20px;
+    margin-left: 0px;
+}
+
+#input-group {
+    flex-wrap: nowrap !important;
+}
+
+select.form-select {
+    background-color: #fbfbfb;
+    font-size: 14px;
+}
+
+select.form-select:focus {
+    box-shadow: unset !important;
+}
+
+.snd-input-end .autoflexx {
+    display: flex;
+    width: 100%;
+    float: left;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.snd-modal #snd-body .snd-input-end {
+    float: left;
+    width: 100%;
+    padding: 0px 30px;
+}
+
+.snd-modal .modal-footer {
+    border: unset;
+    display: flex;
+    justify-content: center;
+}
+
+.snd-modal .modal-content {
+    padding: 20px 0px;
+}
+
+.snd-modal .modal-footer .model-add {
+    padding: 10px 60px;
+    background: #2F55A2;
+    border-radius: 5px;
+    color: white;
+    font-weight: 500;
+    font-size: 14px;
+    text-decoration: unset;
+}
+
+
+
+
+/* .thrd-modal */
+
+.thrd-modal .btn-close {
+    position: absolute;
+    right: 3%;
+    top: 3%;
+}
+
+.thrd-modal #exampleModalToggleLabel8 {
+    width: 100%;
+    text-align: center;
+    color: #2F55A2;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.thrd-modal .modal-header {
+    border: unset;
+}
+
+.thrd-modal #snd-body .mainsnd-body {
+    background: #D4D8EB;
+    display: flex;
+}
+
+.thrd-modal #snd-body .mainsnd-body .flex-snd {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 17px 10px 30px;
+}
+
+.thrd-modal #snd-body .mainsnd-body .flex-snd span {
+    font-size: 12px;
+    color: #022853;
+}
+
+.thrd-modal #snd-body .mainsnd-body .flex-snd small {
+    font-size: 15px;
+    color: #022853;
+    font-weight: 400;
+    margin: 0;
+}
+
+.thrd-modal #snd-body {
+    padding: 0;
+}
+
+.thrd-modal #snd-body .snd-input-top {
+    float: left;
+    width: 100%;
+    padding: 20px 30px;
+}
+
+.thrd-modal #snd-body .snd-input-top .form-control {
+    width: 100% !important;
+    float: left;
+    border-radius: 5px !important;
+    background: #FBFBFB;
+    border: 1px solid #C4C4C4;
+    flex: unset !important;
+    font-size: 14px;
+}
+
+.thrd-modal #snd-body .snd-input-top .form-control:focus {
+    box-shadow: unset !important;
+}
+
+.thrd-modal #snd-body .snd-input-top .input-group-text {
+    background: unset;
+    border: unset;
+    color: #022853;
+    font-size: 12px;
+    font-weight: 500;
+    margin-top: 20px;
+}
+
+.thrd-modal .snd-input-top .autoflexx {
+    display: flex;
+    width: 19%;
+    float: left;
+    flex-direction: column;
+}
+
+
+/*  */
+.thrd-modal #snd-body .snd-input-bottom {
+    float: left;
+    width: 100%;
+    padding: 0px 30px;
+}
+
+#snd-body small {
+    font-size: 12px;
+    color: #022853;
+    margin-bottom: 4px;
+    font-weight: bold;
+}
+
+.thrd-modal #snd-body .snd-input-bottom .form-control {
+    width: 100% !important;
+    float: left;
+    border-radius: 5px !important;
+    background: #FBFBFB;
+    border: 1px solid #C4C4C4;
+    flex: unset !important;
+    font-size: 14px;
+}
+
+.thrd-modal #snd-body .snd-input-bottom .form-control:focus {
+    box-shadow: unset !important;
+}
+
+.thrd-modal #snd-body .snd-input-bottom .input-group-text {
+    background: unset;
+    border: unset;
+    color: #022853;
+    font-size: 12px;
+    font-weight: 500;
+
+}
+
+.snd-input-end .autoflexx #floatingTextarea2 {
+    background: #fbfbfb;
+    border: 1px solid #C4C4C4;
+}
+
+.snd-input-end .autoflexx #floatingTextarea2 {
+    box-shadow: unset !important;
+}
+
+.snd-input-end .autoflexx label {
+    color: #6f7880;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.thrd-modal .snd-input-bottom .autoflexx {
+    display: flex;
+    width: 47%;
+    float: left;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.thrd-modal .form-select {
+    background-color: #fbfbfb;
+    font-size: 14px;
+}
+
+.thrd-modal .form-select:focus {
+    box-shadow: unset !important;
+}
+
+.thrd-modal .snd-input-end .autoflexx {
+    display: flex;
+    width: 100%;
+    float: left;
+    flex-direction: column;
+
+}
+
+.thrd-modal #snd-body .snd-input-end {
+    float: left;
+    width: 100%;
+    padding: 0px 30px;
+}
+
+.thrd-modal .modal-footer {
+    border: unset;
+    display: flex;
+    justify-content: center;
+}
+
+.thrd-modal .modal-content {
+    padding: 20px 0px;
+}
+
+.thrd-modal .modal-footer .model-add {
+    padding: 10px 60px;
+    background: #2F55A2;
+    border-radius: 5px;
+    color: white;
+    font-weight: 500;
+    font-size: 14px;
+    text-decoration: unset;
+}
+
+.thrd-modal #singal {
+    width: 47%;
+    text-align: left;
+    margin-left: 30px;
+}
+
+.thrd-modal #small-input {
+    width: 19%;
+}
+
+.thrd-modal #exampleModalToggleLabel8 {
+    width: 100%;
+    text-align: center;
+    color: #2F55A2;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.thrd-modal .modal-header #exampleModalToggleLabe8 {
+    width: 100%;
+    text-align: center;
+    color: #2F55A2;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+h1#exampleModalToggleLabe9 {
+    width: 100%;
+    text-align: center;
+    color: #2F55A2;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+
+/*------------------------------------------- training-------------------------------------------- */
+#training .timeset ul li {
+    list-style: none;
+    border-bottom: unset !important;
+    font-size: 16px;
+    font-weight: 600;
+    color: #000000;
+}
+
+#training .timeset ul {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px dotted;
+
+    border-bottom: 2px dotted #8ADBFF;
+}
+
+#training .timeset ul li .hover-btns {
+    padding: 8px 20px;
+    background: #2F55A2;
+    font-size: 14px;
+    color: white;
+    text-decoration: unset;
+    border-radius: 3px;
+    z-index: 1;
+}
+
+div#training #traing-main .opicty {
+    opacity: 0;
+    transition: ease-in-out 0.3s;
+}
+
+div#training #traing-main ul:hover :nth-child(1) {
+    opacity: 1;
+    cursor: pointer;
+}
+
+div#training #traing-main .head-one-main .head-one-one .head-one-two {
+    border: unset;
+    background: #C8E6C9;
+    color: #155817;
+    font-size: 12px;
+    border-radius: 4px;
+}
+
+div#traing-main .two-part-head h4 {
+    margin: 0;
+    padding: 0;
+    font-size: 15px;
+    color: #022853;
+    margin-bottom: 9px;
+}
+
+div#traing-main .head-one-main .head-one-one h5 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #28389E;
+    margin: 0;
+}
+
+div#training #traing-main .head-one-main .head-one-one .head-one-three {
+    border: unset;
+    background: #BFD7FF;
+    color: #133775;
+    font-size: 12px;
+    text-decoration: unset;
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-weight: 700;
+}
+
+.training-div {
+    float: left;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.head-one-three {
+    border: unset;
+    background: #BFD7FF;
+    color: #133775;
+    font-size: 12px;
+    text-decoration: unset;
+    border-radius: 4px;
+    padding: 5px 8px;
+    font-weight: 700;
+}
+
+div#training #traing-main .head-one-main .head-one-one .head-one-four {
+    border: unset;
+    background: #F2D8F6;
+    color: #52055E;
+    font-size: 12px;
+    text-decoration: unset;
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-weight: 700;
+}
+
+.head-one-four {
+    border: unset;
+    background: #F2D8F6;
+    color: #52055E;
+    font-size: 12px;
+    text-decoration: unset;
+    border-radius: 4px;
+    padding: 5px 8px;
+    font-weight: 700;
+}
+
+div#training #traing-main #new-end {
+
+    border-bottom: unset !important;
+
+}
+
+div#training #traing-main .end-this .btn-endthis {
+    background: #2F55A2;
+    width: 100%;
+    float: left;
+    padding: 6px;
+    text-decoration: unset;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 4px;
+}
+
+.end-this {
+    float: left;
+    width: 100%;
+    text-align: center;
+}
+
+/* ---------------------------------- trainers------------------------------------*/
+
+section.trainers {
+    float: left;
+    width: 100%;
+    padding: 80px 0px 0px 80px;
+}
+
+section.trainers .trainers-flex {
+    width: 16%;
+    height: 100vh;
+    border-left: 1px solid #D1D1D1;
+    border-right: 1px solid #D1D1D1;
+    border-top: 1px solid #D1D1D1;
+}
+
+section.trainers .trainers-flex {
+    width: 15%;
+}
+
+section.trainers .head-trainers h2 {
+    font-size: 28px;
+    color: #022853;
+    font-weight: 700;
+    margin-bottom: 32px;
+}
+
+.tabs-head {
+    float: left;
+    width: 100%;
+    display: flex;
+    overflow: scroll;
+}
+
+section.trainers .nav-pills .nav-link.active,
+.nav-pills .show>.nav-link {
+    color: var(--bs-nav-pills-link-active-color);
+    background-color: #2F55A2;
+    font-size: 16px;
+    text-align: left;
+    border-radius: unset;
+    font-weight: 500;
+    color: white !important;
+}
+
+section.trainers .nav-pills .nav-link {
+    background: 0 0;
+    text-align: left;
+    border: unset;
+    border-bottom: 1px solid rgb(216, 216, 216);
+    border-radius: unset !important;
+    font-size: 16px;
+    font-weight: 600;
+    color: #7A7A7A;
+}
+
+.trainers-box {
+    float: left;
+    width: 100%;
+}
+
+.trainerinnerpart-tabs {
+    float: left;
+    width: 100%;
+    margin-bottom: 4rem;
+}
+
+.trainerinnerpart-tabs .trainerthree-part {
+    float: left;
+    width: 130%;
+    display: flex;
+
+}
+
+.trainerinnerpart-tabs .trainerthree-part .trainersame-one-part {
+    width: 60%;
+}
+
+.trainerinnerpart-tabs .trainerthree-part .trainersame-two-part {
+    width: 26%;
+    margin: 0px 60px;
+}
+
+.trainerinnerpart-tabs .trainerthree-part .trainersame-three-part {
+    width: 26%;
+}
+
+.trainerinnerpart-tabs .trainerthree-part .trainersame-one-part h3 {
+    float: left;
+    color: #0C4B92;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 6px 10px;
+    background: #8ADBFF;
+    margin: 0px;
+}
+
+.trainerinnerpart-tabs .trainerthree-part .trainersame-one-part .trainerhead-one {
+    border-bottom: 3px solid #8ADBFF;
+    float: left;
+    width: 100%;
+}
+
+.trainerinnerpart-tabs .trainerthree-part .trainersame-two-part h3 {
+    float: left;
+    color: #0C4B92;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 6px 10px;
+    background: #8ADBFF;
+    margin: 0px;
+}
+
+.trainerinnerpart-tabs .trainerthree-part .trainersame-two-part .trainerhead-one {
+    border-bottom: 3px solid #8ADBFF;
+    float: left;
+    width: 100%;
+}
+
+.trainerinnerpart-tabs .trainerthree-part .trainersame-three-part h3 {
+    float: left;
+    color: #0C4B92;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 6px 10px;
+    background: #8ADBFF;
+    margin: 0px;
+}
+
+.trainerinnerpart-tabs .trainerthree-part .trainersame-three-part .trainerhead-one {
+    border-bottom: 3px solid #8ADBFF;
+    float: left;
+    width: 100%;
+}
+
+.trainerhead-one-main {
+    float: left;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.trainerhead-one-main .trainerhead-one-one {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.trainerhead-one-main .trainerhead-one-one h5 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #022853;
+    margin: 0;
+}
+
+.trainerhead-one-main .trainerhead-one-one .trainerdummy-btn-one {
+    text-decoration: unset;
+    color: #133775;
+    font-size: 12px;
+    font-weight: 600;
+    margin-left: 10px;
+    padding: 3px 6px;
+    background: #FFF2BF;
+}
+
+.trainerhead-one-main .trainerhead-one-one img {
+    margin-right: 14px;
+}
+
+.trainerhead-one-main .trainerhead-one-one .trainerhead-one-two {
+    text-decoration: unset;
+    background-color: #C8E6C9;
+    border-radius: 4px;
+    font-size: 12px;
+    padding: 6px 10px;
+    font-weight: 500;
+    color: #155817;
+
+}
+
+.trainer-training {
+    text-decoration: none;
+    background: #BFD7FF;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 6px 10px;
+    border-radius: 4px;
+    color: #133775;
+}
+
+.trainerinnerpart-tabs .trainerthree-part .trainertwo-part-head {
+    float: left;
+    width: 100%;
+    border-bottom: 2px dotted #8ADBFF;
+    padding-bottom: 12px;
+}
+
+.trainerinnerpart-tabs .trainerthree-part .trainertwo-part-head strong {
+    width: 100%;
+    float: left;
+    font-size: 15px;
+    font-weight: 600;
+    color: #022853;
+}
+
+.trainerinnerpart-tabs .trainerthree-part .trainertwo-part-head small {
+    width: 100%;
+    float: left;
+    font-size: 12px;
+    font-weight: 700;
+    color: #022853;
+}
+
+.trainerinnerpart-tabs .trainerthree-part .trainertwo-part-head span {
+    font-size: 15px;
+    float: left;
+    width: 100%;
+    margin-bottom: 6px;
+    color: #022853;
+}
+
+.trainerinnerpart-tabs .trainerthree-part .trainertwo-part-head p {
+    font-size: 15px;
+    float: left;
+    width: 100%;
+    /* margin-bottom: 6px; */
+    color: #022853;
+    margin: 0 !important;
+}
+
+.trainerinnerpart-tabs .trainerthree-part .trainertwo-part-head h6 {
+    margin: 0;
+    padding: 7px 0px;
+    font-size: 15px;
+    font-weight: normal;
+    color: #022853;
+}
+
+.trainerinnerpart-tabs .trainerthree-part .trainertwo-part-head span strong {
+    color: #022853;
+    font-size: 10px;
+}
+
+.trainer-timings {
+    border-bottom: 1px dashed #8ADBFF;
+    width: 100%;
+    float: left;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 58px;
+}
+
+.trainerhover-btns {
+    display: none;
+}
+
+.trainerhover-btns:hover {
+    color: white !important;
+    text-decoration: none !important;
+}
+
+.trainer-timings:hover .trainerhover-btns {
+    display: flex;
+}
+
+.trainer-timings span {
+    color: #000000;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+#fourpart {
+    margin: 0 60px;
+}
+
+.trainerhover-btns {
+    padding: 8px 20px;
+    background: #2F55A2;
+    font-size: 14px;
+    color: white;
+    text-decoration: unset;
+    border-radius: 3px;
+}
+
+.trainer-opicty {
+    opacity: 0;
+    transition: ease-in-out 0.3s;
+    color: white;
+}
+
+.trainer-opicty:hover {
+    opacity: 1;
+    color: white;
+}
+
+.trainer-opicty:hover a {
+    color: white !important;
+    text-decoration: none !important
+}
+
+/* ---------------------------------- trainers------------------------------------*/
+
+/* ---------------------------------- Client Page Starts------------------------------------*/
+.client {
+    width: 100%;
+    float: left;
+    padding: 100px 0;
+}
+
+.client h2 {
+    text-align: center;
+    font-size: 28px;
+    color: #022853;
+    font-weight: bold;
+    margin-bottom: 2rem;
+}
+
+.client .form-check {
+    margin-bottom: 2rem;
+}
+
+.client input#flexCheckDefault {
+    border: 1px solid var(--unnamed-color-c4c4c4);
+
+    border: 1px solid #C4C4C4;
+    border-radius: 3px;
+    box-shadow: unset !important;
+}
+
+.client label.form-check-label {
+    color: #000000;
+    font-size: 15px;
+    font-weight: 600;
+    margin-left: 10px;
+}
+
+.client .client-content {
+    width: 100%;
+    float: left;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.client .client-content .client-row {
+    width: 23%;
+    margin-right: 2%;
+}
+
+.client #book-input {
+    border: 1px solid var(--unnamed-color-c4c4c4);
+    background: #FBFBFB 0% 0% no-repeat padding-box;
+    border: 1px solid #C4C4C4;
+    border-radius: 5px;
+    text-align: left;
+    font-size: 16px;
+    font-weight: 500;
+    color: #74777B;
+    box-shadow: unset !important;
+    padding: 15px 10px 15px 15px;
+}
+
+.client #book-inputs {
+    border: 1px solid var(--unnamed-color-c4c4c4);
+    background: #FBFBFB 0% 0% no-repeat padding-box;
+    border: 1px solid #C4C4C4;
+    border-radius: 5px;
+    text-align: left;
+    font-size: 16px;
+    font-weight: 500;
+    color: #74777B;
+    box-shadow: unset !important;
+    padding: 15px 10px 15px 15px;
+}
+
+.client #book-select {
+    border: 1px solid var(--unnamed-color-c4c4c4);
+
+    border: 1px solid #C4C4C4;
+    border-radius: 5px;
+    text-align: left;
+    font-size: 16px;
+    font-weight: 500;
+    color: #74777B;
+    box-shadow: unset !important;
+    padding: 15px 10px 15px 15px;
+}
+
+.client select#book-select {
+    color: var(--bs-body-color);
+    background-color: #fbfbfb;
+}
+
+.client-button {
+    float: left;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
+}
+
+.client-button .btn-book {
+    padding: 15px 95px;
+    border: unset;
+    font-size: 14px;
+    background: #2F55A2;
+    font-weight: 700;
+    color: white;
+    border-radius: 5px;
+
+}
+
+.client #client-reminder {
+    display: flex;
+    width: 70%;
+    /* align-items: center; */
+}
+
+input:focus {
+    box-shadow: none !important;
+    outline: none !important;
+    /* border: none !important ; */
+    border-color: #dee2e6 !important;
+}
+
+input::placeholder {
+    color: #74777B !important;
+}
+
+textarea::placeholder {
+    color: #74777B !important;
+}
+
+.client #client-reminder label {
+    color: #114B8D;
+    font-size: 16px;
+    font-weight: bold;
+    width: 17%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: -5px;
+}
+
+.client #client-reminder #client-input {
+    border: 1px solid var(--unnamed-color-c4c4c4);
+    background: #FBFBFB 0% 0% no-repeat padding-box;
+    border: 1px solid #C4C4C4;
+    border-radius: 5px;
+    text-align: left;
+    font-size: 16px;
+    font-weight: 500;
+    color: #74777B;
+    box-shadow: unset !important;
+    padding: 15px 10px 15px 15px;
+    width: 100%;
+}
+
+.client .client-textarea {
+    width: 100%;
+
+}
+
+.client .client-textarea #client-text {
+    border: 1px solid var(--unnamed-color-c4c4c4);
+    background: #FBFBFB 0% 0% no-repeat padding-box;
+    border: 1px solid #C4C4C4;
+    border-radius: 5px;
+    text-align: left;
+    font-size: 16px;
+    font-weight: 500;
+    color: #74777B;
+    box-shadow: unset !important;
+    padding: 15px 10px 15px 15px;
+    height: 200px;
+}
+
+/* ---------------------------------- add-Client Page ends------------------------------------*/
+/* ---------------------------------- Client Page starts------------------------------------*/
+.Clients {
+    width: 100%;
+    float: left;
+    margin: 50px 0;
+}
+
+.Clients .container-fluid {
+    padding: 0 100px;
+}
+
+.Clients .client-head {
+    width: 100%;
+    float: left;
+}
+
+.Clients .client-head .clienthead-upper {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.Clients .client-head .clienthead-upper span {
+    color: #022853;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.Clients .client-head .clienthead-upper .add-new {
+    background-color: #2F55A2;
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+    border-radius: 3px;
+    padding: 5px 7px;
+    text-decoration: none;
+}
+
+.Clients .client-head .clienthead-lower {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.Clients .client-head .clienthead-lower span {
+    font-size: 17px;
+    font-weight: 500;
+    color: black;
+    width: 80%;
+}
+
+.Clients .client-head .clienthead-lower strong {
+    font-weight: bold;
+}
+
+.Clients .client-head .clienthead-lower .input-group {
+    width: 15%;
+}
+
+.Clients .client-head .clienthead-lower .input-group span {
+    width: 18%;
+    background-color: white !important;
+    border-left: unset !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Clients .client-head .clienthead-lower input.form-control {
+    border-right: unset;
+    font-size: 14px;
+}
+
+.Clients .client-table {
+    width: 100%;
+    float: left;
+    margin-top: 1rem;
+}
+
+
+.ctable-head :nth-child(1){
+    padding-left: 15px !important;
+}
+.client-table tbody tr td:nth-child(1){
+    padding-left: 15px;
+}
+.client-table tbody tr:nth-child(even){
+    background-color: #E0E3F1;
+    font-size: 15px !important;
+}
+.view-paragraph{
+    padding-top: 7px;
+    margin-bottom: 0;
+    text-transform: capitalize;
+}
+
+
+.Clients .client-table #vclient-schedule {
+    background: unset;
+    border: unset;
+    color: #114B8D;
+    text-align: underline;
+    text-decoration: underline;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.Clients .client-table .ctable-head {
+    background-color: #6595CB;
+    font-size: 14px;
+    font-weight: 600;
+    color: white !important;
+}
+
+.Clients .client-table .ctable-blue {
+    background-color: #E0E3F1;
+    font-size: 15px !important;
+}
+
+.Clients .client-table td {
+    font-size: 15px !important;
+}
+
+#client-dialog {
+    top: 50%;
+    transform: translateY(-50%) !important;
+}
+
+#client-dialog #client-header {
+    border: unset !important;
+    padding: 20px 20px 0px 20px;
+}
+
+#client-dialog #client-header h1 {
+    color: #2F55A2;
+    font-size: 24px;
+    font-weight: bold;
+
+}
+
+.client .client-content .form-select {
+    height: 56px;
+    background-color: #fbfbfb;
+
+    width: 23%;
+    /* padding: 0; */
+    margin: 0;
+    font-size: 16px;
+    color: #5d6063 !important;
+    font-weight: 500
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+
+.form-select{
+    outline: none !important;
+    box-shadow: unset !important;
+    border-color: #C4C4C4 !important;
+}
+.client .client-content .form-roleName {
+    height: 56px;
+    background-color: #fbfbfb;
+    width: 100%;
+    padding-left: 10px;
+    margin: 0;
+    font-size: 16px;
+    color: #5d6063 !important;
+    font-weight: 500
+}
+
+
+#client-dialog .client-body {
+    padding: 15px 20px 20px 20px;
+    color: #535353;
+    font-size: 16px;
+}
+
+.Clients .client-table td img {
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+/* ---------------------------------- Client Page ends------------------------------------*/
+
+/* ----------------------------------Add Trainer schedule button------------------------------------*/
+.train-dialog {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%) !important;
+    max-width: 330px;
+}
+
+.train-dialog .train-header {
+    border: unset;
+    padding: 15px 20px 0px 20px;
+}
+
+.addtrain-select {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.train-dialog h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+}
+
+.train-dialog .train-select {
+    width: 80%;
+    border: 1px solid #C4C4C4;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* ----------------------------------Add Trainer schedule button------------------------------------*/
+/* ----------------------------------Add Trainer schedule button------------------------------------*/
+.tranext-modal .modal-header {
+    border-bottom: none !important;
+    padding-bottom: unset !important;
+}
+
+.tranext-modal .modal-dialog {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%) !important;
+    max-width: 330px;
+}
+
+.tranext-modal .modal-dialog .trainnext-header {
+    padding: 15px 20px 0 0;
+    border: unset;
+}
+
+.tranext-modal .modal-dialog .trainnext-box {
+    display: flex;
+    flex-direction: column;
+}
+
+.tranext-modal .modal-dialog .trainnext-body h2 {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    color: #022853;
+    margin-bottom: 15px;
+}
+
+.tranext-modal .modal-dialog .trainnext-select {
+    border: 1px solid #C4C4C4;
+    font-size: 14px;
+    font-weight: 500;
+    color: #114B8D;
+}
+
+.tranext-modal .modal-dialog h5 {
+    font-size: 16px;
+    color: #28389E;
+    font-weight: 400;
+}
+
+.tranext-modal .modal-dialog h6 {
+    font-size: 15px;
+    color: #022853;
+    font-weight: 400;
+}
+
+.tranext-modal .modal-dialog small {
+    font-size: 12px;
+    color: #022853;
+    font-weight: bold;
+}
+
+.tranext-modal .modal-dialog span {
+    font-size: 15px;
+    color: #022853;
+    font-weight: 400;
+    margin-bottom: 5px;
+}
+
+.tranext-modal .modal-dialog p {
+    font-size: 15px;
+    color: #022853;
+    font-weight: 400;
+    margin: 0;
+}
+
+.input-error p {
+    color: red;
+}
+
+p.input-error {
+    color: red;
+}
+
+
+
+label {
+    display: block;
+    font: 1rem 'Fira Sans', sans-serif;
+}
+
+input,
+label {
+    margin: 0.4rem 0;
+}
+
+
+/* ----------------------------------Add Trainer schedule button------------------------------------*/
+
+/* ///////////Delete Modal/////////////////// */
+.deleteModals .modal-content .modal-header {
+    color: #022853 !important;
+    border: none !important;
+}
+
+.deleteModals .modal-body {
+    text-align: center !important;
+    padding-top: 0px !important;
+}
+
+.deleteModals .modal-footer {
+    border: none !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    padding: 15px 70px !important;
+    margin-bottom: 1.5rem;
+
+}
+
+.deleteModals .modal-footer .closeBtn {
+    float: left;
+    padding: 8px 50px;
+    background-color: grey !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.deleteModals .modal-footer .deleteBtn {
+    float: left;
+    padding: 8px 50px;
+    background-color: #022853 !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.deleteModals .modal-body h2 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #2F55A2;
+
+}
+
+.trainer-modal .modal-header {
+    display: unset !important;
+    width: 100% !important;
+    text-align: center !important;
+    margin-top: 20px !important;
+    border: unset !important;
+}
+
+.trainer-modal .btn-close {
+    position: absolute;
+    right: 3%;
+    top: 4%;
+}
+
+.input-error {
+    color: red !important;
+    margin: 0;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 16px !important;
+    text-align: left;
+    margin-top: 5px !important;
+    margin-left: 5px !important;
+
+}
+
+.trainer-modal .modal-body {
+    padding: 0px 80px !important;
+}
+
+.trainer-modal .modal-header .modal-title {
+    color: #022853 !important;
+    font-size: 24px !important;
+    font-weight: 700 !important;
+    padding: 20px !important;
+    text-align: center;
+    padding-bottom: 10px !important;
+}
+
+.left-tabss #start {
+    border: none !important;
+    width: 20%;
+}
+
+#add-btnset {
+    float: left;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 20px !important;
+}
+
+#add-btnset button {
+    padding: 10px 50px !important;
+    margin-bottom: 10px;
+}
+
+/*-----------------------------------responsive css-------------------------------------------------*/
+
+
+/* .................Show Password icon setting.............................. */
+
+.field-icon {
+    float: right;
+    margin-right: 15px;
+    margin-top: -35px;
+    position: relative;
+    z-index: 2;
+    cursor: pointer;
+}
+
+.fa-eye-slash:before {
+    content: "\f070" !important;
+}
+
+
+
+/* ...........Extra design.................. */
+.forget-text {
+    float: right;
+    padding-top: 15px;
+    padding-right: 10px;
+    color: #022853;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.newBooking {
+    background-color: #2F55A2;
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+    border-radius: 3px;
+    padding: 5px;
+    text-decoration: none;
+}
+
+#heading-booking {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 12px;
+}
+
+
+/* .left-tabss input::-webkit-calendar-picker-indicator {
+    display: none !important;
+    -webkit-appearance: none;
+    text-align: center;
+} */
+.left-tabss img {
+    cursor: pointer !important;
+}
+
+#firstTab {
+    margin: 0px !important;
+}
+
+
+.owl-carousel .owl-stage-outer {
+    float: left;
+    width: 100%;
+}
+
+/* .owl-carousel .owl-stage{
+    width: 100% !important;
+} */
+.owl-carousel {
+    float: left !important;
+    width: 100% !important;
+    margin-top: 5px;
+}
+
+.owl-carousel .nav-link.active {
+    color: #2F55A2;
+    font-weight: 600 !important;
+    background-color: unset !important;
+    border-bottom: 2px solid #2F55A2;
+    border-radius: unset !important;
+}
+
+.nav-pills .nav-link.active {
+    color: #2F55A2 !important;
+}
+
+.owl-carousel .nav-link {
+    color: #A1A1A1;
+    margin: 0px !important;
+    float: left;
+
+}
+
+.owl-carousel.owl-drag .owl-item {
+    float: left;
+    /* width: 110px !important; */
+}
+
+.owl-carousel .owl-dots {
+    display: none !important;
+}
+
+#pills-tab {
+    border-bottom: 1px solid #A1A1A1;
+}
+
+.owl-theme .owl-nav .owl-next {
+    position: absolute;
+    bottom: 0;
+    right: -4%;
+    background: url("/img/arrow-expand-right.png") !important;
+    background-repeat: no-repeat !important;
+    top: 15%;
+}
+
+.owl-theme .owl-nav .owl-prev {
+    position: absolute;
+    bottom: 0;
+    left: -1%;
+    background: url("/img/Path - arrow-expand-left.png") !important;
+    background-repeat: no-repeat !important;
+    top: 15%;
+}
+
+/* #inlineRadio2{margin-left: -1.3rem !important;} */
+
+#trainer-timings {
+    flex-direction: column !important;
+    height: unset !important;
+}
+
+.trainer-times {
+    float: left;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+#swap-modal {
+    align-items: flex-start !important;
+}
+
+.trainer-opicty {
+    opacity: 0;
+    transition: ease-in-out 0.3s;
+    color: white;
+}
+
+.trainer-opicty:hover {
+    opacity: 1;
+    color: white;
+}
+.trainer-opicty:hover a{
+    color: white !important;
+    text-decoration: none !important
+}
+
+
+@media (max-width: 1566px) {}
+
+@media (max-width: 1366px) {}
+
+@media (max-width: 1199px) {
+
+    /*------------- client section starts -----------------*/
+    .Clients .container-fluid {
+        padding: 0 50px;
+    }
+
+    .Clients .client-table td {
+        font-size: 14px !important;
+    }
+
+    /*------------- client section ends -----------------*/
+}
+
+@media (max-width: 1024px) {}
+
+@media (max-width: 991px) {
+
+    /*------------- add client section starts ---------------*/
+    .client #client-reminder label {
+        width: 35%;
+    }
+
+    .client #client-reminder #client-input {
+        width: 40%;
+    }
+
+    /*------------- add client section ends -----------------*/
+
+    /*------------- client section starts -----------------*/
+    .Clients .client-table {
+        white-space: nowrap;
+        overflow: auto;
+    }
+
+    .Clients .client-head .clienthead-upper span {
+        font-size: 25px;
+    }
+
+    .Clients #client-body {
+        white-space: normal !important;
+    }
+
+    /*------------- client section ends -----------------*/
+    /*-------- Index Page starts --------*/
+    .booking .booking-content .booking-row {
+        width: 31%;
+    }
+
+    /*-------- Index Page ends ----------*/
+    /*-------- Schedule Page starts --------*/
+    .innerpart-tabs .three-part {
+        flex-wrap: wrap;
+    }
+
+    .innerpart-tabs .three-part .same-two-part {
+        margin: 0px;
+    }
+
+    .innerpart-tabs .three-part .same-one-part {
+        width: 100%;
+    }
+
+    .innerpart-tabs .three-part .same-two-part {
+        width: 100%;
+    }
+
+    .innerpart-tabs .three-part .same-three-part {
+        width: 100%;
+    }
+
+    .head-one-main {
+        gap: 40px;
+    }
+
+    .booking-tabs .inner-tabs-head .right-tabss .input-group {
+        width: 50% !important;
+    }
+
+    .dummy-btn-one {
+        display: flex;
+        width: 10%;
+        justify-content: center;
+    }
+
+    /*-------- Schedule Page ends ----------*/
+    /*-------- Schedule Page ends ----------*/
+    #schedule-booking .innerpart-tabs .three-part {
+        white-space: nowrap;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #schedule-booking .innerpart-tabs .three-part .same-one-part {
+        width: 100%;
+    }
+
+    #schedule-booking .innerpart-tabs .three-part .same-two-part {
+        width: 100%;
+    }
+
+    #schedule-booking .innerpart-tabs .three-part .same-three-part {
+        width: 100%;
+    }
+
+    #schedule-booking .head-one-main {
+        gap: 40px;
+    }
+
+    #schedule-booking .booking-tabs .inner-tabs-head .right-tabss .input-group {
+        width: 50% !important;
+    }
+
+    /*-------- Schedule Page ends ----------*/
+}
+
+@media (max-width: 767px) {
+
+    /*------------- add client section starts -----------------*/
+    .client .client-content .client-row {
+        width: 48%;
+    }
+
+    .client #book-input {
+        text-align: left;
+        font-size: 15px;
+        padding: 10px 10px 10px 10px;
+    }
+
+    .client #book-inputs {
+        text-align: left;
+        font-size: 15px;
+        padding: 10px 10px 10px 10px;
+    }
+
+    .client #client-reminder #client-input {
+        font-size: 15px;
+        padding: 10px 10px 10px 10px;
+        width: 50%;
+    }
+
+    .client .client-textarea #client-text {
+        font-size: 15px;
+        font-weight: 500;
+        padding: 10px 10px 15px 15px;
+        height: 100px;
+    }
+
+    /*------------- add client section ends -----------------*/
+    /*------------- client section starts -----------------*/
+    .Clients .client-table {
+        margin-top: 1.5rem;
+    }
+
+    .Clients .client-head .clienthead-lower .input-group {
+        width: 45%;
+    }
+
+    .Clients .client-head .clienthead-lower span {
+        font-size: 16px;
+    }
+
+    /*------------- client section ends -----------------*/
+    /*-------- Index Page starts --------*/
+    .booking .booking-content .booking-row {
+        width: 48%;
+    }
+
+    /*-------- Index Page ends ----------*/
+
+}
+
+@media (max-width: 567px) {
+
+    /*------------- Reschedule modal -----------------*/
+    .custom-modell .modal-dialog.modal-dialog-centered {
+        width: 370px !important;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        margin: 0;
+    }
+
+    /*------------- Reschedule modal -----------------*/
+    /*------------- Reschedule modal -----------------*/
+    .train-dialog {
+        margin: 0;
+        top: 50%;
+        transform: translate(-50%, -50%) !important;
+        max-width: 330px;
+        left: 50%;
+    }
+
+    .tranext-modal .modal-dialog {
+        margin: 0;
+        position: relative;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%) !important;
+        max-width: 330px;
+    }
+
+    /*------------- Reschedule modal -----------------*/
+
+    /*------------- add client section starts -----------------*/
+    .client .client-content .client-row {
+        width: 100%;
+    }
+
+    .client #client-reminder {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+    .client #client-reminder label {
+        width: 100%;
+        justify-content: start;
+        font-size: 14px;
+    }
+
+    .client #client-reminder #client-input {
+        font-size: 14px;
+        width: 100%;
+    }
+
+    .client {
+        height: unset;
+
+    }
+
+    /*------------- add client section starts -----------------*/
+
+    /*------------- client section starts -----------------*/
+    .Clients .container-fluid {
+        padding: 0 20px;
+    }
+
+    /*------------- client section ends -----------------*/
+    /*-------- Index Page starts --------*/
+    .booking {
+        padding: 50px 0;
+        height: unset;
+    }
+
+    .booking h2 {
+        font-size: 25px;
+        margin-bottom: 10px;
+    }
+
+    .booking #book-input {
+        font-size: 14px;
+        padding: 10px 10px 10px 10px;
+    }
+
+    .booking .booking-content .booking-row {
+        width: 98%;
+    }
+
+    .booking #book-select {
+        font-size: 14px;
+        padding: 10px 10px 10px 10px;
+    }
+
+    .booking-button .btn-book {
+        padding: 12px 95px;
+        font-size: 14px;
+    }
+
+    .footer p {
+        font-size: 14px;
+    }
+
+    /*-------- Index Page ends ----------*/
+    /*-------- training-test Page starts --------*/
+    section.booking-tabs .head-booking h2 {
+        font-size: 25px;
+    }
+
+    section.booking-tabs .inner-tabs-head .left-tabss {
+        text-align: left;
+    }
+
+    .booking-tabs .inner-tabs-head .right-tabss .input-group {
+        width: 70% !important;
+    }
+
+    section.booking-tabs .inner-tabs-head .right-tabss .input-group .form-control {
+        font-size: 14px;
+    }
+
+    section.booking-tabs .inner-tabs-head .left-tabss h6 small img {
+        width: 3%;
+    }
+
+    section.booking-tabs .inner-tabs-head .left-tabss h6 span img {
+        width: 3%;
+    }
+
+    /*-------- training-test Page ends ----------*/
+    /*-------- Schedule Page starts --------*/
+    #schedule-booking .head-booking h2 {
+        font-size: 25px;
+    }
+
+    #schedule-booking .inner-tabs-head .left-tabss {
+        text-align: left;
+    }
+
+    #schedule-booking .inner-tabs-head .right-tabss .input-group {
+        width: 70% !important;
+    }
+
+    #schedule-booking .inner-tabs-head .right-tabss .input-group .form-control {
+        font-size: 14px;
+    }
+
+    #schedule-booking .inner-tabs-head .left-tabss h6 small img {
+        width: 3%;
+    }
+
+    #schedule-booking .inner-tabs-head .left-tabss h6 span img {
+        width: 3%;
+    }
+
+    .dummy-btn-one {
+        width: 18%;
+    }
+
+    /*-------- Schedule Page ends ----------*/
+}
+
+#dropdownLogout .dropdown-toggle {
+    background-color: #fbfbfb !important;
+    font-size: 14px !important;
+    color: black !important;
+    border: 1px solid #dee2e6 !important;
+    padding: 5px 15px !important;
+    border-radius: 4px !important;
+}
+
+#dropdownLogout .dropdown-toggle .dropdown-item {
+    cursor: pointer !important
+}
+
+.client-content .client-row p {
+    color: red !important;
+}
+
+.booking-content .booking-row p {
+    color: red;
+}
