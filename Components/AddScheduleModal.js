@@ -7,7 +7,8 @@ import axios from "axios";
 import AddSchWData from "./AddSchWData";
 import $ from "jquery"
 
-const AddScheduleModal = ({ show, setShow, trainerName, trainerId, date, year }) => {
+const AddScheduleModal = ({ show, setShow, trainerName, trainerId, date, year, dy }) => {
+  console.log(dy,"dy")
 
   const [secondShow, setSecondShow] = useState(false)
   const [selectTrainer, setSelectSchedul] = useState()
@@ -96,7 +97,7 @@ const AddScheduleModal = ({ show, setShow, trainerName, trainerId, date, year })
           </div>
         </div>
       </div>
-      <AddSchWData trainerId={{ selectTrainer, date, year, trainerName, trainerId }} />
+      <AddSchWData trainerId={{ selectTrainer, date, year, trainerName, trainerId, dy }} />
     </>
   );
 };

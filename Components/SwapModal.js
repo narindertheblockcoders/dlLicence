@@ -25,7 +25,9 @@ const SwapModal = ({ show, setShow, swapDataId, schedualDataFn }) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [errMsg, setErrMsg] = useState(false);
+  const [swapDataById,setSwapDataById] =useState()
 
+  console.log("object swapDataId-->",swapDataId);
   async function onSubmit(values) {
     setLoading(true)
     setErrMsg(false)
@@ -39,7 +41,7 @@ const SwapModal = ({ show, setShow, swapDataId, schedualDataFn }) => {
       bookingRefNo: values?.bookingRefNo,
       locationId: values?.locationId,
       vehicleTypeId: values?.vehicleTypeId,
-      changeBookingDate: dateInputs,
+      dateOfBooking: dateInputs,
       clientId: swapDataId
     }
     getSwapData(newData)
@@ -54,7 +56,7 @@ const SwapModal = ({ show, setShow, swapDataId, schedualDataFn }) => {
         bookingRefNo: "",
         locationId: "",
         vehicleTypeId: "",
-        changeBookingDate: "",
+        dateOfBooking:""
       },
       validationSchema: swapModalSchema,
       validateOnChange: false,
@@ -84,6 +86,7 @@ const SwapModal = ({ show, setShow, swapDataId, schedualDataFn }) => {
     try {
       const token = localStorage.getItem("token")
       const response = await axios.post("/api/swapBooking", { token: token, data: newData })
+      console.log("object response is here-->",response);
       setLoading(false)
       toast.success("Swap successfully")
       resetForm();
@@ -109,11 +112,32 @@ const SwapModal = ({ show, setShow, swapDataId, schedualDataFn }) => {
     setDateInputs(date)
   }
 
+  const getSwapDataById = async () => {
+    try {
+      const token = localStorage.getItem("token")
+      const response = await axios.post("/api/getSwapbookingById", { token: token, bookingId:swapDataId })
+      
+      setSwapDataById(response.data.data.data)
+      {values["clientName"] = response.data.data.data.clientName}
+      {values["clientMobileNo"] = response.data.data.data.clientMobileNo}
+      {values["locationId"] = response.data.data.data.locationId}
+      {values["vehicleTypeId"] = response.data.data.data.vehicleTypeId}
+      {values["dateOfBooking"] = response.data.data.data.dateOfBooking}
+      {values["bookingRefNo"] = response.data.data.data.bookingRefNo}
+    } catch (error) {
+      console.log("Error:::-->", error)
+    }
+  }
+
+
+
   useEffect(() => {
     bookingLocation()
     vehicalBooking()
+    getSwapDataById()
   }, [show])
 
+  console.log("first --->",swapDataById?.clientName)
   return (
     <div>
       <ToastContainer />
@@ -143,8 +167,8 @@ const SwapModal = ({ show, setShow, swapDataId, schedualDataFn }) => {
                     className="form-control"
                     id="book-input"
                     placeholder="Client Name" name="clientName"
-
-                    value={values.clientName}
+                    // value={values.swapDataById?.clientName}
+                    value={values?.clientName}
                     onChange={handleChange}
 
                   />

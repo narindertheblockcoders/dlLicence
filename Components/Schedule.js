@@ -11,7 +11,7 @@ import SwapTrainer from "./SwapTrainer";
 import { format } from "date-fns";
 import ClientInfoModal from "./ClientInfoModal";
 import Backdrop from "@mui/material/Backdrop";
-import CircularProgress from "@mui/material/CircularProgress";
+import CircularProgress, { circularProgressClasses } from "@mui/material/CircularProgress";
 
 let timee;
 function Schedule() {
@@ -48,6 +48,7 @@ function Schedule() {
   const [clientId, setClientId] = useState();
   const [bookingId, setBookingId] = useState();
   const [open, setOpen] = React.useState(false);
+  const [dy, setDY] = useState()
 
   async function getAllTrainer() {
     try {
@@ -68,7 +69,7 @@ function Schedule() {
 
     setSelectedId(formattedDate - 1);
 
-    console.log(formattedDate, "date share");
+    console.log(formattedDate, "date share"); 
   }
 
   useEffect(() => {
@@ -116,6 +117,7 @@ function Schedule() {
   }
 
   const DatePicker = (e) => {
+    console.log("hello from Datepicker-->",e.target.value);
     setDate3(null);
     const dateObj = new Date(e.target.value);
     const monthStr = dateObj.toLocaleString("default", { month: "short" });
@@ -123,7 +125,7 @@ function Schedule() {
     const convertedDate = formattedDateStr.split("-")[1];
     const dateObj1 = new Date(e.target.value);
     const year = dateObj1.getFullYear();
-
+console.log("object year fro ");
     setLeapYear(year);
 
     const date2 = new Date(e.target.value).toLocaleDateString();
@@ -186,6 +188,8 @@ function Schedule() {
   };
 
   async function filterData(item, i) {
+    console.log("first hello from filter Data-->",item)
+    setYear(item)
     setSelectedId(i);
     const filterValue = allScheduleData?.filter((item2) => {
       const dateValue = item2?.dateSch;
@@ -200,6 +204,33 @@ function Schedule() {
 
   async function getDataByDate() {
     const date1 = new Date();
+    console.log("hello date1-->",date1.toString("MMMM yyyy"));
+    console.log("hello nnnnn-->")
+    const reconstructedDate = new Date(date1.valueOf());
+    console.log('test-',reconstructedDate);
+    // const formattedDate = date1.toLocaleDateString("en-US", {
+    //   day: "2-digit",
+    //   month: "short",
+    //   year: "numeric"
+    // });
+    // console.log("object -->",formattedDate);
+
+    
+    // const sendDate = date1?.toDateString()
+    // console.log(sendDate?.slice(4), "date1")
+
+    // const date_string = sendDate?.slice(4)
+    // console.log(date_string, "date_string")
+// date_object = datetime.strptime(date_string, "%B %d, %Y")
+// formatted_date = date_object.strftime("%d %B %Y")
+
+// print(formatted_date)
+    // const currentYear = sendDate?.slice(0,4)
+    // console.log(currentYear,"currentYear")
+    // const currentDate = sendDate?.slice()
+
+
+
     const day1 = date1.getUTCDate().toString();
     const month1 = date1.toLocaleString("default", { month: "short" });
     const formattedDate1 = `${day1} ${month1}`;
@@ -243,7 +274,7 @@ function Schedule() {
     getAllLocation();
     getAllVehicle();
     currentDatePicker();
-    setYear(new Date().toDateString()?.substring(4));
+    // setYear(new Date().toDateString()?.substring(4));
   }, []);
 
   useEffect(() => {
@@ -262,7 +293,7 @@ function Schedule() {
   };
 
   async function modalShowFn(item, item3) {
-    console.log(item, "fuddi error")
+    console.log(item, "hello error")
     setDate(item3);
     setTrainerName(item.trainerName);
     setTrainerId(item.id);
@@ -316,6 +347,26 @@ function Schedule() {
     );
     setTimeSchedule1(filteredData);
   }, [dataByScheduleDate]);
+
+  
+  
+
+
+    console.log("first selectedId--->",selectedId)
+    console.log("first year--->",year)
+    const monthh = year?.toString()
+    console.log(monthh,"date and month");
+    const yearr = yearMonth?.slice(0,4)?.toString()
+    console.log("yearr--->",yearr)
+    setTimeout(() => {
+      
+      setDY(monthh + " " + yearr || newDate().toLocaleDateString())
+    }, 3000);
+
+
+
+
+
 
   return (
     <>
@@ -489,7 +540,7 @@ function Schedule() {
                                       item2?.timeSlot?.slice(0, -3)
                                 );
                                 if (matchingData?.length == 0) {
-                                  console.log(matchingData, "matching date")
+                                  {/* console.log(matchingData, "matching date") */}
                                   return (
                                     <div className="trainer-timings">
                                       <span>{item1?.time}</span>
@@ -880,6 +931,7 @@ function Schedule() {
         trainerName={trainerName}
         trainerId={trainerId}
         year={year}
+        dy={dy}
       />
       <SwapTrainer
         showModal={showModal}

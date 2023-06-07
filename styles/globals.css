@@ -230,10 +230,24 @@ section#login .container {
     font-size: 28px;
     color: #022853;
     font-weight: bold;
+    margin-bottom: 1.5rem;
+}
+
+.rs-picker-toggle-caret{
+    color: #2F55A2 !important;
+    font-weight: 600 !important;
+    font-size: 15px !important;
 }
 
 .booking .form-check {
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
+    /* display: flex;
+    align-items: center;
+    gap: 10px; */
+}
+
+.booking .form-check .form-check-label {
+    margin-top: 0px;
 }
 
 .booking input#flexCheckDefault {
@@ -261,17 +275,27 @@ section#login .container {
     width: 23%;
     margin-right: 2%;
 }
-#add-name-div{
+
+#add-name-div {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 10px   ;
+    gap: 10px;
 }
 
-.add-name-btn{float: left; padding: 13px 20px; background-color: #0C4B92; font-size: 18px; color: white;}
+.add-name-btn {
+    float: left;
+    padding: 13px 20px;
+    background-color: #0C4B92;
+    font-size: 18px;
+    color: white;
+    border-radius: 5px;
+}
+
 #dropdownLogout .dropdown-toggle .dropdown-item {
     cursor: pointer !important;
 }
+
 .booking #book-input {
     border: 1px solid var(--unnamed-color-c4c4c4);
     background: #FBFBFB 0% 0% no-repeat padding-box;
@@ -310,7 +334,7 @@ select#book-select {
     width: 100%;
     display: flex;
     justify-content: center;
-    margin-top: 1.5rem;
+    margin-top: 3.8rem;
 }
 
 .booking-button .btn-book {
@@ -599,7 +623,7 @@ section.booking-tabs .main-tabs .nav-item:first-child {
 .head-one-main .head-one-one h5 {
     font-size: 16px;
     font-weight: 600;
-    color: #022853;
+    color: #28389E;
     margin: 0;
     white-space: nowrap;
 }
@@ -719,6 +743,23 @@ section.booking-tabs .main-tabs .nav-item:first-child {
     font-size: 15px;
     float: left;
     color: #022853;
+    margin-bottom: 3px;
+}
+.client-feild-booking{
+    display: flex;
+    flex-direction: column;
+}
+.client-feild-booking small{
+    font-size: 12px;
+    font-weight: 700;
+    color: #022853;
+}
+
+.client-feild-booking  span{
+    font-size: 15px;
+    float: left;
+    color: #022853;
+    margin-bottom: 3px;
 }
 
 .innerpart-tabs .three-part .two-part-head p {
@@ -786,7 +827,27 @@ section.booking-tabs .custom-modell {
     padding: 10px;
     border-radius: 5px;
     margin-bottom: 1rem;
+    gap: 5px;
+    display: flex;
+    flex-direction: column;
 }
+.client-flex-booking{
+    float: left;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;}
+
+    .payment-done{
+        float: right;
+        font-size: 12px;
+        background-color: #46BB34;
+        border-radius: 4px;
+        color: white;
+        font-weight: 600;
+        padding: 3px 10px;
+    }
+
 
 .schedule_client2 {
     width: 100%;
@@ -880,8 +941,8 @@ section.booking-tabs .custom-modell {
 .rs-picker-daterange .rs-picker-toggle.rs-btn .rs-picker-toggle-clean,
 .rs-picker-date .rs-picker-toggle.rs-btn .rs-picker-toggle-caret,
 .rs-picker-daterange .rs-picker-toggle.rs-btn .rs-picker-toggle-caret {
-    top: 10px !important;
-    right: 7px !important;
+    top: 13px !important;
+    right: 10px !important;
 }
 
 
@@ -1228,9 +1289,10 @@ section.booking-tabs .custom-modell {
 }
 
 
-.snd-modal #snd-body .snd-input-bottom .react-time-picker__wrapper{
+.snd-modal #snd-body .snd-input-bottom .react-time-picker__wrapper {
     border: none !important;
 }
+
 .snd-modal #snd-body .snd-input-bottom .react-time-picker__inputGroup {
     width: 100% !important;
     float: left;
@@ -1240,6 +1302,7 @@ section.booking-tabs .custom-modell {
     flex: unset !important;
     font-size: 14px;
 }
+
 .react-time-picker__inputGroup__amPm {
     outline: none !important;
     box-shadow: none !important;
@@ -2262,17 +2325,20 @@ textarea::placeholder {
 }
 
 
-.ctable-head :nth-child(1){
+.ctable-head :nth-child(1) {
     padding-left: 15px !important;
 }
-.client-table tbody tr td:nth-child(1){
+
+.client-table tbody tr td:nth-child(1) {
     padding-left: 15px;
 }
-.client-table tbody tr:nth-child(even){
+
+.client-table tbody tr:nth-child(even) {
     background-color: #E0E3F1;
     font-size: 15px !important;
 }
-.view-paragraph{
+
+.view-paragraph {
     padding-top: 7px;
     margin-bottom: 0;
     text-transform: capitalize;
@@ -2342,11 +2408,12 @@ input[type=number]::-webkit-outer-spin-button {
     margin: 0;
 }
 
-.form-select{
+.form-select {
     outline: none !important;
     box-shadow: unset !important;
     border-color: #C4C4C4 !important;
 }
+
 .client .client-content .form-roleName {
     height: 56px;
     background-color: #fbfbfb;
@@ -2754,7 +2821,8 @@ label {
     opacity: 1;
     color: white;
 }
-.trainer-opicty:hover a{
+
+.trainer-opicty:hover a {
     color: white !important;
     text-decoration: none !important
 }

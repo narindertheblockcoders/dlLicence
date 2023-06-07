@@ -98,6 +98,7 @@ function NewBooking() {
   }
 
   async function newBooking(formInputs) {
+    console.log("object -->",formInputs);
     try {
       setLoading(true);
       const token = localStorage.getItem("token");
@@ -105,6 +106,7 @@ function NewBooking() {
         formInputs,
         token,
       });
+      console.log("newBooking response is here -->",response);
       setLoading(false);
       setDisable(false);
       toast.success("data inserted Successfully");

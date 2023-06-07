@@ -36,11 +36,6 @@ function BookingList() {
   const [open, setOpen] = React.useState(false);
 
   
-  
-  
-  
-  
-  
   async function schedualDataFn() {
     try {
       const token = localStorage.getItem("token");
@@ -152,6 +147,8 @@ function BookingList() {
     }
   }, []);
 
+
+
   const DatePicker = (e) => {
     setDate3(null);
     const dateObj = new Date(e.target.value);
@@ -248,7 +245,7 @@ function BookingList() {
     const formattedDate1 = `${day1} ${month1}`;
 
     const filterValue = scheduleData?.filter((item2) => {
-      const dateValue = item2.dateOfBooking;
+      var dateValue = item2.dateOfBooking;
       const date = new Date(dateValue);
       const day = date.getUTCDate().toString();
       const month = date.toLocaleString("default", { month: "short" });
@@ -257,6 +254,9 @@ function BookingList() {
     });
     setDataByDate(filterValue);
   }
+
+console.log("first dataByDate--->",dataByDate)
+
 
   return (
     <>
@@ -405,7 +405,6 @@ function BookingList() {
                                 if (item2?.locationId == item?.id) {
                                   return (
                                     <>
-                                      <div key={idx2} className="head-one-main">
                                         {item2?.locationId === item?.id &&
                                         item2.isDummyBooking == 1 ? (
                                           <div className="head-one-one">
@@ -417,7 +416,18 @@ function BookingList() {
                                             </a>
                                           </div>
                                         ) : null}
-
+                                      <div key={idx2} className="head-one-main">
+                                        <div className="head-one-one">
+                                        <h5>
+                                          {new Date(
+                                            item2.dateOfBooking
+                                          ).toLocaleTimeString("en-IN", {
+                                            hour: "numeric",
+                                            minute: "numeric",
+                                            hour12: true,
+                                          })}
+                                        </h5>
+                                        </div>
                                         <div className="head-one-one">
                                           <a href="#">
                                             <img
@@ -445,15 +455,7 @@ function BookingList() {
                                       </div>
 
                                       <div className="two-part-head">
-                                        <h6>
-                                          {new Date(
-                                            item2.dateOfBooking
-                                          ).toLocaleTimeString("en-IN", {
-                                            hour: "numeric",
-                                            minute: "numeric",
-                                            hour12: true,
-                                          })}
-                                        </h6>
+                                  
                                         <h6>{item2.vehicleType}</h6>
                                         <small>Client</small>
                                         <span>{item2.clientName}</span>
@@ -465,13 +467,16 @@ function BookingList() {
                                         {/* <p>{}</p> */}
                                         <span>
                                           {" "}
-                                          {new Date(
+                                         {
+                                          new Date(
                                             item2.dateOfBooking
                                           ).toLocaleDateString("en-US", {
                                             day: "numeric",
                                             month: "short",
                                             year: "numeric",
-                                          })}{" "}
+                                          })
+                                         }
+                                          {" "}
                                           <strong>(First Booking)</strong>
                                         </span>
                                         <small>Trainer </small>
@@ -480,6 +485,7 @@ function BookingList() {
                                       {item2?.paidAmount < item2?.totalAmount &&
                                       item2.paidAmount > 0 ? (
                                         <div className="schedule_client1">
+                                        <div  className="client-feild-booking">
                                           <small>Client</small>
                                           <span>
                                             {" "}
@@ -488,8 +494,14 @@ function BookingList() {
                                               ({item2.bookingRefNo})
                                             </strong>
                                           </span>
+                                          </div>
+                                          <div className="client-flex-booking">
+                                          <div className="client-feild-booking">
                                           <small>Payment Status</small>
                                           <span> {"Partial Payment"}</span>
+                                          </div>
+                                          <button type="button" className="payment-done" >Payment Done</button> 
+                                        </div>
                                         </div>
                                       ) : (
                                         <div className="schedule_client2">

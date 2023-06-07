@@ -7,6 +7,7 @@ import moment from "moment";
 import { useRouter } from "next/router";
 
 const AddSchWData = (trainerId) => {
+  console.log(trainerId,"check data")
 
   const [timeStart, setTimeStart] = useState("00:00");
   const [timeEnd, setTimeEnd] = useState("00:00");
@@ -22,7 +23,7 @@ const AddSchWData = (trainerId) => {
   const [loading, setLoading] = useState(false);
   const [disable, setDisable] = useState(false);
   const [selectClientName, setSelectClientName] = useState()
-
+  const [clientDataById, setClientDataById] = useState()
   //errorMessage
   const [locationErr, setLocationErr] = useState(false);
   const [vehicleErr, setVehicleErr] = useState(false);
@@ -33,7 +34,7 @@ const AddSchWData = (trainerId) => {
   const [mobileErr1, setMobileErr1] = useState(false);
   const [testTimeErr, setTestTimeErr] = useState(false);
 
-  const date = new Date(trainerId?.trainerId?.year);
+  const date = new Date(trainerId?.trainerId?.dy);
   const year = date.getFullYear();
   const month = ("0" + (date.getMonth() + 1)).slice(-2);
   const day = ("0" + date.getDate()).slice(-2);
@@ -44,6 +45,7 @@ const AddSchWData = (trainerId) => {
 
   const router = useRouter();
   async function onlyTraining(data) {
+    console.log("data for onlyTraining --->",data)
     try {
       setLoading(true);
       const token = localStorage.getItem("token");
@@ -361,6 +363,24 @@ const AddSchWData = (trainerId) => {
     }
   }
 
+  async function getclientBookingById() {
+    try {
+      const token = localStorage.getItem("token")
+      const response = await axios.post("/api/getclientBookingById", { token: token, clientId: clientId })
+      setClientDataById(response.data.data.data)
+      console.log("object1 response.data.data.data-->", response.data.data.data.locationId);
+      setLocation(response?.data?.data?.data?.locationId)
+      setVehicleType(response?.data?.data?.data?.vehicleTypeId)
+      // setVehicleType(response.data.data.data.vehicleTypeId)
+      // locationId: location,
+      // setLocation(response.data.data.data.locationId)
+      // vehicleTypeId: vehicleType,
+    } catch (error) {
+      console.log("Error:::-->", error)
+    }
+  }
+
+
   async function hideNameFunction() {
     setNameErr(false);
     setNameErr1(false);
@@ -406,6 +426,7 @@ const AddSchWData = (trainerId) => {
 
   useEffect(() => {
     getMobileNumber()
+    getclientBookingById()
   }, [clientId])
 
   return (
@@ -450,7 +471,7 @@ const AddSchWData = (trainerId) => {
 
                 <div class="flex-snd">
                   <span>Date</span>
-                  <small>{trainerId?.trainerId?.year} </small>
+                  <small>{trainerId?.trainerId?.dy} </small>
                 </div>
               </div>
 
@@ -502,13 +523,15 @@ const AddSchWData = (trainerId) => {
                         aria-label="Default select example"
                         onChange={(e) => setLocation(e.target.value)}
                       >
-                        <option selected>Select</option>
+                        {/* <option value={item?.id}>{item?.place}</option> */}
+                        <option value="">Select</option>
                         {bookLocation?.map((item) => {
                           return (
-                            <option value={item?.id}>{item?.place}</option>
-                          );
+                            <option selected={item?.id == location} value={item?.id}> {item?.place}</option>
+                          )
                         })}
                       </select>
+
                       {locationErr && (
                         <span className="input-error">
                           Location is required
@@ -535,7 +558,7 @@ const AddSchWData = (trainerId) => {
                             <option value="">Select</option>{" "}
                             {bookLocation?.map((item) => {
                               return (
-                                <option value={item?.id}>{item?.place}</option>
+                                <option selected={item?.id == location} value={item?.id}> {item?.place}</option>
                               );
                             })}
                           </select>
@@ -557,7 +580,7 @@ const AddSchWData = (trainerId) => {
                             <option value="">Select</option>
                             {bookVehicle?.map((item) => {
                               return (
-                                <option value={item?.id}>{item?.vehicleType}</option>
+                                <option selected={item?.id == vehicleType} value={item?.id}> {item?.vehicleType}</option>
                               );
                             })}
                           </select>
@@ -582,7 +605,7 @@ const AddSchWData = (trainerId) => {
                         <option value="">Select</option>{" "}
                         {bookVehicle?.map((item) => {
                           return (
-                            <option value={item?.id}>{item?.vehicleType}</option>
+                            <option selected={item?.id == vehicleType} value={item?.id}> {item?.vehicleType}</option>
                           );
                         })}
                       </select>
