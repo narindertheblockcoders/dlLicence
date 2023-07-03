@@ -8,12 +8,16 @@ import AddScheduleModal from "./AddScheduleModal";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import SwapTrainer from "./SwapTrainer";
-import { format } from "date-fns";
+import { parse, isWithinInterval, format } from "date-fns";
 import ClientInfoModal from "./ClientInfoModal";
 import Backdrop from "@mui/material/Backdrop";
-import CircularProgress, { circularProgressClasses } from "@mui/material/CircularProgress";
+import CircularProgress, {
+  circularProgressClasses,
+} from "@mui/material/CircularProgress";
+import { ClassNameConfigurator } from "@mui/base";
 
 let timee;
+let t;
 function Schedule() {
   const [scheduleData, setScheduleData] = useState();
   const [dataByScheduleDate, setDataByScheduleDate] = useState();
@@ -48,7 +52,8 @@ function Schedule() {
   const [clientId, setClientId] = useState();
   const [bookingId, setBookingId] = useState();
   const [open, setOpen] = React.useState(false);
-  const [dy, setDY] = useState()
+  const [dy, setDY] = useState();
+  const [time, setTime] = useState();
 
   async function getAllTrainer() {
     try {
@@ -67,15 +72,15 @@ function Schedule() {
     const options = { day: "numeric" };
     const formattedDate = currentDate.toLocaleDateString(undefined, options);
 
-    setSelectedId(formattedDate - 1);
-
-    console.log(formattedDate, "date share"); 
+    console.log(formattedDate, "date heer");
+    setSelectedId(formattedDate);
   }
 
   useEffect(() => {
     todayDate();
   }, []);
 
+  console.log(selectedId, "date ggge");
   const timeSchedule = [
     { time: "07:00 AM" },
     { time: "07:30 AM" },
@@ -101,7 +106,7 @@ function Schedule() {
     { time: "05:30 PM" },
     { time: "06:00 PM" },
     { time: "06:30 PM" },
-    { time: "07:00 PM" },
+    // { time: "07:00 PM" },
   ];
 
   async function getAllSchedule() {
@@ -109,15 +114,15 @@ function Schedule() {
       const token = localStorage.getItem("token");
       const res = await axios.post("/api/getSchedules", { token: token });
       const response = res.data.data.data;
+      const ress = res.data;
+      t = ress.data.data[0]?.startTime?.slice(0, 5);
       setOpen(false);
       setAllScheduleData(response);
     } catch (err) {
       console.log(err, "all shedule error");
     }
   }
-
   const DatePicker = (e) => {
-    console.log("hello from Datepicker-->",e.target.value);
     setDate3(null);
     const dateObj = new Date(e.target.value);
     const monthStr = dateObj.toLocaleString("default", { month: "short" });
@@ -125,7 +130,6 @@ function Schedule() {
     const convertedDate = formattedDateStr.split("-")[1];
     const dateObj1 = new Date(e.target.value);
     const year = dateObj1.getFullYear();
-console.log("object year fro ");
     setLeapYear(year);
 
     const date2 = new Date(e.target.value).toLocaleDateString();
@@ -187,9 +191,10 @@ console.log("object year fro ");
     setDatePicker(temp);
   };
 
+  console.log(selectedId, "date item select");
   async function filterData(item, i) {
-    console.log("first hello from filter Data-->",item)
-    setYear(item)
+    setYear(item);
+    console.log(i, "date itejo");
     setSelectedId(i);
     const filterValue = allScheduleData?.filter((item2) => {
       const dateValue = item2?.dateSch;
@@ -204,33 +209,7 @@ console.log("object year fro ");
 
   async function getDataByDate() {
     const date1 = new Date();
-    console.log("hello date1-->",date1.toString("MMMM yyyy"));
-    console.log("hello nnnnn-->")
     const reconstructedDate = new Date(date1.valueOf());
-    console.log('test-',reconstructedDate);
-    // const formattedDate = date1.toLocaleDateString("en-US", {
-    //   day: "2-digit",
-    //   month: "short",
-    //   year: "numeric"
-    // });
-    // console.log("object -->",formattedDate);
-
-    
-    // const sendDate = date1?.toDateString()
-    // console.log(sendDate?.slice(4), "date1")
-
-    // const date_string = sendDate?.slice(4)
-    // console.log(date_string, "date_string")
-// date_object = datetime.strptime(date_string, "%B %d, %Y")
-// formatted_date = date_object.strftime("%d %B %Y")
-
-// print(formatted_date)
-    // const currentYear = sendDate?.slice(0,4)
-    // console.log(currentYear,"currentYear")
-    // const currentDate = sendDate?.slice()
-
-
-
     const day1 = date1.getUTCDate().toString();
     const month1 = date1.toLocaleString("default", { month: "short" });
     const formattedDate1 = `${day1} ${month1}`;
@@ -274,7 +253,6 @@ console.log("object year fro ");
     getAllLocation();
     getAllVehicle();
     currentDatePicker();
-    // setYear(new Date().toDateString()?.substring(4));
   }, []);
 
   useEffect(() => {
@@ -293,8 +271,8 @@ console.log("object year fro ");
   };
 
   async function modalShowFn(item, item3) {
-    console.log(item, "hello error")
-    setDate(item3);
+    // console.log(item, "hello error")
+    setTime(item3);
     setTrainerName(item.trainerName);
     setTrainerId(item.id);
     setShow(true);
@@ -348,26 +326,25 @@ console.log("object year fro ");
     setTimeSchedule1(filteredData);
   }, [dataByScheduleDate]);
 
-  
-  
+  useEffect(() => {});
 
+  const monthh = year?.toString();
+  const yearr = yearMonth?.slice(0, 4)?.toString();
 
-    console.log("first selectedId--->",selectedId)
-    console.log("first year--->",year)
-    const monthh = year?.toString()
-    console.log(monthh,"date and month");
-    const yearr = yearMonth?.slice(0,4)?.toString()
-    console.log("yearr--->",yearr)
-    setTimeout(() => {
-      
-      setDY(monthh + " " + yearr || newDate().toLocaleDateString())
-    }, 3000);
+  const date4 = new Date(`${yearMonth}-01`); // Create a Date object with the year and month
+  const monthName = date4.toLocaleString("en-US", { month: "long" });
+  console.log(monthName, "month Name");
 
+  setTimeout(() => {
+    setDY(
+      selectedId,
+      monthName + " " + yearr || newDate().toLocaleDateString()
+    );
+  }, 500);
 
+  console.log("allScheduleData in schedule page--->", dataByScheduleDate);
 
-
-
-
+  console.log(dy, "hello dy");
   return (
     <>
       <Backdrop
@@ -525,6 +502,7 @@ console.log("object year fro ");
                   <div className="innerpart-tabs Schedule" id="common-cls">
                     <div className="three-part">
                       {allTrainers?.map((item, id) => {
+                        // console.log("hello allTrainers-->",item)
                         return (
                           <div className="same-one-part">
                             <div className="head-one">
@@ -534,15 +512,48 @@ console.log("object year fro ");
                             <div className="trainer-times ">
                               {timeSchedule?.map((item1) => {
                                 const matchingData = dataByScheduleDate?.filter(
-                                  (item2) =>
-                                    item?.id == item2?.trainerId &&
-                                    item1?.time?.split(" ")[0] ==
-                                      item2?.timeSlot?.slice(0, -3)
+                                  (item2) => {
+                                    const startTime = item2?.startTime?.slice(
+                                      0,
+                                      -3
+                                    );
+                                    const endTime = item2?.endTime?.slice(
+                                      0,
+                                      -3
+                                    );
+                                    // console.log(item2, "item2---------->");
+                                    const filteredTimeSlots =
+                                      timeSchedule.filter((slot) => {
+                                        const slotTime = slot.time;
+                                        return (
+                                          slotTime >= startTime &&
+                                          slotTime <= endTime
+                                        );
+                                      });
+
+                                    for (
+                                      let i = 0;
+                                      i <= filteredTimeSlots.length;
+                                      i++
+                                    ) {
+                                      if (
+                                        item?.id == item2?.trainerId &&
+                                        item1?.time?.split(" ")[0] ==
+                                          filteredTimeSlots[i]?.time?.split(
+                                            " "
+                                          )[0]
+                                      ) {
+                                        return item2;
+                                      }
+                                    }
+                                  }
                                 );
                                 if (matchingData?.length == 0) {
-                                  {/* console.log(matchingData, "matching date") */}
                                   return (
-                                    <div className="trainer-timings">
+                                    <div
+                                      className="trainer-timings"
+                                      id="trainer-timings-width"
+                                    >
                                       <span>{item1?.time}</span>
                                       <div
                                         className="trainer-opcity"
@@ -563,353 +574,696 @@ console.log("object year fro ");
                                       </div>
                                     </div>
                                   );
-                                }
+                                } else {
+                                  // console.log(
+                                  //   "hello from matchingData.length!=0--->",
+                                  //   matchingData?.length
+                                  // );
+                                  // console.log("hello from here--->",item)
+                                  return (
+                                    <>
+                                      {searchSchedualData == null
+                                        ? dataByScheduleDate?.map(
+                                            (item2, id) => {
+                                              // console.log("hello from here--->",item2)
+                                              var startTime =
+                                                item2?.startTime?.slice(0, -3);
+                                              const endTime =
+                                                item2?.endTime?.slice(0, -3);
+                                              const filteredTimeSlots =
+                                                timeSchedule?.filter((slot) => {
+                                                  const slotTime = slot.time;
+                                                  return (
+                                                    slotTime >= startTime &&
+                                                    slotTime <= endTime
+                                                  );
+                                                });
+                                              // console.log("hello from here--->",item2)
+                                              // console.log("hello from here--->",item1)
+                                              if (
+                                                item2?.scheduleId == 1 ||
+                                                item2?.scheduleId == 2
+                                              ) {
+                                                for (
+                                                  let i = 0;
+                                                  i <= filteredTimeSlots.length;
+                                                  i++
+                                                ) {
+                                                  if (
+                                                    item?.id ==
+                                                      item2?.trainerId &&
+                                                    item1?.time?.split(
+                                                      " "
+                                                    )[0] ==
+                                                      filteredTimeSlots[
+                                                        i
+                                                      ]?.time?.split(" ")[0]
+                                                  ) {
+                                                    return (
+                                                      <div
+                                                        className="trainer-timings "
+                                                        id="trainer-timings"
+                                                      >
+                                                        {item2.scheduleId ==
+                                                        3 ? (
+                                                          <div className="training-div">
+                                                            <h5 className="head-one-four">
+                                                              {" "}
+                                                              Test
+                                                            </h5>
+                                                          </div>
+                                                        ) : null}
+                                                        {item2.scheduleId ==
+                                                        2 ? (
+                                                          <div className="training-div">
+                                                            <h5 className="t-test">
+                                                              Training & Test
+                                                            </h5>
+                                                          </div>
+                                                        ) : null}
+                                                        {item2.scheduleId ==
+                                                        1 ? (
+                                                          <div className="training-div">
+                                                            <h5 className="head-one-three">
+                                                              Training
+                                                            </h5>
+                                                          </div>
+                                                        ) : null}
 
-                                return (
-                                  <>
-                                    {searchSchedualData == null
-                                      ? dataByScheduleDate?.map((item2, id) => {
-                                          if (
-                                            item?.id == item2?.trainerId &&
-                                            item1?.time?.split(" ")[0] ==
-                                              item2?.timeSlot?.slice(0, -3)
-                                          ) {
-                                            return (
-                                              <div
-                                                className="trainer-timings "
-                                                id="trainer-timings"
-                                              >
-                                                {item2.scheduleId == 3 ? (
-                                                  <div className="training-div">
-                                                    <h5 className="head-one-four">
-                                                      {" "}
-                                                      Test
-                                                    </h5>
-                                                  </div>
-                                                ) : null}
-                                                {item2.scheduleId == 2 ? (
-                                                  <div className="training-div">
-                                                    <h5 className="t-test">
-                                                      Training & Test
-                                                    </h5>
-                                                  </div>
-                                                ) : null}
-                                                {item2.scheduleId == 1 ? (
-                                                  <div className="training-div">
-                                                    <h5 className="head-one-three">
-                                                      Training
-                                                    </h5>
-                                                  </div>
-                                                ) : null}
+                                                        <div className="head-one-main">
+                                                          {item2.scheduleId !=
+                                                          3 ? (
+                                                            <div className="head-one-one">
+                                                              <h5>
+                                                                {new Date(
+                                                                  `01/01/2000 ${item2.startTime}`
+                                                                ).toLocaleTimeString(
+                                                                  "en-US",
+                                                                  {
+                                                                    hour: "numeric",
+                                                                    minute:
+                                                                      "numeric",
+                                                                    hour12: true,
+                                                                  }
+                                                                )}
+                                                                -
+                                                                {new Date(
+                                                                  `01/01/2000 ${item2.endTime}`
+                                                                ).toLocaleTimeString(
+                                                                  "en-US",
+                                                                  {
+                                                                    hour: "numeric",
+                                                                    minute:
+                                                                      "numeric",
+                                                                    hour12: true,
+                                                                  }
+                                                                )}
+                                                              </h5>
+                                                            </div>
+                                                          ) : (
+                                                            <div className="head-one-one">
+                                                              <h5>
+                                                                {new Date(
+                                                                  `01/01/2000 ${item2.timeSlot}`
+                                                                ).toLocaleTimeString(
+                                                                  "en-US",
+                                                                  {
+                                                                    hour: "numeric",
+                                                                    minute:
+                                                                      "numeric",
+                                                                    hour12: true,
+                                                                  }
+                                                                )}
+                                                              </h5>
+                                                            </div>
+                                                          )}
 
-                                                <div className="head-one-main">
-                                                  {item2.scheduleId != 3 ? (
-                                                    <div className="head-one-one">
-                                                      <h5>
-                                                        {new Date(
-                                                          `01/01/2000 ${item2.startTime}`
-                                                        ).toLocaleTimeString(
-                                                          "en-US",
-                                                          {
-                                                            hour: "numeric",
-                                                            minute: "numeric",
-                                                            hour12: true,
-                                                          }
-                                                        )}
-                                                        -
-                                                        {new Date(
-                                                          `01/01/2000 ${item2.endTime}`
-                                                        ).toLocaleTimeString(
-                                                          "en-US",
-                                                          {
-                                                            hour: "numeric",
-                                                            minute: "numeric",
-                                                            hour12: true,
-                                                          }
-                                                        )}
-                                                      </h5>
-                                                    </div>
-                                                  ) : (
-                                                    <div className="head-one-one">
-                                                      <h5>
-                                                        {new Date(
-                                                          `01/01/2000 ${item2.timeSlot}`
-                                                        ).toLocaleTimeString(
-                                                          "en-US",
-                                                          {
-                                                            hour: "numeric",
-                                                            minute: "numeric",
-                                                            hour12: true,
-                                                          }
-                                                        )}
-                                                      </h5>
-                                                    </div>
-                                                  )}
+                                                          <div className="head-one-one">
+                                                            <a
+                                                              href="#"
+                                                              className="head-one-two"
+                                                              onClick={(e) =>
+                                                                handleModalShowFn(
+                                                                  item2
+                                                                )
+                                                              }
+                                                            >
+                                                              Swap Trainer
+                                                            </a>
+                                                          </div>
+                                                        </div>
+                                                        <div className="two-part-head">
+                                                          {bookVehicle?.map(
+                                                            (item3) => {
+                                                              if (
+                                                                item2.vehicleTypeId ==
+                                                                item3.id
+                                                              )
+                                                                return (
+                                                                  <>
+                                                                    <h6>
+                                                                      {
+                                                                        item3?.vehicleType
+                                                                      }
+                                                                    </h6>
+                                                                  </>
+                                                                );
+                                                            }
+                                                          )}
 
-                                                  <div className="head-one-one">
-                                                    <a
-                                                      href="#"
-                                                      className="head-one-two"
-                                                      onClick={(e) =>
-                                                        handleModalShowFn(item2)
-                                                      }
-                                                    >
-                                                      Swap Trainer
-                                                    </a>
-                                                  </div>
-                                                </div>
-                                                <div className="two-part-head">
-                                                  {bookVehicle?.map((item3) => {
-                                                    if (
-                                                      item2.vehicleTypeId ==
-                                                      item3.id
-                                                    )
+                                                          {item2.scheduleId !=
+                                                          1 ? (
+                                                            <small>
+                                                              Test at{" "}
+                                                              {item2.testTime}
+                                                            </small>
+                                                          ) : null}
+
+                                                          <small>
+                                                            Location
+                                                          </small>
+                                                          {allLocation?.map(
+                                                            (item3) => {
+                                                              if (
+                                                                item2?.locationId ==
+                                                                item3?.id
+                                                              ) {
+                                                                return (
+                                                                  <>
+                                                                    <span>
+                                                                      {" "}
+                                                                      {
+                                                                        item3?.place
+                                                                      }
+                                                                    </span>
+                                                                  </>
+                                                                );
+                                                              }
+                                                            }
+                                                          )}
+
+                                                          <small>Client</small>
+                                                          <div class="training-booking">
+                                                            <span>
+                                                              {" "}
+                                                              {
+                                                                item2.clientName
+                                                              }{" "}
+                                                              <strong>
+                                                                (
+                                                                {
+                                                                  item2.clientMobileNo
+                                                                }
+                                                                )
+                                                              </strong>{" "}
+                                                            </span>
+                                                            <Link
+                                                              href="#"
+                                                              class="view-booking"
+                                                              onClick={(e) =>
+                                                                bookingModalShowFn(
+                                                                  item2
+                                                                )
+                                                              }
+                                                            >
+                                                              View Bookings
+                                                            </Link>
+                                                          </div>
+
+                                                          <div class="tt-payment">
+                                                            <ul>
+                                                              <li>
+                                                                <strong>
+                                                                  Payment Status
+                                                                </strong>
+                                                              </li>
+                                                              <li>Pending</li>
+                                                            </ul>
+                                                            <ul>
+                                                              <li>
+                                                                <strong>
+                                                                  Amount
+                                                                </strong>
+                                                              </li>
+                                                              <li>$500</li>
+                                                            </ul>
+                                                            <ul>
+                                                              <li>
+                                                                <a href="">
+                                                                  Payment Done
+                                                                </a>
+                                                              </li>
+                                                            </ul>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                    );
+                                                  }
+                                                  break;
+                                                }
+                                              }
+                                              // console.log("hello item22222222--->",item2)
+                                              if (item2?.scheduleId == 3) {
+                                                // console.log("hellooo-->",slotTime)
+                                                // console.log("hello item22222222--->",item2)
+                                                // console.log(item1, "testtime hello")
+
+                                                var testtime =
+                                                  item2?.testTime?.slice(0, -3);
+                                                const filteredTimeSlots1 =
+                                                  timeSchedule?.filter(
+                                                    (slot) => {
+                                                      const slotTime =
+                                                        slot.time?.slice(0, -3);
+                                                      const nextSlotTime =
+                                                        timeSchedule[
+                                                          timeSchedule.indexOf(
+                                                            slot
+                                                          ) + 1
+                                                        ]?.time?.slice(0, -3);
                                                       return (
-                                                        <>
-                                                          <h6>
-                                                            {item3?.vehicleType}
-                                                          </h6>
-                                                        </>
-                                                      );
-                                                  })}
-
-                                                  {item2.scheduleId != 1 ? (
-                                                    <small>
-                                                      Test at {item2.testTime}
-                                                    </small>
-                                                  ) : null}
-
-                                                  <small>Location</small>
-                                                  {allLocation?.map((item3) => {
-                                                    if (
-                                                      item2?.locationId ==
-                                                      item3?.id
-                                                    ) {
-                                                      return (
-                                                        <>
-                                                          <span>
-                                                            {" "}
-                                                            {item3?.place}
-                                                          </span>
-                                                        </>
+                                                        slotTime <= testtime &&
+                                                        (nextSlotTime
+                                                          ? nextSlotTime >=
+                                                            testtime
+                                                          : true)
                                                       );
                                                     }
-                                                  })}
+                                                  );
+                                                // console.log(" filteredTimeSlots1-->", filteredTimeSlots1[0]?.time?.slice(0, -3))
+                                                console.log(
+                                                  " filteredTimeSlots1 length-->",
+                                                  filteredTimeSlots1?.length
+                                                );
+                                                // console.log("item1?.time--->", item2?.trainerId)
+                                                // console.log(filteredTimeSlots1[i-1]?.time?.split(" ")[0], "Var")
+                                                for (
+                                                  let i = 1;
+                                                  (i =
+                                                    filteredTimeSlots1?.length);
+                                                  i++
+                                                ) {
+                                                  // console.log(" i is here--->",filteredTimeSlots1?.length)
+                                                  if (
+                                                    allTrainers?.map(
+                                                      (titem) => {
+                                                        // console.log("titem.id == item2?.trainerId-->",titem.id == item2?.trainerId,titem.id,item2?.trainerId)
+                                                        return (
+                                                          titem.id ==
+                                                          item2?.trainerId
+                                                        );
+                                                      }
+                                                    ) &&
+                                                    timeSchedule?.map(
+                                                      (sitem) => {
+                                                        // console.log("sitem?.time?.sp",sitem?.time?.split(" ")[0] == filteredTimeSlots1[i-1]?.time?.split(" ")[0],sitem?.time?.split(" ")[0], filteredTimeSlots1[i-1]?.time?.split(" ")[0])
+                                                        return (
+                                                          sitem?.time?.split(
+                                                            " "
+                                                          )[0] ==
+                                                          filteredTimeSlots1[
+                                                            i - 1
+                                                          ]?.time?.split(" ")[0]
+                                                        );
+                                                      }
+                                                    )
+                                                  ) {
+                                                    // console.log("helllllooooooo")
+                                                    return (
+                                                      <div
+                                                        className="trainer-timings "
+                                                        id="trainer-timings"
+                                                      >
+                                                        {item2.scheduleId ==
+                                                        3 ? (
+                                                          <div className="training-div">
+                                                            <h5 className="head-one-four">
+                                                              {" "}
+                                                              Test
+                                                            </h5>
+                                                          </div>
+                                                        ) : null}
+                                                        {item2.scheduleId ==
+                                                        2 ? (
+                                                          <div className="training-div">
+                                                            <h5 className="t-test">
+                                                              Training & Test
+                                                            </h5>
+                                                          </div>
+                                                        ) : null}
+                                                        {item2.scheduleId ==
+                                                        1 ? (
+                                                          <div className="training-div">
+                                                            <h5 className="head-one-three">
+                                                              Training
+                                                            </h5>
+                                                          </div>
+                                                        ) : null}
 
-                                                  <small>Client</small>
-                                                  <div class="training-booking">
+                                                        <div className="head-one-main">
+                                                          {item2.scheduleId !=
+                                                          3 ? (
+                                                            <div className="head-one-one">
+                                                              <h5>
+                                                                {new Date(
+                                                                  `01/01/2000 ${item2.startTime}`
+                                                                ).toLocaleTimeString(
+                                                                  "en-US",
+                                                                  {
+                                                                    hour: "numeric",
+                                                                    minute:
+                                                                      "numeric",
+                                                                    hour12: true,
+                                                                  }
+                                                                )}
+                                                                -
+                                                                {new Date(
+                                                                  `01/01/2000 ${item2.endTime}`
+                                                                ).toLocaleTimeString(
+                                                                  "en-US",
+                                                                  {
+                                                                    hour: "numeric",
+                                                                    minute:
+                                                                      "numeric",
+                                                                    hour12: true,
+                                                                  }
+                                                                )}
+                                                              </h5>
+                                                            </div>
+                                                          ) : (
+                                                            <div className="head-one-one">
+                                                              <h5>
+                                                                {new Date(
+                                                                  `01/01/2000 ${item2.timeSlot}`
+                                                                ).toLocaleTimeString(
+                                                                  "en-US",
+                                                                  {
+                                                                    hour: "numeric",
+                                                                    minute:
+                                                                      "numeric",
+                                                                    hour12: true,
+                                                                  }
+                                                                )}
+                                                              </h5>
+                                                            </div>
+                                                          )}
+
+                                                          <div className="head-one-one">
+                                                            <a
+                                                              href="#"
+                                                              className="head-one-two"
+                                                              onClick={(e) =>
+                                                                handleModalShowFn(
+                                                                  item2
+                                                                )
+                                                              }
+                                                            >
+                                                              Swap Trainer
+                                                            </a>
+                                                          </div>
+                                                        </div>
+                                                        <div className="two-part-head">
+                                                          {bookVehicle?.map(
+                                                            (item3) => {
+                                                              if (
+                                                                item2.vehicleTypeId ==
+                                                                item3.id
+                                                              )
+                                                                return (
+                                                                  <>
+                                                                    <h6>
+                                                                      {
+                                                                        item3?.vehicleType
+                                                                      }
+                                                                    </h6>
+                                                                  </>
+                                                                );
+                                                            }
+                                                          )}
+
+                                                          {item2.scheduleId !=
+                                                          1 ? (
+                                                            <small>
+                                                              Test at{" "}
+                                                              {item2.testTime}
+                                                            </small>
+                                                          ) : null}
+
+                                                          <small>
+                                                            Location
+                                                          </small>
+                                                          {allLocation?.map(
+                                                            (item3) => {
+                                                              if (
+                                                                item2?.locationId ==
+                                                                item3?.id
+                                                              ) {
+                                                                return (
+                                                                  <>
+                                                                    <span>
+                                                                      {" "}
+                                                                      {
+                                                                        item3?.place
+                                                                      }
+                                                                    </span>
+                                                                  </>
+                                                                );
+                                                              }
+                                                            }
+                                                          )}
+
+                                                          <small>Client</small>
+                                                          <div class="training-booking">
+                                                            <span>
+                                                              {" "}
+                                                              {
+                                                                item2.clientName
+                                                              }{" "}
+                                                              <strong>
+                                                                (
+                                                                {
+                                                                  item2.clientMobileNo
+                                                                }
+                                                                )
+                                                              </strong>{" "}
+                                                            </span>
+                                                            <Link
+                                                              href="#"
+                                                              class="view-booking"
+                                                              onClick={(e) =>
+                                                                bookingModalShowFn(
+                                                                  item2
+                                                                )
+                                                              }
+                                                            >
+                                                              View Bookings
+                                                            </Link>
+                                                          </div>
+
+                                                          <div class="tt-payment">
+                                                            <ul>
+                                                              <li>
+                                                                <strong>
+                                                                  Payment Status
+                                                                </strong>
+                                                              </li>
+                                                              <li>Pending</li>
+                                                            </ul>
+                                                            <ul>
+                                                              <li>
+                                                                <strong>
+                                                                  Amount
+                                                                </strong>
+                                                              </li>
+                                                              <li>$500</li>
+                                                            </ul>
+                                                            <ul>
+                                                              <li>
+                                                                <a href="">
+                                                                  Payment Done
+                                                                </a>
+                                                              </li>
+                                                            </ul>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                    );
+                                                  }
+                                                  break;
+                                                }
+                                              }
+                                            }
+                                          )
+                                        : searchSchedualData.map((item2) => {
+                                            if (
+                                              item?.id == item2?.trainerId &&
+                                              item1?.time?.split(" ")[0] ==
+                                                item2?.startTime?.slice(0, -3)
+                                            ) {
+                                              return (
+                                                <div
+                                                  className="trainer-timings "
+                                                  id="trainer-timings"
+                                                >
+                                                  {item2.scheduleId == 3 ? (
+                                                    <div className="training-div">
+                                                      <h5 className="head-one-four">
+                                                        {" "}
+                                                        Test
+                                                      </h5>
+                                                    </div>
+                                                  ) : null}
+                                                  {item2.scheduleId == 2 ? (
+                                                    <div className="training-div">
+                                                      <h5 className="t-test">
+                                                        Training & Test
+                                                      </h5>
+                                                    </div>
+                                                  ) : null}
+                                                  {item2.scheduleId == 1 ? (
+                                                    <div className="training-div">
+                                                      <h5 className="head-one-three">
+                                                        Training
+                                                      </h5>
+                                                    </div>
+                                                  ) : null}
+                                                  <div className="head-one-main">
+                                                    {item2.scheduleId != 3 ? (
+                                                      <div className="head-one-one">
+                                                        <h5>
+                                                          {new Date(
+                                                            `01/01/2000 ${item2.startTime}`
+                                                          ).toLocaleTimeString(
+                                                            "en-US",
+                                                            {
+                                                              hour: "numeric",
+                                                              minute: "numeric",
+                                                              hour12: true,
+                                                            }
+                                                          )}
+                                                          -
+                                                          {new Date(
+                                                            `01/01/2000 ${item2.endTime}`
+                                                          ).toLocaleTimeString(
+                                                            "en-US",
+                                                            {
+                                                              hour: "numeric",
+                                                              minute: "numeric",
+                                                              hour12: true,
+                                                            }
+                                                          )}
+                                                        </h5>
+                                                      </div>
+                                                    ) : (
+                                                      <div className="head-one-one">
+                                                        <h5>
+                                                          {new Date(
+                                                            `01/01/2000 ${item2.timeSlot}`
+                                                          ).toLocaleTimeString(
+                                                            "en-US",
+                                                            {
+                                                              hour: "numeric",
+                                                              minute: "numeric",
+                                                              hour12: true,
+                                                            }
+                                                          )}
+                                                        </h5>
+                                                      </div>
+                                                    )}
+                                                    <div className="head-one-one">
+                                                      <a
+                                                        href="#"
+                                                        className="head-one-two"
+                                                        onClick={(e) =>
+                                                          handleModalShowFn(
+                                                            item2
+                                                          )
+                                                        }
+                                                      >
+                                                        Swap Trainer
+                                                      </a>
+                                                    </div>
+                                                  </div>
+                                                  <div className="two-part-head">
+                                                    {bookVehicle?.map(
+                                                      (item3) => {
+                                                        if (
+                                                          item2.vehicleTypeId ==
+                                                          item3.id
+                                                        )
+                                                          return ( <>
+                                                              <h6> {  item3?.vehicleType } </h6>
+                                                            </>
+                                                          );
+                                                      }
+                                                    )}
+
+                                                    {item2.scheduleId != 1 ? (
+                                                      <small>
+                                                        Test at {item2.testTime}
+                                                      </small>
+                                                    ) : null}
+                                                    <small>Location</small>
+                                                    {allLocation?.map(
+                                                      (item3) => {
+                                                        if (
+                                                          item2?.locationId ==
+                                                          item3?.id
+                                                        ) {
+                                                          return (
+                                                            <>
+                                                              <span>
+                                                                {" "}
+                                                                {item3?.place}
+                                                              </span>
+                                                            </>
+                                                          );
+                                                        }
+                                                      }
+                                                    )}
+
+                                                    <small>Client</small>
                                                     <span>
                                                       {" "}
-                                                      {item2.clientName}{" "}
+                                                      {item2.clientName}
                                                       <strong>
                                                         ({item2.clientMobileNo})
-                                                      </strong>{" "}
+                                                      </strong>
                                                     </span>
-                                                    <Link
-                                                      href="#"
-                                                      class="view-booking"
-                                                      onClick={(e) =>
-                                                        bookingModalShowFn(
-                                                          item2
-                                                        )
-                                                      }
-                                                    >
-                                                      View Bookings
-                                                    </Link>
-                                                  </div>
 
-                                                  <div class="tt-payment">
-                                                    <ul>
-                                                      <li>
-                                                        <strong>
-                                                          Payment Status
-                                                        </strong>
-                                                      </li>
-                                                      <li>Pending</li>
-                                                    </ul>
-                                                    <ul>
-                                                      <li>
-                                                        <strong>Amount</strong>
-                                                      </li>
-                                                      <li>$500</li>
-                                                    </ul>
-                                                    <ul>
-                                                      <li>
-                                                        <a href="">
-                                                          Payment Done
-                                                        </a>
-                                                      </li>
-                                                    </ul>
-                                                  </div>
-                                                </div>
-                                              </div>
-                                            );
-                                          }
-                                        })
-                                      : searchSchedualData.map((item2) => {
-                                          if (
-                                            item?.id == item2?.trainerId &&
-                                            item1?.time?.split(" ")[0] ==
-                                              item2?.timeSlot?.slice(0, -3)
-                                          ) {
-                                            return (
-                                              <div
-                                                className="trainer-timings "
-                                                id="trainer-timings"
-                                              >
-                                                {item2.scheduleId == 3 ? (
-                                                  <div className="training-div">
-                                                    <h5 className="head-one-four">
-                                                      {" "}
-                                                      Test
-                                                    </h5>
-                                                  </div>
-                                                ) : null}
-                                                {item2.scheduleId == 2 ? (
-                                                  <div className="training-div">
-                                                    <h5 className="t-test">
-                                                      Training & Test
-                                                    </h5>
-                                                  </div>
-                                                ) : null}
-                                                {item2.scheduleId == 1 ? (
-                                                  <div className="training-div">
-                                                    <h5 className="head-one-three">
-                                                      Training
-                                                    </h5>
-                                                  </div>
-                                                ) : null}
-                                                <div className="head-one-main">
-                                                  {item2.scheduleId != 3 ? (
-                                                    <div className="head-one-one">
-                                                      <h5>
-                                                        {new Date(
-                                                          `01/01/2000 ${item2.startTime}`
-                                                        ).toLocaleTimeString(
-                                                          "en-US",
-                                                          {
-                                                            hour: "numeric",
-                                                            minute: "numeric",
-                                                            hour12: true,
-                                                          }
-                                                        )}
-                                                        -
-                                                        {new Date(
-                                                          `01/01/2000 ${item2.endTime}`
-                                                        ).toLocaleTimeString(
-                                                          "en-US",
-                                                          {
-                                                            hour: "numeric",
-                                                            minute: "numeric",
-                                                            hour12: true,
-                                                          }
-                                                        )}
-                                                      </h5>
+                                                    <div class="tt-payment">
+                                                      <ul>
+                                                        <li>
+                                                          <strong>
+                                                            Payment Status
+                                                          </strong>
+                                                        </li>
+                                                        <li>Pending</li>
+                                                      </ul>
+                                                      <ul>
+                                                        <li>
+                                                          <strong>
+                                                            Amount
+                                                          </strong>
+                                                        </li>
+                                                        <li>$500</li>
+                                                      </ul>
+                                                      <ul>
+                                                        <li>
+                                                          <a href="">
+                                                            Payment Done
+                                                          </a>
+                                                        </li>
+                                                      </ul>
                                                     </div>
-                                                  ) : (
-                                                    <div className="head-one-one">
-                                                      <h5>
-                                                        {new Date(
-                                                          `01/01/2000 ${item2.timeSlot}`
-                                                        ).toLocaleTimeString(
-                                                          "en-US",
-                                                          {
-                                                            hour: "numeric",
-                                                            minute: "numeric",
-                                                            hour12: true,
-                                                          }
-                                                        )}
-                                                      </h5>
-                                                    </div>
-                                                  )}
-                                                  <div className="head-one-one">
-                                                    <a
-                                                      href="#"
-                                                      className="head-one-two"
-                                                      onClick={(e) =>
-                                                        handleModalShowFn(item2)
-                                                      }
-                                                    >
-                                                      Swap Trainer
-                                                    </a>
                                                   </div>
                                                 </div>
-                                                <div className="two-part-head">
-                                                  {bookVehicle?.map((item3) => {
-                                                    if (
-                                                      item2.vehicleTypeId ==
-                                                      item3.id
-                                                    )
-                                                      return (
-                                                        <>
-                                                          <h6>
-                                                            {item3?.vehicleType}
-                                                          </h6>
-                                                        </>
-                                                      );
-                                                  })}
-
-                                                  {item2.scheduleId != 1 ? (
-                                                    <small>
-                                                      Test at {item2.testTime}
-                                                    </small>
-                                                  ) : null}
-                                                  <small>Location</small>
-                                                  {allLocation?.map((item3) => {
-                                                    if (
-                                                      item2?.locationId ==
-                                                      item3?.id
-                                                    ) {
-                                                      return (
-                                                        <>
-                                                          <span>
-                                                            {" "}
-                                                            {item3?.place}
-                                                          </span>
-                                                        </>
-                                                      );
-                                                    }
-                                                  })}
-
-                                                  <small>Client</small>
-                                                  <span>
-                                                    {" "}
-                                                    {item2.clientName}
-                                                    <strong>
-                                                      ({item2.clientMobileNo})
-                                                    </strong>
-                                                  </span>
-
-                                                  <div class="tt-payment">
-                                                    <ul>
-                                                      <li>
-                                                        <strong>
-                                                          Payment Status
-                                                        </strong>
-                                                      </li>
-                                                      <li>Pending</li>
-                                                    </ul>
-                                                    <ul>
-                                                      <li>
-                                                        <strong>Amount</strong>
-                                                      </li>
-                                                      <li>$500</li>
-                                                    </ul>
-                                                    <ul>
-                                                      <li>
-                                                        <a href="">
-                                                          Payment Done
-                                                        </a>
-                                                      </li>
-                                                    </ul>
-                                                  </div>
-                                                </div>
-                                              </div>
-                                            );
-                                          }
-                                        })}
-                                  </>
-                                );
+                                              );
+                                            }
+                                          })}
+                                    </>
+                                  );
+                                }
                               })}
                             </div>
                           </div>
@@ -927,11 +1281,11 @@ console.log("object year fro ");
       <AddScheduleModal
         show={show}
         setShow={setShow}
-        date={date}
+        schDate={dy}
         trainerName={trainerName}
         trainerId={trainerId}
         year={year}
-        dy={dy}
+        schTime={time}
       />
       <SwapTrainer
         showModal={showModal}

@@ -4,21 +4,16 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Modal from "react-bootstrap/Modal";
 import { useState, useEffect } from "react";
-import { addTrainerModalSchema } from "./Utils/Schema";
 import axios from "axios";
-import {
-  Formik,
-  Field,
-  ErrorMessage,
-  useFormik,
-  validateYupSchema,
-} from "formik";
+import AddScheduleModal from "./AddScheduleModal";
 
 const AddTrainerModal = ({
   showModal,
   setShowModal,
   itemId,
   schedualDataFn,
+  schTime,
+  schDate
 }) => {
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);
@@ -26,32 +21,16 @@ const AddTrainerModal = ({
   const [allSchedule, setAllScheduled] = useState();
   const [loading, setLoading] = useState(false);
   const [showTrainerData, setShowTrainerData] = useState();
-
-
-  async function onSubmit(values) {
-    setLoading(true);
-    let newData = {
-      trainerId: values?.trainerid,
-      bookingId: itemId,
-    };
-    addTrainerFn(newData);
-  }
-
-  const {
-    values,
-    errors,
-    handleBlur,
-    resetForm,
-    handleChange,
-    handleSubmit,
-    touched,
-  } = useFormik({
-    initialValues: {
-      trainerid: "",
-    },
-    validationSchema: addTrainerModalSchema,
-    onSubmit,
-  });
+  const [show, setShow] = useState()
+  const [trainerId, setTrainerId] = useState()
+  const [trainer, setTrainer] = useState()
+  const [clientName, setClientName] = useState()
+  const [mobileNo, setMobileNo] = useState()
+  const [vehicleType, setVehicletype] = useState()
+  const [location, setLocation] = useState()
+  const [clientId,setClientId] = useState()
+  const [testTrainer, setTestTrainer] = useState()
+  const [trainerErr, setTrainerErr] = useState()
 
   async function getAllTrainer() {
     try {
@@ -74,12 +53,24 @@ const AddTrainerModal = ({
         return dataId == itemId;
       });
       setAllScheduled(filterData);
+      setTrainer(filterData.trainerId)
+      filterData.map((item) => {
+        setTrainer(item?.trainerId)
+        setClientName(item?.clientName)
+        setMobileNo(item?.clientMobileNo)
+        setVehicletype(item?.vehicleTypeId)
+        setLocation(item?.locationId)
+        setClientId(item?.clientId)
+      })
+
+      console.log("filterData-->",filterData);
     } catch (error) {
       console.log("Error:", error);
     }
   }
 
   async function addTrainerFn(newData) {
+    console.log("newData:", newData);
     try {
       const token = localStorage.getItem("token");
       const response = await axios.post("/api/addTrainer", {
@@ -87,9 +78,8 @@ const AddTrainerModal = ({
         data: newData,
       });
       setShowTrainerData(response.data.data.data)
-      setLoading(false);
-      toast.success("Trainer added successfully");
-      resetForm();
+      console.log("response data-->", response.data.data.data);
+      // setLoading(false);
       setTimeout(() => {
         setShowModal(false);
       }, [1000]);
@@ -106,6 +96,31 @@ const AddTrainerModal = ({
     getAllScheduleData();
   }, [itemId, showTrainerData]);
 
+
+  async function modalShowFn(e) {
+    e.preventDefault()
+    setShow(true);
+    setShowModal(false);
+
+    setTrainerErr(false)
+    if (!trainer) {
+      setTrainerErr(true)
+      return;
+    }
+    const newData = {
+      trainerId: trainer,
+      bookingId: itemId,
+    };
+    if (!trainerErr) {
+          addTrainerFn(newData);
+        
+    }
+
+  }
+  async function trainerErrFn() {
+    setTrainerErr(false);
+  }
+console.log("hello trainer-->",trainer)
   return (
     <div>
       <ToastContainer />
@@ -132,17 +147,19 @@ const AddTrainerModal = ({
                     <select
                       className="form-select form-select-lg mb-3 trainnext-select"
                       aria-label=".form-select-lg example"
+                      onClick={trainerErrFn}
                       name="trainerid"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
+                      onChange={(e) => setTrainer(e.target.value)}
                     >
                       {item1.trainerId != null ? item1.trainerName : <option value="">Select Trainer</option>}
+                      {/* <option value="">Select Trainer</option> */} 
                       {allTrainer?.map((item, idx) => {
+
                         return (
                           <option
                             value={item?.id}
                             selected={
-                              item?.trainerName == item1.trainerName ? true : false
+                              item?.trainerName == item1.trainerName
                             }
                           >
                             {item.trainerName}
@@ -150,8 +167,8 @@ const AddTrainerModal = ({
                         );
                       })}
                     </select>
-                    {errors?.trainerid && touched?.trainerid && (
-                      <p className="input-error">{errors?.trainerid}</p>
+                    {trainerErr && (
+                      <span className="input-error">Select trainer</span>
                     )}
                   </>
                 )
@@ -195,14 +212,32 @@ const AddTrainerModal = ({
                 type="submit"
                 className="btn-book btn btn-primary "
                 disabled={loading}
+                data-bs-target="#exampleModalToggle3"
+                data-bs-toggle="modal"
+                onClick={(e) =>
+                  modalShowFn(e)
+                }
               >
                 {" "}
-                {loading ? "Loading..." : "ADD"}
+                {loading ? "Loading..." : "Next"}
               </button>
             </div>
           </form>
         </Modal.Body>
       </Modal>
+
+      <AddScheduleModal
+        show={show}
+        setShow={setShow}
+        trainerId={trainer}
+        schDate={schDate}
+        schTime={schTime}
+        clientName={clientName}
+        mobileNo={mobileNo}
+        vehicleType={vehicleType}
+        location={location}
+        clientId={clientId}
+      />
     </div>
   );
 };

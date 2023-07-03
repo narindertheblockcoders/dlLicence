@@ -38,7 +38,7 @@ function Trainers() {
     { time: "05:30 PM" },
     { time: "06:00 PM" },
     { time: "06:30 PM" },
-    { time: "07:00 PM" },
+    // { time: "07:00 PM" },
   ];
 
   const [trainer, setTrainer] = useState()
@@ -51,7 +51,7 @@ function Trainers() {
   const [trainerName, setTrainerName] = useState()
   const [date, setDate] = useState();
   const [year, setYear] = useState();
-
+  const [sortedDates,setSortedDates] =useState()
   const date1 = []
   const newDate = []
   //vehicleTypesch2
@@ -62,13 +62,26 @@ function Trainers() {
       const token = localStorage.getItem("token")
       const response = await axios.post("/api/getAllTrainerData", { token: token, trainerId: 1 })
       const resultData = response.data.data.data
+
       const dataArray = Object.values(resultData).map(value => ({ ...value }));
+
+///
+        // const dates = dataArray?.map(item => item.datesch);
+        // setSortedDates(dates)
+        // console.log("hello dates-->",dates)
+        // const sorted = dates.sort((a, b) => moment(a.datesch).diff(moment(b.datesch)));
+
+
+///
+
+
+
       const sortedData = [...dataArray].sort((a, b) => {
-        const dateA = new Date(a.datesch);
-        const dateB = new Date(b.datesch);
+        const dateA = new Date(a.dateSch);
+        const dateB = new Date(b.dateSch);
         return dateA - dateB;
       });
-     setOpen(false)
+      setOpen(false)
       setTrainerData(sortedData)
     } catch (error) {
       console.log("Error---:", error)
@@ -88,12 +101,13 @@ function Trainers() {
       const resultData = response.data.data.data
       const dataArray = Object.values(resultData).map(value => ({ ...value }));
       // setTrainerDate(dataArray)
+      // const dateFormat = "YYYY-MM-DD"
       const sortedData = [...dataArray].sort((a, b) => {
-        const dateA = new Date(a.datesch);
-        const dateB = new Date(b.datesch);
+        const dateA = new Date(a.dateSch);
+        const dateB = new Date(b.dateSch);
         return dateA - dateB;
       });
-       setOpen(false)
+      setOpen(false)
       setTrainerData(sortedData)
     } catch (error) {
       console.log("Error---:", error)
@@ -143,13 +157,12 @@ function Trainers() {
       }
     }
   }
-
   useEffect(() => {
     getDate()
   }, [trainerData])
 
   useEffect(() => {
-    setDataState(newDate)
+    setDataState(newDate) 
   }, [trainerData])
 
 
@@ -175,14 +188,15 @@ function Trainers() {
     setShow(true);
   }
   
+
   return (
     <>
       <Backdrop
-  sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-  open={open}
->
-  <CircularProgress color="inherit" />
-</Backdrop>
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={open}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <Navbar />
       {/* section-traner-tab */}
       <section className="trainers">
@@ -190,7 +204,7 @@ function Trainers() {
           <h2>Trainers</h2>
         </div>
         <div className="trainers-tabs">
-          <div className="d-flex align-items-start">
+          <div className="d-flex align-items-start" id="traner-tab-flex">
             <div
               className="nav flex-column nav-pills me-3 trainers-flex"
               id="v-pills-tab"
@@ -238,11 +252,8 @@ function Trainers() {
 
             <div className="tabs-head">
               {dataState?.map((item) => {
-                {/* const dateStr = (item?.datesc); */ }
                 const dateObj = new Date(item);
-                dateObj.setTime(dateObj.getTime());
                 const formattedDate = format(dateObj, "MMM dd yyyy");
-                <div>hello</div>
                 return (
                   <>
                     <div className="tab-content" id="v-pills-tabContent">
@@ -260,20 +271,33 @@ function Trainers() {
                                 <div className="trainerhead-one">
                                   <h3>{formattedDate}</h3>
                                 </div>
-                                {timeSchedule?.map((item2) => {
+                                {timeSchedule?.map((item1) => {
                                   const matchingData = trainerData?.filter(
-                                    (item3) =>
+                                    (item2) =>
+                                    {
+                                      // console.log(item2,'hellooooooooooooooo')
+                                      const startTime = (item2?.startTime?.slice(0, -3));
+                                      const endTime = (item2?.endTime?.slice(0, -3));
+                                      const filteredTimeSlots = timeSchedule.filter(slot => {
+                                        const slotTime = slot.time;
+                                        return slotTime >= startTime && slotTime <= endTime;
+                                      });
+                                      for (let i = 0; i <= filteredTimeSlots.length; i++) {
+                                        if (item === item2?.dateSch && item1?.time?.split(" ")[0] == filteredTimeSlots[i]?.time?.split(" ")[0])
+                                        {
+                                          //  console.log("filteredTimeSlots--->")
 
-                                      item === item3?.dateSch &&
-                                      item2?.time?.split(" ")[0] ===
-                                      item3?.timeSlot?.slice(0, -3)
+                                          return item2;
+                                        }
+                                      }
+                                    }
                                   );
-
-                                  if (matchingData.length === 0) {
-
+                                  // console.log("matchingData---->",matchingData?.length)
+                                  if (matchingData.length == 0) {
+                                    // console.log("hello from here-->")
                                     return (<>
                                       <div className="trainer-timings">
-                                        <span>{item2?.time}</span>
+                                        <span>{item1?.time}</span>
                                         <div className="trainer-opicty">
                                           <Link
                                             href={"#"}
@@ -282,7 +306,7 @@ function Trainers() {
                                             data-bs-toggle="modal"
                                             // value={item.time}
                                             onClick={(e) =>
-                                              modalShowFn(item2.time)
+                                              modalShowFn(item1.time)
                                             }
                                           >
                                             Add Schedule
@@ -291,125 +315,125 @@ function Trainers() {
                                       </div>
                                     </>)
                                   }
+                                  if (matchingData?.length != 0) {
+                                    // console.log("hello from here-->")
+                                    return (
+                                      <>
+                                        {trainerData?.map((item5) => {
+                                          // console.log("item5-->",item5)
+                                          const startTime = (item5?.startTime?.slice(0, -3));
+                                          const endTime = (item5?.endTime?.slice(0, -3));
+                                          const filteredTimeSlots = timeSchedule.filter(slot => {
+                                            const slotTime = slot.time;
+                                            return slotTime >= startTime && slotTime <= endTime;
+                                          });
 
-                                  return (
-                                    <>
-
-                                      {trainerData?.map((item5) => {
-
-                                        if (
-                                          item5?.dateSch == item &&
-                                          item2?.time?.split(" ")[0] ==
-                                          item5?.timeSlot?.slice(0, -3)
-                                        ) {
-
-                                          return (
-                                            <>
-
-                                              <div className="trainerhead-one-main">
-                                                <div className="trainerhead-one-one">
-                                          {item5?.scheduleId !=3 ? 
-                                                  <h5> {new Date(`01/01/2000 ${item5?.startTime}`).toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}
-                                                    - {new Date(`01/01/2000 ${item5?.endTime}`).toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}</h5>
-                                                : null  }
-                                                </div>
-                                                <div className="trainerhead-one-one">
-
-                                                  {item5.scheduleId == 3 ? (
-                                                    <div className="training-div">
-                                                      <h5 className="head-one-four">
-                                                        {" "}
-                                                        Test
-                                                      </h5>
+                                          for (let i = 0; i <= filteredTimeSlots.length; i++) {
+                                            if (item === item5?.dateSch && item1?.time?.split(" ")[0] == filteredTimeSlots[i]?.time?.split(" ")[0]) {
+                                              return (
+                                                <>
+  
+                                                  <div className="trainerhead-one-main">
+                                                    <div className="trainerhead-one-one">
+                                                      {item5?.scheduleId != 3 ?
+                                                        <h5> {new Date(`01/01/2000 ${item5?.startTime}`).toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}
+                                                          - {new Date(`01/01/2000 ${item5?.endTime}`).toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}</h5>
+                                                        : null}
                                                     </div>
-                                                  ) : null}
-                                                  {item5.scheduleId == 2 ? (
-                                                    <div className="training-div">
-                                                      <h5 className="t-test">
-                                                        Training & Test
-                                                      </h5>
+                                                    <div className="trainerhead-one-one">
+  
+                                                      {item5.scheduleId == 3 ? (
+                                                        <div className="training-div">
+                                                          <h5 className="head-one-four">
+                                                            {" "}
+                                                            Test
+                                                          </h5>
+                                                        </div>
+                                                      ) : null}
+                                                      {item5.scheduleId == 2 ? (
+                                                        <div className="training-div">
+                                                          <h5 className="t-test">
+                                                            Training & Test
+                                                          </h5>
+                                                        </div>
+                                                      ) : null}
+                                                      {item5.scheduleId == 1 ? (
+                                                        <div className="training-div">
+                                                          <h5 className="head-one-three">
+                                                            Training
+                                                          </h5>
+                                                        </div>
+                                                      ) : null}
+  
                                                     </div>
-                                                  ) : null}
-                                                  {item5.scheduleId == 1 ? (
-                                                    <div className="training-div">
-                                                      <h5 className="head-one-three">
-                                                        Training
-                                                      </h5>
+                                                  </div>
+  
+                                                  <div className="trainertwo-part-head">
+                                                    {vehicleType?.map((item3) => {
+                                                      if (item5?.vehicleTypeId == item3?.id) {
+                                                        return (
+                                                          <>
+                                                            <h6>{item3?.vehicleType}</h6>
+                                                          </>
+                                                        )
+                                                      }
+                                                    })}
+                                                    {/* {item5?.scheduleId != 1 ?
+                                                      <strong>Test at {new Date(`01/01/2000 ${item5?.testTime}`).toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}</strong>
+                                                      : null} */}
+  
+  
+                                                    <small>Location</small>
+                                                    {bookLocation?.map((item4) => {
+                                                      if (item5?.locationId == item4?.id) {
+                                                        return (
+                                                          <>
+  
+                                                            <span>{item4?.place}</span>
+                                                          </>
+                                                        )
+                                                      }
+                                                    })}
+  
+                                                    <small>Client</small>
+                                                    <span> {item5?.clientName}({item5?.clientMobileNo})</span>
+                                                  </div>
+                                                </>
+                                              )
+                                            }
+                                            else if (item5?.isData == false) {
+                                              return (
+                                                <>
+  
+                                                  <div className="trainer-timings">
+                                                    <span>{item1?.time}</span>
+                                                    <div className="trainer-opcity">
+                                                      <Link
+                                                        href=""
+                                                        className="trainerhover-btns"
+                                                        data-bs-target="#exampleModalToggle3"
+                                                        data-bs-toggle="modal"
+                                                        value={item.time}
+                                                        onClick={(e) =>
+                                                          modalShowFn(
+  
+                                                            item1.time
+                                                          )
+                                                        }
+                                                      >
+                                                        Add Schedule
+                                                      </Link>
                                                     </div>
-                                                  ) : null}
-
-                                                </div>
-                                              </div>
-
-                                              <div className="trainertwo-part-head">
-                                                {vehicleType?.map((item3) => {
-                                                  if (item5?.vehicleTypeId == item3?.id) {
-                                                    return (
-                                                      <>
-                                                        <h6>{item3?.vehicleType}</h6>
-                                                      </>
-                                                    )
-                                                  }
-                                                })}
-                                                  {item5?.scheduleId !=1 ?
-                                                <strong>Test at {new Date(`01/01/2000 ${item5?.testTime}`).toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}</strong>
-                                                 :null }
-                                               
-                                               
-                                                <small>Location</small>
-                                                {bookLocation?.map((item4) => {
-                                                  if (item5?.locationId == item4?.id) {
-                                                    return (
-                                                      <>
-
-                                                        <span>{item4?.place}</span>
-                                                      </>
-                                                    )
-                                                  }
-                                                })}
-
-                                                <small>Client</small>
-                                                <span> {item5?.clientName}({item5?.clientMobileNo})</span>
-                                              </div>
-                                            </>
-                                          )
+                                                  </div>
+                                                </>
+                                              );
+                                            }
+                                            break;}
+                                        })
                                         }
-
-                                        else if (item5?.isData == false) {
-
-                                          return (
-                                            <>
-
-                                              <div className="trainer-timings">
-                                                <span>{item2?.time}</span>
-                                                <div className="trainer-opcity">
-                                                  <Link
-                                                    href=""
-                                                    className="trainerhover-btns"
-                                                    data-bs-target="#exampleModalToggle3"
-                                                    data-bs-toggle="modal"
-                                                    value={item.time}
-                                                    onClick={(e) =>
-                                                      modalShowFn(
-
-                                                        item2.time
-                                                      )
-                                                    }
-                                                  >
-                                                    Add Schedule
-                                                  </Link>
-                                                </div>
-                                              </div>
-                                            </>
-                                          );
-                                        }
-
-                                      })
-                                      }
-                                    </>
-                                  )
-
-
+                                      </>
+                                    )
+                                  }
                                 })}
 
                               </div>

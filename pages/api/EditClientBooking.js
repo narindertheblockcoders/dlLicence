@@ -3,12 +3,10 @@ import axios from "axios";
 export default async function handler(req, res) {
   if (req.method == "POST") {
     try {
-      const { token } = req.body;
-      const { data } = req.body;
-      console.log("data for only training-->",data,token);
+      const { token, data } = req.body;
       var config = {
         method: "post",
-        url: "http://134.122.64.108:3005/api/v1/useradmin/clienttrainingonly",
+        url: "http://134.122.64.108:3005/api/v1/useradmin/editbooking",
         headers: {
           Authorization: `Bearer ${token}`,
         },

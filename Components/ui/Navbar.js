@@ -1,7 +1,18 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router';
 
 const Navbar = () => {
+
+  const [selectActive, setSelectActive] = useState(0)
+
+  
+  useEffect(()=>{
+  setSelectActive(localStorage.getItem("activeNo"))
+
+},[])
+
+  console.log(selectActive,"select Active")
+
 
   const router = useRouter()
   async function logOut() {
@@ -27,28 +38,28 @@ const Navbar = () => {
 
 
               <li className="nav-item">
-                <a className="nav-link  " aria-current="page" href="getUsers">
+                <a className={selectActive == 1 ? "nav-link active" : "nav-link "} onClick={()=>localStorage.setItem("activeNo",1)}  aria-current="page" href="getUsers">
                   Users
                 </a>
               </li>
 
               <li className="nav-item">
-                <a className="nav-link " aria-current="page" href="/bookingList">
+                <a className={selectActive == 2 ? "nav-link active" : "nav-link "}  onClick={()=>localStorage.setItem("activeNo",2)} aria-current="page" href="/bookingList">
                   Booking
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" aria-current="page" href="/schedule">
+                <a className={selectActive == 3 ? "nav-link active" : "nav-link "}  onClick={()=>localStorage.setItem("activeNo",3)} aria-current="page" href="/schedule">
                   Schedule
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" aria-current="page" href="/trainers">
+                <a className={selectActive == 4 ? "nav-link active" : "nav-link "}  onClick={()=>localStorage.setItem("activeNo",4)} aria-current="page" href="/trainers">
                   Trainers
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link " aria-current="page" href="/client">
+                <a className={selectActive == 5 ? "nav-link active" : "nav-link "}  onClick={()=>localStorage.setItem("activeNo",5)} aria-current="page" href="/client">
                   Clients
                 </a>
               </li>

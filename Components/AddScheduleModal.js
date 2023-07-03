@@ -5,28 +5,53 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import AddSchWData from "./AddSchWData";
-import $ from "jquery"
+import $ from "jquery";
 
-const AddScheduleModal = ({ show, setShow, trainerName, trainerId, date, year, dy }) => {
-  console.log(dy,"dy")
+const AddScheduleModal = ({
+  show,
+  setShow,
+  trainerId,
+  schDate,
+  schTime,
+  clientName,
+  mobileNo,
+  vehicleType,
+  location,
+  clientId,
+}) => {
 
-  const [secondShow, setSecondShow] = useState(false)
-  const [selectTrainer, setSelectSchedul] = useState()
 
+  console.log(  
+    trainerId,
+    schDate,
+    schTime,
+    clientName,
+    mobileNo,
+    vehicleType,
+    location,
+    clientId,"props data here ")
+
+
+  const [secondShow, setSecondShow] = useState(false);
+  const [selectTrainer, setSelectSchedul] = useState();
 
   async function modalShowFn(e) {
     if (selectTrainer == null) {
-      toast.error("Please select schedule type.")
-
+      toast.error("Please select schedule type.");
     } else {
-      setSecondShow(true)
+      setSecondShow(true);
     }
   }
   return (
     <>
       <ToastContainer />
-      <div class="modal add-first-modal" id="exampleModalToggle3"
-        aria-hidden="true" aria-labelledby="exampleModalToggleLabel3" tabindex="-1">
+      <div
+        class="modal add-first-modal"
+        id="exampleModalToggle3"
+        aria-hidden="true"
+        aria-labelledby="exampleModalToggleLabel3"
+        tabindex="-1"
+      >
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header">
@@ -97,7 +122,19 @@ const AddScheduleModal = ({ show, setShow, trainerName, trainerId, date, year, d
           </div>
         </div>
       </div>
-      <AddSchWData trainerId={{ selectTrainer, date, year, trainerName, trainerId, dy }} />
+      <AddSchWData
+        trainerId={{
+          selectTrainer,
+          trainerId,
+          schDate,
+          schTime,
+          clientName,
+          mobileNo,
+          vehicleType,
+          location,
+          clientId,
+        }}
+      />
     </>
   );
 };

@@ -8,6 +8,7 @@ import FeedbackModal from "./FeedbackModal";
 import { format } from 'date-fns';
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
+import ReactPaginate from "react-paginate";
 
 
 function Client() {
@@ -20,7 +21,8 @@ function Client() {
   const [allClientData, setAllClientData] = useState();
   const [message, setMessage] = useState();
   const [open, setOpen] = React.useState(false);
-
+  const [currentPage, setCurrentpage] = useState(1)
+  const [ postsPerPage , setPostsPerPage] = useState(10)
 
   async function getAllClients() {
     try {
@@ -37,10 +39,7 @@ function Client() {
 
   const SearchFn = (e) => {
     const search = e.target.value;
-    if (search == null) {
-      getAllClients();
-      return;
-    }
+
 
     setDataSearch(search);
     const filterData = allClientData?.filter((item) => {
@@ -50,6 +49,12 @@ function Client() {
 
     setSearchData(filterData);
     setInputLength(filterData.length);
+
+    if (search == "") {
+      getAllClients();
+      setSearchData(null)
+      return;
+    }
   };
 
   useEffect(() => {
@@ -78,6 +83,21 @@ function Client() {
       console.log(err);
     }
   }
+
+
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  var currentPosts = allClientData?.slice(indexOfFirstPost, indexOfLastPost)
+
+  const Pagination  = ({selected}) =>{
+    setCurrentpage(selected + 1) 
+    setSearchData(null)
+    
+  }
+
+  console.log(searchData,"search data here for test.")
+
+
   return (
     <>
          <Backdrop
@@ -129,7 +149,7 @@ function Client() {
           </div>
 
           <div className="client-table">
-            <table className="table ">
+            <table className="table " id="users-table">
               <thead>
                 <tr className="ctable-head">
                   <th scope="col">Id</th>
@@ -145,7 +165,7 @@ function Client() {
               </thead>
               <tbody>
                 {searchData == null
-                  ? allClientData?.map((item, id) => {
+                  ? currentPosts?.map((item, id) => {
                     return (
                       <tr>
                         <td>
@@ -283,7 +303,26 @@ function Client() {
               </tbody>
             </table>
           </div>
-        </div>
+        {inputLength <= 10 || inputLength == null? null:
+        (
+          <div className="paginate-sec">
+            <ReactPaginate
+            previousLabel="← Previous"
+            nextLabel="Next →"
+            onPageChange={Pagination}
+            pageCount={Math.ceil(allClientData?.length / postsPerPage)}
+            containerClassName="pagination"
+            previousLinkClassName="pagination__link"
+            nextLinkClassName="pagination__link"
+            disabledClassName="pagination__link--disabled"
+            activeClassName="pagination_link--active"
+            className="page-link"
+            />
+
+          </div>
+        )}
+                </div>
+
       </section>
 
       <DeleteClientModal

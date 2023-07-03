@@ -12,7 +12,9 @@ import Link from "next/link";
 import Head from "next/head";
 import OwlCarousel from "react-owl-carousel3";
 import dynamic from "next/dynamic";
-
+import { format } from "date-fns";
+import EditClientDetailModal from "./EditClientDetailModal";
+import Footer from "./ui/Footer";
 
 function BookingList() {
   const [scheduleData, setScheduleData] = useState();
@@ -31,11 +33,14 @@ function BookingList() {
   const [loading, setLoading] = useState(false);
   const [itemId, setItemId] = useState();
   const [halfHour, setHalfHour] = useState();
-  const [todayDates, setTodayDates] = useState()
+  const [todayDates, setTodayDates] = useState();
   const [selectedId, setSelectedId] = useState(0);
   const [open, setOpen] = React.useState(false);
+  const [schTime, setSchTime] = useState();
+  const [schDate, setSchDate] = useState();
+  const [showDetail, setShowDetail] = useState(false);
+  const [clientId, setClientId] = useState();
 
-  
   async function schedualDataFn() {
     try {
       const token = localStorage.getItem("token");
@@ -47,12 +52,14 @@ function BookingList() {
       const numAscending = result?.sort(
         (a, b) => a.dummyBooking - b.dummyBooking
       );
-      setOpen(false)
+      setOpen(false);
       setScheduleData(numAscending);
     } catch (error) {
       console.log("Error:", error);
     }
   }
+
+  console.log(schDate, "hello date ");
 
   async function vehicalBooking() {
     try {
@@ -91,23 +98,22 @@ function BookingList() {
       },
     });
   }
-  async function todayDate(){
+  async function todayDate() {
     const currentDate = new Date();
-    const options = { day: 'numeric' };
+    const options = { day: "numeric" };
     const formattedDate = currentDate.toLocaleDateString(undefined, options);
-  
-    setSelectedId(formattedDate - 1)
-   
-     console.log(formattedDate,"date share")
+
+    setSelectedId(formattedDate - 1);
+
+    console.log(formattedDate, "date share");
   }
 
-  useEffect(()=>{
-    todayDate()
-  },[todayDates])
-
+  useEffect(() => {
+    todayDate();
+  }, [todayDates]);
 
   useEffect(() => {
-    setOpen(true)
+    setOpen(true);
     schedualDataFn();
     vehicalBooking();
     bookingLocation();
@@ -123,8 +129,20 @@ function BookingList() {
     setShow(true);
   }
 
-  function handleModalShowFn(e) {
-    setItemId(e);
+  function editClientModalFn(e) {
+    setClientId(e);
+    setShowDetail(true);
+  }
+
+  function handleModalShowFn(item) {
+    const originalDate = new Date(item?.dateOfBooking);
+    const formattedDate = format(originalDate, "dd MMM yyyy");
+    const formattedDateCapitalized =
+      formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
+    const formattedTime = format(originalDate, "hh:mm a");
+    setSchTime(formattedTime);
+    setSchDate(formattedDateCapitalized);
+    setItemId(item.id);
     setShowModal(true);
   }
 
@@ -146,8 +164,6 @@ function BookingList() {
     if (dataByDate) {
     }
   }, []);
-
-
 
   const DatePicker = (e) => {
     setDate3(null);
@@ -230,9 +246,9 @@ function BookingList() {
       const day = date.getUTCDate().toString();
       const month = date.toLocaleString("default", { month: "short" });
       const formattedDate = `${day} ${month}`;
-
       return formattedDate.includes(item);
     });
+    // console.log( "click in here filterValue-->",filterValue);
 
     setDataByDate(filterValue);
   }
@@ -243,6 +259,7 @@ function BookingList() {
     const day1 = date1.getUTCDate().toString();
     const month1 = date1.toLocaleString("default", { month: "short" });
     const formattedDate1 = `${day1} ${month1}`;
+    // console.log("click in here filterValue- hello->",formattedDate1);
 
     const filterValue = scheduleData?.filter((item2) => {
       var dateValue = item2.dateOfBooking;
@@ -250,22 +267,22 @@ function BookingList() {
       const day = date.getUTCDate().toString();
       const month = date.toLocaleString("default", { month: "short" });
       const formattedDate = `${day} ${month}`;
+      // console.log("click in here filterValue- hello->",formattedDate);
       return formattedDate === formattedDate1;
     });
     setDataByDate(filterValue);
   }
 
-console.log("first dataByDate--->",dataByDate)
-
+  console.log("first dataByDate--->", dataByDate);
 
   return (
     <>
-<Backdrop
-  sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-  open={open}
->
-  <CircularProgress color="inherit" />
-</Backdrop>
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={open}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <Navbar />
 
       <Head>
@@ -405,31 +422,37 @@ console.log("first dataByDate--->",dataByDate)
                                 if (item2?.locationId == item?.id) {
                                   return (
                                     <>
-                                        {item2?.locationId === item?.id &&
-                                        item2.isDummyBooking == 1 ? (
-                                          <div className="head-one-one">
-                                            <a
-                                              href="#"
-                                              className="dummy-btn-one"
-                                            >
-                                              Dummy
-                                            </a>
-                                          </div>
-                                        ) : null}
-                                      <div key={idx2} className="head-one-main">
+                                      <div key={idx2} className="head-one-main" id="head-one-main">
+                                      {item2?.locationId === item?.id &&
+                                      item2.isDummyBooking == 1 ? (
+                                        
                                         <div className="head-one-one">
-                                        <h5>
-                                          {new Date(
-                                            item2.dateOfBooking
-                                          ).toLocaleTimeString("en-IN", {
-                                            hour: "numeric",
-                                            minute: "numeric",
-                                            hour12: true,
-                                          })}
-                                        </h5>
+                                          <a href="#" className="dummy-btn-one">
+                                            Dummy
+                                          </a>
                                         </div>
+                                      ) : null}
+
+<div className="head-one-header">
+ 
                                         <div className="head-one-one">
-                                          <a href="#">
+                                          <h5 className="booking-time">
+                                            {new Date(
+                                              item2.dateOfBooking
+                                            ).toLocaleTimeString("en-IN", {
+                                              hour: "numeric",
+                                              minute: "numeric",
+                                              hour12: true,
+                                            })}
+                                          </h5>
+                                        </div>
+                                   
+                                        <div className="head-one-one">
+                                          <a
+                                            onClick={() =>
+                                              editClientModalFn(item2.id)
+                                            }
+                                          >
                                             <img
                                               src="img/Icon feather-edit.svg"
                                               alt=""
@@ -445,18 +468,20 @@ console.log("first dataByDate--->",dataByDate)
                                           </button>
                                           <button
                                             onClick={() =>
-                                              handleModalShowFn(item2.id)
+                                              handleModalShowFn(item2)
                                             }
                                             className="head-one-two"
                                           >
                                             Add Trainer
                                           </button>
                                         </div>
-                                      </div>
+                                        </div>
+                                        </div>
 
                                       <div className="two-part-head">
-                                  
-                                        <h6>{item2.vehicleType}</h6>
+                                        <h6 className="vehicle-text">
+                                          {item2.vehicleType}
+                                        </h6>
                                         <small>Client</small>
                                         <span>{item2.clientName}</span>
                                         <small>Booking Ref. no. </small>
@@ -467,56 +492,78 @@ console.log("first dataByDate--->",dataByDate)
                                         {/* <p>{}</p> */}
                                         <span>
                                           {" "}
-                                         {
-                                          new Date(
+                                          {new Date(
                                             item2.dateOfBooking
                                           ).toLocaleDateString("en-US", {
                                             day: "numeric",
                                             month: "short",
                                             year: "numeric",
-                                          })
-                                         }
-                                          {" "}
+                                          })}{" "}
                                           <strong>(First Booking)</strong>
                                         </span>
                                         <small>Trainer </small>
                                         <span>{item2.trainerName}</span>
+                                        {item2?.paidAmount <
+                                          item2?.totalAmount &&
+                                        item2.paidAmount > 0 ? (
+                                          <div className="schedule_client1">
+                                            <div className="client-feild-booking">
+                                              <small>Client</small>
+                                              <span>
+                                                {" "}
+                                                {item2.clientName}
+                                                <strong>
+                                                  ({item2.bookingRefNo})
+                                                </strong>
+                                              </span>
+                                            </div>
+                                            <div className="client-flex-booking">
+                                              <div className="client-feild-booking">
+                                                <small>Payment Status</small>
+                                                <span>
+                                                  {" "}
+                                                  {"Partial Payment"}
+                                                </span>
+                                              </div>
+                                              <button
+                                                type="button"
+                                                className="payment-done"
+                                              >
+                                                Payment Done
+                                              </button>
+                                            </div>
+                                          </div>
+                                        ) : (
+                                          <div
+                                            className="schedule_client1"
+                                            id="schedule_client1"
+                                          >
+                                            <div className="client-feild-booking">
+                                              <small>Client</small>
+                                              <span>
+                                                {" "}
+                                                {item2.clientName}
+                                                <strong>
+                                                  ({item2.bookingRefNo})
+                                                </strong>
+                                              </span>
+                                            </div>
+                                            <div className="client-flex-booking">
+                                              <div className="client-feild-booking">
+                                                <small>Payment Status</small>
+                                                <span> {"No Payment"}</span>
+                                              </div>
+                                              <button
+                                                type="button"
+                                                className="payment-done"
+                                              >
+                                                Payment Done
+                                              </button>
+                                            </div>
+                                          </div>
+                                        )}
                                       </div>
-                                      {item2?.paidAmount < item2?.totalAmount &&
-                                      item2.paidAmount > 0 ? (
-                                        <div className="schedule_client1">
-                                        <div  className="client-feild-booking">
-                                          <small>Client</small>
-                                          <span>
-                                            {" "}
-                                            {item2.clientName}
-                                            <strong>
-                                              ({item2.bookingRefNo})
-                                            </strong>
-                                          </span>
-                                          </div>
-                                          <div className="client-flex-booking">
-                                          <div className="client-feild-booking">
-                                          <small>Payment Status</small>
-                                          <span> {"Partial Payment"}</span>
-                                          </div>
-                                          <button type="button" className="payment-done" >Payment Done</button> 
-                                        </div>
-                                        </div>
-                                      ) : (
-                                        <div className="schedule_client2">
-                                          <small>Client</small>
-                                          <span>
-                                            {" "}
-                                            {item2.clientName}
-                                            <strong>
-                                              ({item2.bookingRefNo})
-                                            </strong>
-                                          </span>
-                                          <small>Payment Status</small>
-                                          <span> {"No Payment"}</span>
-                                        </div>
-                                      )}
+
                                     </>
                                   );
                                 }
@@ -539,11 +586,20 @@ console.log("first dataByDate--->",dataByDate)
           schedualDataFn={schedualDataFn}
           swapDataId={swapDataId}
         />
+        <EditClientDetailModal
+          showDetail={showDetail}
+          setShowDetail={setShowDetail}
+          schedualDataFn={schedualDataFn}
+          clientId={clientId}
+        />
+
         <AddTrainerModal
           showModal={showModal}
           setShowModal={setShowModal}
           schedualDataFn={schedualDataFn}
           itemId={itemId}
+          schTime={schTime}
+          schDate={schDate}
         />
 
         <Backdrop

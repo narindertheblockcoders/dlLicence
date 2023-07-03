@@ -5,6 +5,9 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Button } from "react-bootstrap";
 import Navbar from "./ui/Navbar";
+import $ from  "jquery"
+
+
 function AddUser() {
   const [inputs, setInputs] = useState({
     emailId: "",
@@ -144,12 +147,46 @@ function AddUser() {
     return errors;
   };
 
+
+
+  async function jQueryFunction() {
+    $(".toggle-password").click(function () {
+      $(this).toggleClass("fa-solid fa-eye-slash");
+      var input = $($(this).attr("toggle"));
+      if (input.attr("type") == "password") {
+        input.attr("type", "text");
+      } else {
+        input.attr("type", "password");
+      }
+    });
+  }
+
+
+
+  async function jQueryFunctionOne(){
+    $(".toggle-one-password").click(function(){
+      $(this).toggleClass("fa-solid fa-eye-slash");
+      var input = $($(this).attr("toggle"));
+      if(input.attr("type") == "password"){
+        input.attr("type", "text");
+      }else{
+        input.attr("type", "password")
+      }
+    })
+  }
+
+  useEffect(() => {
+    jQueryFunction();
+    jQueryFunctionOne()
+  }, []);
+
+
   return (
     <>
       <Navbar />
       <ToastContainer />
 
-      <section className="client">
+      <section className="client" id="client">
         <div className="container">
           <form onSubmit={handleSubmit}>
             <div className="client-head">
@@ -171,26 +208,29 @@ function AddUser() {
               <div className="mb-3 client-row">
                 <input
                   type="password"
-                  className="form-control"
+                  className="form-control only-paasword"
                   id="book-input"
                   placeholder="Password"
                   name="password"
                   value={inputs.password}
                   onChange={handleChange}
                 />
+                <span toggle=".only-paasword" className="fa fa-fw fa-eye password-icon toggle-one-password"></span>
                 <p className={"input-error"}>{formError.password}</p>
 
               </div>
               <div className="mb-3 client-row">
                 <input
                   type="password"
-                  className="form-control"
+                  className="form-control confirm-password"
                   id="book-input"
+           
                   placeholder="Confirm Password"
                   name="confirmPassword"
                   value={inputs.confirmPassword}
                   onChange={handleChange}
                 />
+                <span toggle=".confirm-password" className="fa fa-fw fa-eye password-icon toggle-password"></span>
                 <p className={"input-error"}>{formError.confirmPassword}</p>
               </div>
               <div className="mb-3 client-row">
@@ -245,8 +285,7 @@ function AddUser() {
                   className="form-select w-100"
                   aria-label="Default select example"
                   name="status"
-                  onChange={handleChange}
-                >
+                  onChange={handleChange} >
                   <option value="">Status</option>
                   <option value="1">Active</option>
                   <option value="0">Disable</option>
@@ -254,7 +293,7 @@ function AddUser() {
                 <p className={"input-error"}>{formError.status}</p>
               </div>
             </div>
-            <div className="client-button">
+            <div className="client-button" id="client-button">
               <Button className="btn-book" type="submit" disabled={disable}>
                 {loading ? "Loading..." : "Add User"}
               </Button>

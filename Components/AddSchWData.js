@@ -3,18 +3,14 @@ import React, { useEffect, useState } from "react";
 import TimePicker from "react-time-picker";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import moment from "moment";
 import { useRouter } from "next/router";
 
 const AddSchWData = (trainerId) => {
-  console.log(trainerId,"check data")
-
   const [timeStart, setTimeStart] = useState("00:00");
   const [timeEnd, setTimeEnd] = useState("00:00");
   const [location, setLocation] = useState();
   const [vehicleType, setVehicleType] = useState();
   const [clientName, setClientName] = useState();
-  const [clientId, setClientId] = useState()
   const [clientMobile, setClientMobile] = useState();
   const [comment, setComment] = useState();
   const [testTime, setTestTime] = useState();
@@ -22,8 +18,11 @@ const AddSchWData = (trainerId) => {
   const [bookVehicle, setBookvehicle] = useState();
   const [loading, setLoading] = useState(false);
   const [disable, setDisable] = useState(false);
-  const [selectClientName, setSelectClientName] = useState()
-  const [clientDataById, setClientDataById] = useState()
+  const [allTrainer, setAllTrainer] = useState();
+
+
+  console.log(trainerId,"sch modal props")
+
   //errorMessage
   const [locationErr, setLocationErr] = useState(false);
   const [vehicleErr, setVehicleErr] = useState(false);
@@ -33,29 +32,30 @@ const AddSchWData = (trainerId) => {
   const [mobileErr, setMobileErr] = useState(false);
   const [mobileErr1, setMobileErr1] = useState(false);
   const [testTimeErr, setTestTimeErr] = useState(false);
+  const [modal, setModal] = useState()
 
-  const date = new Date(trainerId?.trainerId?.dy);
+  const date = new Date(trainerId?.trainerId?.schDate);
   const year = date.getFullYear();
   const month = ("0" + (date.getMonth() + 1)).slice(-2);
   const day = ("0" + date.getDate()).slice(-2);
   const formattedDate = `${year}-${month}-${day}`;
 
-  var timeSlot = trainerId?.trainerId?.date;
+  var timeSlot = trainerId?.trainerId?.schTime;
   const timeSlote1 = timeSlot?.split(" ")[0];
-
   const router = useRouter();
+
   async function onlyTraining(data) {
-    console.log("data for onlyTraining --->",data)
     try {
-      setLoading(true);
       const token = localStorage.getItem("token");
-      const res = await axios.post("/api/onlyTraining", { token, data });
+      const res = await axios.post("/api/onlyTraining", { token: token, data: data });
       const response = res.data;
       toast.success("Data added successfully");
-      window.location.reload()
-      setLoading(false);
-      setDisable(false);
-    } catch (err) {
+      setTimeout(() => {
+        //   router.push("/schedule")
+        window.location.reload()
+      }, [3000])
+
+    }catch (err) {
       console.log(err);
       setLoading(false);
       setDisable(false);
@@ -64,16 +64,17 @@ const AddSchWData = (trainerId) => {
   }
 
   async function trainingTest(data) {
-    try {
-      setLoading(true);
 
+    try {
       const token = localStorage.getItem("token");
       const res = await axios.post("/api/trainingTest", { token, data });
       const response = res.data;
+      console.log("hello from addSchedule page response -->", response)
       toast.success("Data added successfully");
-      window.location.reload()
-      setLoading(false);
-      setDisable(false);
+      setTimeout(() => {
+        //   router.push("/schedule")
+        window.location.reload()
+      }, [3000])
     } catch (err) {
       console.log(err);
       setLoading(false);
@@ -89,9 +90,14 @@ const AddSchWData = (trainerId) => {
       const res = await axios.post("/api/onlyTest", { token, data });
       const response = res.data;
       toast.success("Data added successfully");
-      window.location.reload()
-      setLoading(false);
-      setDisable(false);
+      // setTimeout(() => {
+      //   setModal("modal")
+      //   router.push("/schedule")
+      // }, [3000])
+      setTimeout(() => {
+        //   router.push("/schedule")
+        window.location.reload()
+      }, [3000])
     } catch (err) {
       console.log(err);
       setLoading(false);
@@ -159,7 +165,7 @@ const AddSchWData = (trainerId) => {
       startTime: timeStart,
       endTime: timeEnd,
       comment: comment,
-      clientId: clientId,
+      clientId: trainerId.trainerId.clientId,
     };
 
     if (
@@ -171,11 +177,15 @@ const AddSchWData = (trainerId) => {
       !mobileErr &&
       !mobileErr1
     ) {
+      setDisable(true)
+      setLoading(true)
       onlyTraining(data);
     }
   }
 
   async function formSubmitSecond() {
+
+    console.log("hello from training and test--->>>")
     var regex = /^[a-zA-Z ]*$/;
     const phoneRegExp = /^(\d{3})[- ]?(\d{3})[- ]?(\d{4})$/;
 
@@ -240,7 +250,7 @@ const AddSchWData = (trainerId) => {
       startTime: timeStart,
       endTime: timeEnd,
       comment: comment,
-      clientId: clientId,
+      clientId: trainerId.trainerId.clientId,
     };
 
 
@@ -254,6 +264,9 @@ const AddSchWData = (trainerId) => {
       !mobileErr1 &&
       !testTimeErr
     ) {
+      console.log("hello from trainingTest function  here----");
+      setDisable(true)
+      setLoading(true)
       trainingTest(data);
     }
   }
@@ -261,6 +274,7 @@ const AddSchWData = (trainerId) => {
   async function formSubmitThird() {
     var regex = /^[a-zA-Z ]*$/;
     const phoneRegExp = /^(\d{3})[- ]?(\d{3})[- ]?(\d{4})$/;
+
 
     setLocationErr(false);
     if (!location) {
@@ -316,7 +330,7 @@ const AddSchWData = (trainerId) => {
       clientMobileNo: clientMobile,
       dateSch: formattedDate,
       comment: comment,
-      clientId: clientId,
+      clientId: trainerId.trainerId.clientId,
     };
 
     if (
@@ -329,6 +343,8 @@ const AddSchWData = (trainerId) => {
       !mobileErr1 &&
       !testTimeErr
     ) {
+      setDisable(true)
+      setLoading(true)
       onlyTest(data);
     }
   }
@@ -353,32 +369,15 @@ const AddSchWData = (trainerId) => {
     }
   }
 
-  async function getAllclient() {
-    try {
-      const token = localStorage.getItem("token");
-      const response = await axios.post("/api/allClients", { token: token });
-      setSelectClientName(response.data.data.data);
-    } catch (error) {
-      console.log("error:", error);
-    }
-  }
-
-  async function getclientBookingById() {
-    try {
-      const token = localStorage.getItem("token")
-      const response = await axios.post("/api/getclientBookingById", { token: token, clientId: clientId })
-      setClientDataById(response.data.data.data)
-      console.log("object1 response.data.data.data-->", response.data.data.data.locationId);
-      setLocation(response?.data?.data?.data?.locationId)
-      setVehicleType(response?.data?.data?.data?.vehicleTypeId)
-      // setVehicleType(response.data.data.data.vehicleTypeId)
-      // locationId: location,
-      // setLocation(response.data.data.data.locationId)
-      // vehicleTypeId: vehicleType,
-    } catch (error) {
-      console.log("Error:::-->", error)
-    }
-  }
+  // async function getAllclient() {
+  //   try {
+  //     const token = localStorage.getItem("token");
+  //     const response = await axios.post("/api/allClients", { token: token });
+  //     setSelectClientName(response.data.data.data);
+  //   } catch (error) {
+  //     console.log("error:", error);
+  //   }
+  // }
 
 
   async function hideNameFunction() {
@@ -403,31 +402,27 @@ const AddSchWData = (trainerId) => {
   useEffect(() => {
     getAllLocation();
     getAllVehicle();
-    getAllclient()
+    // getAllclient()
+    setLocation(trainerId?.trainerId?.location)
+    setVehicleType(trainerId?.trainerId?.vehicleType)
+    setClientName(trainerId?.trainerId?.clientName)
+    setClientMobile(trainerId?.trainerId?.mobileNo)
+
   }, [trainerId]);
 
-  async function selectedClient(item) {
-    const id = item?.split("-")
-    setClientName(id[1])
-    setClientId(id[0])
-
-  }
-
-  async function getMobileNumber() {
-    const mobileNo = selectClientName?.filter((item) => {
-      if (item?.id == clientId) {
-        return item?.clientMobileNo
-      }
-    })
-    if (mobileNo) {
-      setClientMobile(mobileNo[0]?.clientMobileNo)
+  async function getAllTrainer() {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.post("/api/getAllTrainer", { token });
+      setAllTrainer(response.data.data.data);
+    } catch (error) {
+      console.log("Error:", error);
     }
   }
-
   useEffect(() => {
-    getMobileNumber()
-    getclientBookingById()
-  }, [clientId])
+    getAllTrainer()
+
+  }, [])
 
   return (
     <>
@@ -437,6 +432,8 @@ const AddSchWData = (trainerId) => {
         id="exampleModalToggle4"
         aria-hidden="true"
         aria-labelledby="exampleModalToggleLabel4"
+        data-bs-dismiss={modal}
+        // aria-label="Close"
         tabindex="-1"
       >
         <div class="modal-dialog modal-dialog-centered">
@@ -460,18 +457,26 @@ const AddSchWData = (trainerId) => {
                 ) : (
                   <div class="flex-snd">
                     <span>Trainer </span>
-                    <small>{trainerId?.trainerId?.trainerName}</small>
+                    {allTrainer?.map((item) => {
+                      if (item?.id == trainerId?.trainerId?.trainerId)
+                        return (
+                          <>
+
+                            <small>{item?.trainerName}</small>
+                          </>
+                        )
+                    })}
                   </div>
                 )}
 
                 <div class="flex-snd">
                   <span>Time Slot </span>
-                  <small>{trainerId?.trainerId?.date} </small>
+                  <small>{trainerId?.trainerId?.schTime} </small>
                 </div>
 
                 <div class="flex-snd">
                   <span>Date</span>
-                  <small>{trainerId?.trainerId?.dy} </small>
+                  <small>{trainerId?.trainerId?.schDate} </small>
                 </div>
               </div>
 
@@ -485,24 +490,50 @@ const AddSchWData = (trainerId) => {
                         <div class="input-group" id="input-group">
                           <div class="autoflexx mb-0">
                             <small>Time Start</small>
-                            <TimePicker
+                            {/* <TimePicker
                               onChange={(e) => setTimeStart(e)}
                               value={timeStart}
                               format="h:mm a"
                               disableClock={true}
                               clearIcon={null}
+                            /> */}
+                            <input
+                              type="time"
+                              class="form-control"
+                              placeholder="hh:mm"
+                              // onClick={hideTestTimeFunction}
+                              format="hh:mm"
+                              // aria-label="Test Time"
+                              // defaultValue={testTime}
+                              onChange={(e) => setTimeStart(e.target.value)}
+                            // min="01:00"
+                            // max="12:00"
+
                             />
                           </div>
 
                           <span class="input-group-text">to</span>
                           <div class="autoflexx mb-0">
                             <small>Time End</small>
-                            <TimePicker
+                            {/* <TimePicker
                               onChange={(e) => setTimeEnd(e)}
                               value={timeEnd}
                               format="h:mm a"
                               disableClock={true}
                               clearIcon={null}
+                            /> */}
+                            <input
+                              type="time"
+                              class="form-control"
+                              placeholder="hh:mm"
+                              // onClick={hideTestTimeFunction}
+                              format="hh:mm"
+                              // aria-label="Test Time"
+                              // defaultValue={testTime}
+                              onChange={(e) => setTimeEnd(e.target.value)}
+                            // min="01:00"
+                            // max="12:00"
+
                             />
                           </div>
                         </div>
@@ -616,10 +647,16 @@ const AddSchWData = (trainerId) => {
                       )}
                     </div>
                     <span class="input-group-text"></span>
+
+                    {/* <div class="timepicker timepicker1" dir="ltr">
+			<input type="text" class="hh N" min="0" max="23" placeholder="hh" maxlength="2" />:
+			<input type="text" class="mm N" min="0" max="59" placeholder="mm" maxlength="2" />
+		</div> */}
+
                     <div class="autoflexx">
                       <small>Test Time</small>
                       <input
-                        type="text"
+                        type="time"
                         class="form-control"
                         placeholder="hh:mm"
                         onClick={hideTestTimeFunction}
@@ -627,6 +664,9 @@ const AddSchWData = (trainerId) => {
                         aria-label="Test Time"
                         defaultValue={testTime}
                         onChange={(e) => setTestTime(e.target.value)}
+                      // min="01:00"
+                      // max="12:00"
+
                       />
                       {testTimeErr && (
                         <span className="input-error">
@@ -639,19 +679,16 @@ const AddSchWData = (trainerId) => {
                 <div class="input-group ">
                   <div class="autoflexx">
                     <small>Select Client Name</small>
-                    <select
-                      class="form-select"
+                    <input
+                      type="text"
+                      class="form-control"
                       onClick={hideNameFunction}
                       aria-label="Default select example"
-                      onChange={(e) => selectedClient(e.target.value)}
-                    >
-                      <option value="">Select</option>{" "}
-                      {selectClientName?.map((item) => {
-                        return (
-                          <option value={`${item?.id}-${item?.clientName}`}>{item?.clientName}</option>
-                        );
-                      })}
-                    </select>
+                      defaultValue={clientName}
+                      onChange={(e) => setClientName(e.target.value)}
+                    />
+
+
 
                     {nameErr && (
                       <span className="input-error">
@@ -681,6 +718,7 @@ const AddSchWData = (trainerId) => {
                       onClick={hideMobileFunction}
                       aria-label="Client Mobile"
                       defaultValue={clientMobile}
+                      onChange={(e) => setClientMobile(e.target.value)}
                       maxLength={10}
                     />
                     {mobileErr && (
@@ -718,7 +756,8 @@ const AddSchWData = (trainerId) => {
                   <button
                     class="btn btn-primary model-add"
                     onClick={() => formSubmitFirst()}
-                    disabled={loading}
+                    // disabled={loading}
+                    disabled={disable}
                   >
                     {" "}
                     {loading ? "Loading..." : "Add"}
@@ -731,7 +770,8 @@ const AddSchWData = (trainerId) => {
                   <button
                     class="btn btn-primary model-add"
                     onClick={() => formSubmitSecond()}
-                    disabled={loading}
+                    // disabled={loading}
+                    disabled={disable}
                   >
                     {" "}
                     {loading ? "Loading..." : "Add"}
@@ -744,7 +784,8 @@ const AddSchWData = (trainerId) => {
                   <button
                     class="btn btn-primary model-add"
                     onClick={() => formSubmitThird()}
-                    disabled={loading}
+                    // disabled={loading}
+                    disabled={disable}
                   >
                     {" "}
                     {loading ? "Loading..." : "Add"}

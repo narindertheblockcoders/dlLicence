@@ -98,17 +98,12 @@ function NewBooking() {
   }
 
   async function newBooking(formInputs) {
-    console.log("object -->",formInputs);
     try {
-      setLoading(true);
       const token = localStorage.getItem("token");
       const response = await axios.post("/api/newBooking", {
         formInputs,
         token,
       });
-      console.log("newBooking response is here -->",response);
-      setLoading(false);
-      setDisable(false);
       toast.success("data inserted Successfully");
       setTimeout(() => {
         router.push("/bookingList");
@@ -169,6 +164,8 @@ function NewBooking() {
   }, [paidAmount, totalAmount]);
 
   async function formSubmitFn() {
+
+
     setBookingRefNoErr(false);
     setLicenseNoErr(false);
     setClientNameErr(false);
@@ -180,7 +177,7 @@ function NewBooking() {
     setDateofBookingErr(false);
     setDateofPaymentErr(false);
     // setPaymentBalErr(false);
-
+    
     if (
       !bookingRefNo &&
       !licenseNo &&
@@ -191,9 +188,10 @@ function NewBooking() {
       !totalAmount &&
       !paidAmount &&
       !dateofBooking &&
-      !dateofPayment &&
-      !paymentBalance
-    ) {
+      !dateofPayment 
+      // !paymentBalance
+      ) {
+      console.log("hello from new booking1 ");
       setBookingRefNoErr(true);
       setLicenseNoErr(true);
       setClientNameErr(true);
@@ -207,6 +205,7 @@ function NewBooking() {
       // setPaymentBalErr(false);
       return;
     } else {
+      console.log("hello from new booking3333 ");
       setBookingRefNoErr(false);
       if (!bookingRefNo) {
         setBookingRefNoErr(true);
@@ -268,6 +267,8 @@ function NewBooking() {
       // }
     }
 
+  
+
     const data = {
       clientId: clientId,
       bookingRefNo: bookingRefNo,
@@ -283,7 +284,7 @@ function NewBooking() {
       paymentBalance: paymentBalance,
       isDummyBooking: isDummyBooking,
     };
-
+    console.log("hello from here1111--->",data)
     if (
       !bookingRefNoErr &&
       !licenseNoErr &&
@@ -298,11 +299,20 @@ function NewBooking() {
       //  &&
       // !paymentBalE rr
     ) {
-      // setLoading(true)
-      // setDisable(true)
+      console.log("hello from here--->",data)
+      setLoading(true)
+      setDisable(true)
       newBooking(data);
     }
   }
+
+
+
+
+
+
+
+
   async function bookingRefNoFn() {
     setBookingRefNoErr(false);
   }
@@ -334,9 +344,9 @@ function NewBooking() {
   async function DopErrFn() {
     setDateofPaymentErr(false);
   }
-  async function paymentBalErrFn() {
-    setPaymentBalErr(false);
-  }
+  // async function paymentBalErrFn() {
+  //   setPaymentBalErr(false);
+  // }
   return (
     <>
       <ToastContainer />
@@ -404,7 +414,7 @@ function NewBooking() {
               >
                 <option value="">Select Location</option>
                 {booklocation?.map((item) => {
-                  return <option value={item.id}>{item.place}</option>;
+                  return <option  value={item.id}>{item.place}</option>;
                 })}
               </select>
               {locationIdErr && (
@@ -419,9 +429,9 @@ function NewBooking() {
                 onChange={(e) => setVehicleTypeId(e.target.value)}
                 onClick={vehicleTypeErrFn}
               >
-                <option value="">Select Vehicle Type</option>
+                <option value="" >Select Vehicle Type</option>
                 {vehicleType?.map((item) => {
-                  return <option value={item.id}>{item.vehicleType}</option>;
+                  return <option  value={item.id}>{item.vehicleType}</option>;
                 })}
               </select>
               {vehicleTypeIdErr && (
@@ -431,13 +441,14 @@ function NewBooking() {
 
             {/* <div className="mb-3 booking-row">
               <label for="booking-input">Choose Name:</label>
-              <input list="New-booking" id="booking-input" name="booking-input"></input>
+              <input     className="form-control"
+                id="book-input" list="New-booking" name="booking-input" placeholder="Name"></input>
               <datalist id="New-booking">
                 <option value="person1"></option>
                 <option value="person2"></option>
                 {allClient?.map((item) => {
                   return (
-                    <option value={`${item?.id}-${item?.clientName}`}>
+                    <option value={item?.clientName}>
                       {item.clientName}
                     </option>
                   );
@@ -464,13 +475,12 @@ function NewBooking() {
               <button type="button" className="add-name-btn" onClick={addClientFn}>
                 {" "}
                 +
-                {/* <i class="bi bi-plus-square" onClick={addClientFn} /> */}
               </button>
-              {clientNameErr && (
+              {/* {clientNameErr && (
                 <span className="input-error">Client name is required</span>
-              )}
+              )} */}
 
-              {/* </i> */}
+
             </div>
 
             <div className="mb-3 booking-row">
@@ -594,13 +604,13 @@ function NewBooking() {
                 defaultValue={paymentBalance}
                 placeholder="Payment Balance"
                 readonly="true"
-                onClick={paymentBalErrFn}
+                // onClick={paymentBalErrFn}
               />
-              {paymentBalErr && (
+              {/* {paymentBalErr && (
                 <span className="input-error">
                   Total paid amount is required
                 </span>
-              )}
+              )} */}
             </div>
           </div>
 
